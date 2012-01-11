@@ -1,0 +1,31 @@
+<h1>Listing mugshots</h1>
+
+<table>
+  <tr>
+    <th>Authuser</th>
+    <th>Caption</th>
+    <th>Xoffset</th>
+    <th>Yoffset</th>
+    <th>Active</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @mugshots.each do |mugshot| %>
+  <tr>
+    <td><%= mugshot.authuser_id %></td>
+    <td><%= mugshot.caption %></td>
+    <td><%= mugshot.xoffset %></td>
+    <td><%= mugshot.yoffset %></td>
+    <td><%= mugshot.active %></td>
+    <td><%= link_to 'Show', mugshot %></td>
+    <td><%= link_to 'Edit', edit_mugshot_path(mugshot) %></td>
+    <td><%= link_to 'Destroy', mugshot, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Mugshot', new_mugshot_path %>

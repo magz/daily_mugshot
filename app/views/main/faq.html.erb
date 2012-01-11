@@ -1,0 +1,257 @@
+<% cache 'faq' do %>
+<%= javascript_tag "$('faq').addClassName('current');" %>
+<%= stylesheet_link_tag "faq" %>
+<h1>Frequently Asked Questions</h1>
+
+<div class="faqSection">
+<b>General</b>
+<ul>
+	<li><%= link_to "Why did you make this?", '#g1' %></li>
+	<li><%= link_to "Why do you need my email?", '#g3' %></li>
+	<li><%= link_to "Can I use a digital camera?", '#g4' %></li>
+	<li><%= link_to "Can I email in a mugshot?", '#g5' %></li>
+	<li><%= link_to "How do I delete my account?", '#delete_account' %></li>
+</ul>
+</div>
+<div class="faqSection">
+<b>Reminder Application Questions</b>
+<ul>
+	<li><%= link_to "What version of Mac OS does the DMSReminder support?", '#r1' %></li>
+	<li><%= link_to "What version of Windows OS does the DMSReminder support?", '#r2' %></li>
+	<li><%= link_to "How do I uninstall the Mac DMSReminder?", '#r3' %></li>
+	<li><%= link_to "How do I uninstall the Windows DMSReminder?", '#r4' %></li>
+</ul>
+</div>
+
+<div class="faqSection">
+<b>Website Problems</b>
+<ul>
+
+  <li><%= link_to "Help! I can't get my web-cam working!", '#webcam_broken' %></li>
+  <li><%= link_to "Help! I can't remember my password!","#p1" %></li>
+	<li><%= link_to "Help! I want to get my widget on my profile or blog","#p2" %></li>
+	<li><%= link_to "Help! I can't find my mugshow in the search area","#p3" %></li>
+	<li><%= link_to "Help! I want to retake a picture from the past.","#p4" %></li>
+	<li><%= link_to "Help! I want to upload a series of pictures I took myself","#p5" %></li>
+	<li><%= link_to "Help! I want to upload today's picture from a file, not a webcam","#p6" %></li>
+	<li><%= link_to "Help! I want to take a second picture today","#p7" %></li>
+	<li><%= link_to "Help! I don't have a webcam!","#p8" %></li>
+	<li><%= link_to "Help! How do I refresh my browser cache?","#p9" %></li>
+	
+</ul>
+</div>
+<div class="faqSection">
+<b>iPhone Problems</b>
+<ul>
+  <li><%= link_to "How do I use the iPhone app?", '#iphone_general' %></li>	
+</ul>
+</div>
+<div class="faqSection">
+<b>Legal</b>
+<ul>
+	<li><%= link_to "Who owns the uploaded content?","#l1" %></li>
+	<li><%= link_to "Which side of Force are you on?","#l2" %></li>
+</ul>
+</div>
+<hr>
+<div class="faqAnswer"><a name="g1">
+    <b>Why did you make this?</b>
+    <p>
+      Check the <%#= link_to 'about', :action => 'about' %> section.  In short though, I thought it would be fun!
+    </p>
+</div>
+<div class="faqAnswer"><a name="g3">
+    <b>Why do you need my email?</b>
+    <p>
+    	We use email to validate you if you lose a password, and to let you know when someone has posted a comment 
+			about your mugshow.  We will NEVER sell/give your email away.
+    </p>
+</div>
+<div class="faqAnswer"><a name="g4">
+    <b>Can I use a digital camera?</b>
+    <p>
+	    Certainly!  You can upload any image you like from a digital camera to a scan, anything really :)  
+			Of course it must be an image.
+    </p>
+</div>
+<div class="faqAnswer"><a name="g5">
+    <b>Can I email in mugshots?</b>
+    <p>
+	    Yes!  Once you are logged in, goto 'My Mugshow' -> 'update account' for details.  
+			This is great for mobile... I took my mugshot from the Brooklyn Bridge recently :) 
+   </p>
+</div>
+<div class="faqAnswer"><a name="delete_account">
+    <b>How do I delete my account?</b>
+    <p>
+	    To delete your account please visit <%#= link_to url = destroy_my_account_url, url %>.
+   </p>
+</div>
+<div class="faqAnswer"><a name="r1">
+    <b>What versions of Mac OS does the DMSReminder support?</b>
+    <p>
+      The Mac DMSReminder supports Mac OS versions 10.4.x and later.
+    </p>
+</div>
+<div class="faqAnswer"><a name="r2">
+    <b>What versions of Windows does the DMSReminder support?</b>
+    <p>
+      The Windows DMSReminder supports Windows versions XP.
+    </p>
+</div>
+<div class="faqAnswer"><a name="r3">
+    <b>How do I uninstall the Mac DMSReminder?</b>
+    <p>
+      Easy! First quit the app by clicking on the Daily Mugshot icon at the top of your screen and selecting quit.  
+			Then go into your applications folder, find DMS Reminder, and drag it into your trash.  Thats it!
+    </p>
+</div>
+<div class="faqAnswer"><a name="r4">
+    <b>How do I uninstall the Windows DMSReminder?</b>
+    <p>
+      Easy! First quit the app by selecting the Daily Mugshot icon in your taskbar 
+			(at the bottom right of your screen) choosing quit.  
+			Then open Add/Remove programs from the control panel, find DMS Reminder and select uninstall.  Thats it!
+    </p>
+</div>
+
+<div class='faqAnswer' id='webcam_broken'>
+	<b>Help! I can't get my web-cam working!</b>
+	<p>Please try all of these as they apply:</p>
+	<ul>
+		<li>
+			<p>
+				Make sure you are using the latest version of Adobe Flash.
+				You can verify this by visiting Adobe's website at:
+				<%= link_to "http://adobe.com/software/flash/about/", "http://adobe.com/software/flash/about/", :popup => true %>
+			</p>
+		</li>
+		<li>
+			<p>
+				If you are having trouble with <em>Firefox</em>, try
+				<%= link_to(
+					'this', 
+					'http://blog.dailymugshot.com/2010/11/allowing-your-webcam-in-firefox-for-mac.html', 
+					:popup => true) %>.
+			</p>
+		</li>
+		<li>
+			<p>Have you allowed your browser access to your camera? Click
+			<%#= link_to "here", :controller => 'main', :action => 'camera_hope' %>
+			to allow your camera.</p>
+		</li>
+	</ul>
+</div>
+
+<div class="faqAnswer"><a name="p1">
+<b>Help!  I can't remember my password!</b>
+<p>
+No problem. <%#= link_to 'Click Here.', :action => 'reminder' %>
+</p>
+</div>
+
+<div class="faqAnswer"><a name="p2">
+<b>Help!  I want to get my mugshow on my social network profile or blog</b>
+<p>
+	Easy.  Make sure you are logged in and click here to go to the publish section.  From there its a breeze!
+</p>
+</div>
+
+<div class="faqAnswer"><a name="p3">
+<b>Help!  I can't find my mugshow in the search area</b>
+<p>
+	Your mugshow will only be featured in the search area if the 'Public' check-box in the My Sequence section is 
+	checked.
+</p>
+</div>
+
+<div class="faqAnswer"><a name="p4">
+<b>Help! I want to retake a picture from the past.</b>
+<p>
+	There is no way to update pictures taken in the past.  This is done purposefully.  
+	The goal of this project is to offer authentic daily snapshots, and this feature would compromise that.  
+	However, if you want to remove a picture from the mugshow, you can find the thumbnail in your 'My Sequence' 
+	section and uncheck it.
+</p>
+</div>
+
+<div class="faqAnswer"><a name="p5">
+<b>Help! I want to upload a series of pictures I took myself</b>
+<p>
+	There is no way to upload a batch of photos.  This is done purposefully.  
+	The goal of this project is to offer authentic daily snapshots, and this feature would compromise that.
+</p>
+</div>
+
+<div class="faqAnswer"><a name="p6">
+<b>Help! I want to upload today's picture from a file, not a webcam</b>
+<p>
+	Fantastic!  When you click 'Take a Pic' from the main nav, you will be taken to a page which has a big button: 
+	'Upload Pic'.  Just hit this and you are on your way!
+</p>
+</div>
+
+<div class="faqAnswer"><a name="p7">
+<b>Help! I want to take a second picture today</b>
+<p>
+	One picture per day.  Thems the rules.
+</p>
+</div>
+
+<div class="faqAnswer"><a name="p8">
+<b>Help! I don't have a webcam!</b>
+<p>
+	No Problem!  How about uploading an image from a digital camera?  When you click 'Take a Pic' from the main nav, 
+	you will be taken to a page which has a big button: 'Upload Pic'.  Just hit this and you are on your way!
+</p>
+</div>
+
+<div class="faqAnswer"><a name="p9">
+<b>Help! How do I refresh my browser cache?</b>
+<p>
+      Its easy.  We wrote the steps out for you <%#= link_to 'here', :action => "refresh_cache" %>
+</p>
+</div>
+
+<div class="faqAnswer"><a name="iphone_general">
+<b>How do I use the iPhone app?</b>
+<ol>
+	<li>
+		Log into your Daily Mugshot account by entering your username and password in the designated fields. (If you don't already have one, you create an account by tapping on the "create an account" link on the bottom of the home screen. It will take you the Daily Mugshot registration page within the iPhone's safari browser where you can create a username and password for your account.)
+	</li>
+	<li>
+		Once you're logged in and ready to take your first Mugshot, tap on the "Take Mugshot" button in the bottom right hand corner. 
+	</li>
+	<li>
+		After taking your first Mugshot, you'll be able to preview and decide to either re-take or to use the photo you just captured.
+	</li>
+	<li>
+		Once you're happy with your Mugshot, you'll be able to pinch or move (aka. "pan") the image so that it's centered on the screen. When you're happy with the image, tap the "upload" button in the bottom right-hand corner to submit your first Mugshot. If you decide that you'd like to re-take your Mugshot, tap on the re-take button on the bottom left-hand corner. 
+	</li>
+	<li>
+		After you tap "upload", you'll be presented with an open-text field where you can add comments to your Mugshot. If you don't want to write a comment, leave the field blank and tap the "Submit" button in the upper right hand corner. That's it, you're done for today! If you change your mind and decide you'd like to retake your daily Mugshot after you've already uploaded it, don't worry; You can always edit or delete your Mugshots at a later date by logging into your account on www.DailyMugshot.com.
+	</li>
+	<li>
+		Once you have a few photos logged, you can tap “View Mugshot” on the homescreen to view an animated slideshow of all the photos you’ve take. If you tap the screen you can view the slideshow options. From here you can adjust the slideshow speed, pause the slideshow, manually switch between photos and choose to turn on or off the slideshow repeat, stats and photo comments.
+	</li>
+</ol>
+</div>
+
+<div class="faqAnswer"><a name="l1">
+<b>Who owns the uploaded content?</b>
+<p>
+You do!  Check the <%= link_to 'terms', '/tos.html' %>, but basically you own it all, 
+you just grant us the right to 'do stuff' with it, which enables us to post it to your profile, etc...
+</p>
+</div>
+
+<div class="faqAnswer"><a name="l2">
+<b>Which side of the Force are you on?</b>
+<p>
+	The good side!  This project was started from a place of fun, and it is going to stay that way. 
+	We don't give away your email, we don't bug you, we don't charge anything.  
+	I just thought this would be a fun thing to do.  And I really hope you like it!  
+	Your feedback is (seriously) appreciated.
+</p>
+</div>
+<%- end -%>

@@ -1,0 +1,52 @@
+<%= stylesheet_link_tag "comments" %>
+<%# is this necessary? %>
+<%= stylesheet_link_tag "show" %>
+<%= javascript_include_tag 'lowpro' %>
+<%= javascript_include_tag 'show' %>
+
+<script type="text/javascript">
+swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
+</script>
+
+<script src="http://cdn.gigya.com/wildfire/js/wfapiv2.js"></script>
+
+<textarea id="gigya_id" style="display:none">
+  <div style="width:200px !important;position:relative !important;width:200px !important;height:220px !important;overflow:hidden !important;">
+    <object type="application/x-shockwave-flash" data="/swf/newdms3.swf?pathurl=/swf/paths.xml&userid=<%= @authuser.id %>" width="200" height="200">
+      <param name="movie" value="/swf/newdms3.swf?pathurl=/swf/paths.xml&userid=<%= @authuser.id  %>" />
+      <param name="scale" value="noScale" /><param name="salign" value="TL" />
+    </object>
+    <a style="display:block !important;background:url(/images/snag.png) 0 0 no-repeat !important;width:200px !important;height:20px !important;padding:0 !important;position:relative !important;top:-3px !important;text-indent:-1000em !important;overflow:hidden !important;cursor:pointer !important;cursor:hand !important;border:none !important;text-decoration:none !important;" href="/" title="Daily Mugshot">
+      Daily Mugshot
+    </a>
+  </div>
+</textarea>
+
+<h1><%= @authuser.login %>'s Mugshow</h1>
+	<span id="tabs"><%#= render :partial => "show_tabs" %></span>
+<div id="mosaic_view"></div>
+<div id="mugshow_view">
+					<div class="mugshow_box">
+						<div class="mugshow_box_content">
+							<div id="player">
+                				<script type="text/javascript">
+								var flashvars = {};
+								var params = {userid:<%= @authuser.id %>};
+								var attributes = {};
+								swfobject.embedSWF("http://www.dailymugshot.com/swf/newdms3.swf", "player", "200", "200", "9.0.115", flashvars, params, attributes);
+								</script>
+				
+							</div>
+							
+							<div class="mugshow_meta">
+								<%#= render :partial => "show_stats" if @authuser.userstat.last_mugshot %>
+								<%#= render :partial => "show_actions" %>
+							</div>	
+							<div class="clearboth"><!--EMPTY--></div>
+						</div>
+					</div> -->
+					<div class="clearboth"><!--EMPTY--></div>
+					<div id="showFriend">
+				    </div>
+				  <h3 class="title">Comments</h3>
+				  <%= render :partial => 'comments' %>

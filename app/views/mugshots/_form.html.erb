@@ -1,0 +1,40 @@
+<%= form_for(@mugshot) do |f| %>
+  <% if @mugshot.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@mugshot.errors.count, "error") %> prohibited this mugshot from being saved:</h2>
+
+      <ul>
+      <% @mugshot.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+	<%= f.label :image %>
+	<%= f.file_field :image %>
+	</div>
+  <div class="field">
+    <%= f.label :authuser_id %><br />
+    <%= f.number_field :authuser_id %>
+  </div>
+  <div class="field">
+    <%= f.label :caption %><br />
+    <%= f.text_field :caption %>
+  </div>
+  <div class="field">
+    <%= f.label :xoffset %><br />
+    <%= f.number_field :xoffset %>
+  </div>
+  <div class="field">
+    <%= f.label :yoffset %><br />
+    <%= f.number_field :yoffset %>
+  </div>
+  <div class="field">
+    <%= f.label :active %><br />
+    <%= f.check_box :active %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

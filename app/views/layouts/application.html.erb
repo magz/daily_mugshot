@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DailyMugshot</title>
+  <%= stylesheet_link_tag "application"%>
+  <%= stylesheet_link_tag "quickstyles"%>
+  <%= stylesheet_link_tag "base"%>
+  <%= stylesheet_link_tag "public"%>
+  <%= javascript_include_tag "application", "swfobject" %>
+  <%= javascript_include_tag "application", "zoom_thumb" %>
+
+  <link rel="shortcut icon" href= <% asset_path "favicon.ico" %> >
+  <%= csrf_meta_tags %>
+	<%= yield :head %>
+
+</head>
+<body>
+    
+<!-- BEGINNING SITE -->
+    <div id="site">
+		
+        <!-- BEGINNING TOOLTIP HELPER -->
+        <div id="tooltip">
+	        <div id="tooltip_helper">
+	        </div>
+        </div>
+
+        <!-- END TOOLTIP HELPER -->
+
+        <!-- BEGINNING NAVIGATION COLUMN -->
+        <div id="nav_column">
+			          <div id="logo_box">
+			            <%# @a = logged_in? ? (tz(Time.now)).strftime("%m_%d") : Time.now.strftime("%m_%d")  %>
+				        <%= link_to image_tag("static_date_icon.png"), :root, :id => "logo"  %>
+				            <h1 id="title">Daily Mugshot</h1>
+			         	</div>
+
+			          <!-- BEGINNING SIDE BOX -->
+			          <div id="status_box" class="side_box">
+			                <div class="side_box_header">
+			                     <!--BLANK-->
+			                </div>
+			                <div id="alert_container" class="side_box_content">
+			                    <div id="alert_box">
+				                    <a href="#" class="new_mugshot">
+															<img border="false" src= <%= asset_path "dmslogo_med.png" %> class="thumbnail" />
+															<strong>Update Area:</strong>
+															<span class="description">Check here for updates!</span>
+				                    </a>
+			                    </div>
+			                </div>
+			            </div>    
+									<div id="search_box" class="side_box">
+			                <div class="side_box_header"><!-- --></div>
+			                <div class="side_box_content">
+												<%= form_tag(:search) do %>
+										        <input id="search_input" name="search_input" type="text" /></label>
+												<fieldset>
+												  <%#= text_field :email_like_or_login_like, :id => 'search_input', :value => "Search user/email" %>
+												<script type="text/javascript">
+			                   /* <![CDATA[ */
+			                	var searchDOM = document.getElementById('search_input');
+			                   watermark.apply( searchDOM );
+			                   /* ]]> */
+			                  </script>
+												</fieldset>
+			                  <% end %>
+			                </div>
+			            </div>
+			            <!-- END SIDE BOX -->  
+									<!-- BEGINNING NAVIGATION -->
+									<div id="nav">
+										<div id="account_login" class="side_box">
+											<div class="side_box_header">
+												<!--BLANK-->
+											</div>
+											<div class="side_box_content">
+							          <%= render :partial =>"main/loginarea" %>
+							        </div>
+										</div>		
+
+										<div id="nav_locations" class="side_box">
+											<div class="side_box_header">
+												<!--BLANK-->
+											</div>
+											<div class="side_box_content">	
+									          <%= render :partial =>"main/sidenav" %>
+									        </div>
+										</div>	
+
+									</div>
+									<!-- END NAVIGATION -->              
+
+
+			        </div>
+			         <!-- END NAVIGATION COLUMN -->
+
+			        <!-- BEGINNING MAIN CONTENT AREA -->
+						 <%#= render :partial => "main/tip" %>
+						<% if flash[:notice] %>
+						<div id= "alert", class="alert">
+							<div class="content">
+								<p><%= flash[:notice] %></p>
+							</div>
+						</div>
+						<% end %>
+			        <div id="content" class="content_box">
+			           <div class="content_box_header">
+			                <!--BLANK-->
+			           </div>
+			              <div class="content_box_content">
+			                <%= yield %>
+			              </div> 
+			        </div>
+			        <!-- END MAIN CONTENT AREA -->
+
+			        <!-- START FOOTER -->
+			        <div id="footer">
+			            <div id="footer_text">
+			              <%= link_to "Terms of Service", "/tos.html" %> Copyright &copy; 2007-2010 Dailymugshot.com.  All rights reserved. 
+			            </div>
+			        </div>
+			        <!-- END FOOTER -->
+			    </div>
+			    <!-- END SITE -->
+					<% if Rails.env == 'production' %>
+			    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+			    </script>
+			    <script type="text/javascript">
+			      _uacct = "UA-2760766-1";
+			      urchinTracker();
+			    </script>
+					<% end %>
+
+					<%= yield :foot %>
+
+					<script type="text/javascript" charset="utf-8">
+						var rails_env = '<%= Rails.env %>'
+					</script>
+
+				</body>
+			</html>
+
+
+</body>
+</html>

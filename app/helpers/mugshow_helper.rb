@@ -1,0 +1,2 @@
+module MugshowHelper
+end

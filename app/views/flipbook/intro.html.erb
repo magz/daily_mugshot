@@ -1,0 +1,62 @@
+<%= stylesheet_link_tag "flip_book2" %>  
+<%= javascript_tag "$('flipbook').addClassName('current');" %>
+ <h1>So what is a Flipbook?</h1>
+   
+   
+   <div id="flipbook_banner">
+   	<h2>Create a Flipbook from your Mugshow in 4 easy steps.</h2>
+	<% if logged_in? %>
+	<%= link_to "Get Started!", :action => "new", :class => "get_started_button" %>
+	<% else %>
+	<%= link_to image_tag("get_started_button.gif"), :signup %>
+	<% end %>	
+   </div>
+    
+    <div id="flipbook_steps">
+      <ol>
+        <li id="pick_mugshots">
+          <h3>Pick mugshots <small>fun!</small></h3>
+        </li>
+        <li id="design_cover">
+          <h3>Design cover!<small>colors &amp; text</small></h3>
+        </li>
+        <li id="order_it">
+          <h3>Order it <small>$11.99</small></h3>
+        </li>
+        <li id="get_it">
+          <h3>Get it <small>in the mail</small></h3>
+        </li>
+      </ol>
+    </div>
+    <h3>Gimme some details</h3>
+    <p>
+    	<ul>
+    		<li>
+    			<strong>How much is a flipbook?</strong><br />
+    			Only $11.99 plus shipping and handling.
+    		</li>
+    		<li>
+    			<strong>How many pictures are in a flipbook?</strong><br />
+    			There are 64 pictures in a flipbook. This means that you must have at least 
+64 mugshots in your mugshow.  Get shooting!
+    		</li>
+    		<li>
+    			<strong>What size is it?</strong><br />
+    			A flipbook is 3.5" x 2" (inches), about the size of a business card.
+    		</li>	
+    		<li>
+    			<strong>Can I customize it?</strong><br />
+    			You can choose all of your pictures, the color of the cover and add up to 
+2 lines of text on the cover.
+    		</li>
+		</ul>
+	</p>
+	<p>
+	<% if logged_in? %>
+	<%= link_to "Get Started!", :action => "new", :class => "get_started_button" %>
+
+	<% else %>
+	<%= link_to "Get Started!", signup_path, :class => "get_started_button" %>
+	<% end %>	
+	</p>
+

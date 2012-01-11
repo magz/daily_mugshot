@@ -1,0 +1,94 @@
+<% #kinda feel like this should be in a separate css...i think i tried that and it worked fine %>
+<% content_for :head do %>
+	<style type="text/css" media="screen">
+		#iphone_app {
+			float: left;
+			margin-left: 0px;
+			margin-top: 15px;
+			width: 55%;
+		}
+		#iphone a{border:none;}
+		#iphone .right {
+			color:#222222;
+			float:left;
+			margin-top:75px;
+		}
+			#iphone .right .app_store{
+				float:left;
+				display:block;
+			}
+
+			#iphone .right .android_store{
+				float:right;
+			}
+			
+	</style>
+<% end %>
+
+<script type="text/javascript">
+swfobject.registerObject("dms_flow", "9.0.115", "expressInstall.swf");
+</script>
+
+<%= stylesheet_link_tag "home" %>
+
+<h1>Welcome to Daily Mugshot!</h1>
+<!-- N10:35AM -->
+<div id="widget_rotator_container" OnMouseOver="renderTooltip(180,'check out a random mugshow!');" OnMouseOut="hideTooltip();">
+  <div id="widget_rotator">
+<script type="text/javascript">
+var flashvars = {};
+var params = {userid:60581};
+var attributes = {};
+swfobject.embedSWF("http://localhost:3000/swf/flow.swf", "widget_rotator", "525", "220", "9.0.115", flashvars, params, attributes);
+</script>
+    <div id="myContent">
+      <p>Alternative content</p>
+    </div>
+
+</script>
+  </div>
+</div>
+<div id="guide_steps">
+  <ol>
+    <li id="signup_step">
+      <h3>Signup <small>free!</small></h3>
+      <div class="desc"><p><strong>It takes less than a minute!</strong></p></div>
+    </li>
+    <li id="reminder_step">
+      <h3>Get Reminder <small>easy</small></h3>
+      <div class="desc"><p><strong>puts the 'daily' in Daily Mugshot</strong></p></div>
+    </li>
+    <li id="pics_step">
+      <h3>Take Pics <small>fun!</small></h3>
+      <div class="desc"><p><strong>the site works with your webcam</strong></p></div>
+    </li>
+    <li id="post_step">
+      <h3>Post Widget <small>share!</small></h3>
+      <div class="desc"><p><strong>Put your mugshow on your profile</strong></p></div>
+    </li>
+  </ol>
+</div>
+
+<div id="iphone">
+	<div id='iphone_app'><%= image_tag('iphone_app.jpg') %></div>
+	<div class='right'>
+		<%= image_tag('app_text.png', :class => 'iphone-text') %>
+		<div class='clear'></div>
+		
+		<%= link_to "http://itunes.apple.com/us/app/dailymugshot/id393861180?mt=8", :popup => true, :class => 'app_store' do %>
+			<%= image_tag("app_store.jpg") %>
+		<% end %>
+		
+		<%= link_to "https://market.android.com/details?id=com.fuzz.dms&feature=search_result", :popup => true, :class => 'android_store' do %>
+			<%= image_tag("android_store.png") %>
+		<% end %>
+	</div>
+	<div class='clear'></div>
+</div>
+
+<h2 class='clear'>What's this all about?</h2>
+<ul>
+	<li>Daily Mugshot is a free service which helps you chronicle daily images of yourself and share them as an animated sequence.
+	<li>We have widgets which you can place on your profile or blog and they automatically update when you take new mugshots. (You can always make your mugshots private so only you can see them.)
+	<li>Getting started is really easy, all you need is a webcam, digital camera, or camera-phone! <%#= link_to "Get Started!", signup_path %>
+</ul>

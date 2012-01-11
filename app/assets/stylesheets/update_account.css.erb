@@ -1,0 +1,60 @@
+/* @group Update Account */
+
+#update_account_form{
+	
+}
+#update_account_form h3{
+	background: none;
+	margin: 0 0 10px 0;	
+	font-size: 18px;
+}
+#update_account_form .highlight_box_content{
+	padding: 10px 10px 20px 10px;
+	margin-top: 10px;
+}
+
+.update_button{
+	background: url(<%=asset_path "update_button.gif" %>) 0 0 no-repeat;
+	margin-left: 220px;
+	width: 80px;
+}
+
+#update_account_form label{
+	font-weight: bold;
+	display: block;
+	position: relative;
+	z-index: 1;
+}
+#update_account_form label input,
+#update_account_form label select{
+	font-weight: normal;
+	position: absolute;
+	left: 130px;
+	width:160px;
+	top: -5px;
+}
+#update_account_form label input[type=radio],
+#update_account_form label input[type=checkbox]{
+	width: auto;
+	margin: 0;
+}
+#update_account_form label .hint{
+	font-weight: normal;
+}
+#update_account_form .hint{
+	font-weight: normal;
+	color: #888;
+}
+#update_account_form .old_password{
+	text-align: center;
+}
+#current_password .hint{
+	display: block;
+}
+#current_password .forgot_password{
+	float: right;
+	margin-right: 140px;
+	position: relative;
+	z-index: 2;
+}
+/* @end */

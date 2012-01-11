@@ -1,0 +1,189 @@
+/**********************************************************************
+B R O W S E  A R E A
+***********************************************************************/
+
+
+div.thumbcheck {
+	background:transparent url(<%=asset_path "side_box_bg.png" %>) repeat-y scroll 0pt;
+	margin:0pt 0pt 8px;
+	width:190px;
+}
+
+div.thumbcheck_header {
+	background:transparent url(<%=asset_path "side_box_header.png" %>) no-repeat scroll 0pt;
+	height:10px;
+}
+div.thumbcheck_body {
+	background:transparent url(<%=asset_path "side_box_footer.png" %>) no-repeat scroll 0pt bottom;
+	padding:5px 13px 16px;
+}
+
+/* @group Sequence List */
+
+
+#sequence_list{
+	margin:15px 0px 0px 0 !important;
+	padding: 0px 0 0 0 !important;
+	list-style: none;
+	list-style-image: none;
+	width: 520px;
+	clear: both;
+}
+#sequence_list li{
+	width: 110px;
+	height: auto;
+	float: left;
+	margin:0 8px 15px 12px;
+	text-align: center;	
+	font-size: 13px;
+	line-height: 1.3em;
+	cursor: pointer;
+	cursor:hand;	
+}
+* html #sequence_list li{
+	display: inline;
+}
+#sequence_list li a{
+	background:  url(<%=asset_path "browse_sequence_header_hover.gif" %>) 0 0 no-repeat;	
+}
+#sequence_list li a,
+#sequence_list li span.zoom_thumb{
+	display: block;
+	width: 100%;
+	height: auto;
+	float: left;	
+	border: 0;
+	cursor: pointer;
+	cursor:hand;
+	background:  url(<%=asset_path "browse_sequence_bg.gif" %>) 0 0 repeat-y;
+}
+#sequence_list li span.zoom_thumb{
+	cursor: default;
+}
+#sequence_list .list_container{
+	display: block;
+	width: 100%;
+	height: auto;
+	float: left;
+	padding: 0 0 5px 0;
+	background:  url(<%=asset_path "browse_sequence_footer.gif" %>) 0 bottom no-repeat;	
+}
+* html #sequence_list .list_container{
+	width:auto;
+	height:auto;
+	float:none;
+}
+* + html #sequence_list .list_container{
+	width:auto;
+	height:auto;
+	float:none;
+}
+#sequence_list .list_container img{
+	width: 50px;
+	height: 50px;
+}
+#sequence_list li .name{
+	display: block;
+	width: 110px;
+	font-weight: bold;
+	color: white;
+	background: #84A524  url(<%=asset_path "browse_sequence_header.gif" %>) 0 0 no-repeat;
+	margin-bottom: 5px;
+	border-bottom: 1px solid white;
+	padding: 1px 0;
+	overflow:hidden;
+}
+#sequence_list li a:hover,
+#sequence_list li span.zf_hover{
+	z-index: 2;
+	position: relative;
+}
+#sequence_list li a:hover .name{
+	background: #137DDF  url(<%=asset_path "browse_sequence_header_hover.gif" %>) 0 0 no-repeat;
+}
+#sequence_list li .date{
+	display: block;
+	color: #666;
+}
+#sequence_list li .number{
+	display: block;
+	color: #666;
+}
+
+/* @group Tooltip */
+
+
+#sequence_list li .tip img{
+	width: 200px;
+	height: 200px;
+	position: absolute;
+	left: 20px;
+	top: 19px;
+	z-index: 2;
+	display: none;
+}
+#sequence_list li a:hover .tip,
+#sequence_list li span.zf_hover .tip{
+	left: -250px;
+	top: -30px;
+	display: block;
+}
+#sequence_list li a:hover .tip img,
+#sequence_list li span.zf_hover .tip img{
+	display: block;
+}
+
+/* @end */
+
+
+/* @end */
+
+/* @group Filters */
+
+#advancedMenu{
+	background: url(<%=asset_path "highlight_box_370_bottom.gif" %>) 0 bottom no-repeat;
+	width: 370px;
+	float: right;
+	margin-bottom: 15px;
+	margin-right: 15px;
+	font-size: 13px;
+}
+#advancedMenu form{
+	background: url(<%=asset_path "highlight_box_370_top.gif" %>) 0 0 no-repeat;
+	padding: 10px;	
+}
+#advancedMenu form b{
+	color: #333;
+}
+#advancedMenu ul{
+	margin: 0 0 10px 0;
+	padding: 0;
+	list-style: none;
+	list-style-image: none;
+}
+#advancedMenu li{
+	margin-bottom: 8px;
+}
+#hideFiltersButton{
+	float: left;
+}
+#submitFilters{
+	background-image: url(<%=asset_path "filter_now_button.gif" %>);
+	background-color: transparent;	
+	width: 100px;
+	margin-left: 135px;
+}
+#showFiltersButton input{
+	background-image: url(<%=asset_path "show_filters_button.gif" %>);	
+	background-color: transparent;
+	width: 113px;
+	margin-left: 10px;
+}
+#hideFiltersButton input{
+	background-image: url(<%=asset_path "hide_filters_button.gif" %>);	
+	background-color: transparent;
+	width: 113px;
+	margin-left: 10px;
+}
+
+/* @end */

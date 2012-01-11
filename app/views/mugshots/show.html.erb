@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+	<b>Images:</b>
+	<%= image_tag @mugshot.image.url %>
+	<%= image_tag @mugshot.image.url(:full) %>
+	<%= image_tag @mugshot.image.url(:inner) %>
+	<%= image_tag @mugshot.image.url(:thumb) %>
+</p>
+<p>
+  <b>Authuser:</b>
+  <%= @mugshot.authuser_id %>
+</p>
+  
+<p>
+  <b>Caption:</b>
+  <%= @mugshot.caption %>
+</p>
+
+<p>
+  <b>Xoffset:</b>
+  <%= @mugshot.xoffset %>
+</p>
+
+<p>
+  <b>Yoffset:</b>
+  <%= @mugshot.yoffset %>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%= @mugshot.active %>
+</p>
+
+
+<%= link_to 'Edit', edit_mugshot_path(@mugshot) %> |
+<%= link_to 'Back', mugshots_path %>

@@ -1,0 +1,17 @@
+<ul id="navUL">
+	<% if logged_in? %>
+	<li id="mySequence"><%= link_to "My Mugshow", my_mugshow_path %></li>
+	<li id="takePic"><%= link_to "Take a Pic", new_pic_path %></li>
+	<br>
+	<li id="pubWidget"><%#= link_to "Publish", publish_path %></li>
+	<li id="invites"><%#= link_to "Find Your Friends", {:controller => "authuser", :action => "find_friends" } %></li>
+	<li id="invites" class = "new"><%#= link_to "Youtube It -- NEW!", {:controller => "video", :action => "new" } %></li>
+	<% end %>
+	<li id="browseGal" class="current"><%= link_to "Browse Gallery", :browse %></li>
+	<li id="getReminders"><%= link_to "Get Reminders", :get_reminder %></li>
+	<li id="flipbook"><%= link_to "Make A Flipbook", :flipbook_intro %></li>
+	<li id="feedback"><%#= link_to "Feedback", new_feedback_path %></li>
+	<li id="upmBlog"><%= link_to "DMS Blog","http://blog.dailymugshot.com", :popup => true %></li>          
+	<li id="about"><%= link_to "About", :about %></li>
+	<li id="faq"><%= link_to "FAQ", :faq %></li>
+</ul> 

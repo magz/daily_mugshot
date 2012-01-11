@@ -1,0 +1,83 @@
+body{
+	background: #D5D6BC;
+	color:#555;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 12px;
+}
+#header{
+	background: #DFE0CD;	
+	-webkit-border-radius:12px;
+	margin: 25px 0 10px 0;
+	height:90px;
+	position: relative;
+}
+#header h1{
+	background: url(<%=asset_path "iphone_dms_header_logo.png" %>) 0 0 no-repeat;
+	width:283px;
+	height:128px;
+	text-indent: -9999px;
+	margin: 0 auto;
+	top:-20px;
+	left:-5px;
+	position:relative;
+}
+#content_wrap{
+	background: #DFE0CD;
+	-webkit-border-radius:12px;
+	padding:6px;
+}
+#content{
+	-webkit-border-radius:10px;
+	background: white;	
+	padding:10px;
+}
+fieldset, form,h1,h2,h3,h4{
+	border:0;
+	padding:0;
+	margin:0;
+}
+h1,h2,h3,h4,h5{
+	color:#333;
+}
+h2{
+	font-size: 1.3em;
+	padding:0 0 .5em 0;
+	margin:0;
+	color:#346EC9;
+	text-align: center;
+	background:url(<%=asset_path "header_border.gif" %> ) 0 bottom repeat-x;
+}
+label{
+	font-weight: bold;
+	color:#333;
+	display:block;
+	padding:0 0 .25em 0;
+}
+#email{
+	width:100%;
+	padding:0.5em 0;
+}
+#reset,
+#app{
+	margin:0.5em auto 0 auto;
+	width:100%;
+	display: block;
+}
+.alert{
+	-webkit-border-radius:8px;
+	padding:1em;
+	text-shadow: white 0 1px 0;
+}
+.alert.error{
+	background:#F8DADA;
+	border:2px solid #E06666;
+	color:#CC0000;
+}
+.alert.success{
+	background: #E4EEFB;
+	border:2px solid #B3CDF2;
+	color:#346EC9;
+}
+a{
+	color: #8FB420;
+}

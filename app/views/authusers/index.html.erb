@@ -1,0 +1,81 @@
+<%= stylesheet_link_tag 'browse' %>
+<script type="text/javascript" charset="utf-8">
+	var menu_height;
+	function advanced_menu_display(action){
+		switch(action){
+			case 'show': $('#hideFiltersButton').show(); $('#advancedMenu').show(), $('#advancedMenu').animate({height:menu_height},500); $('#showFiltersButton').hide();break;
+			case 'hide': $('#hideFiltersButton').hide(); $('#advancedMenu').animate({height:0}, 500, function(){$(this).hide()}); $('#showFiltersButton').show();break;
+			default:break;
+		}
+	}
+	$("#advancedMenu").ready(function(){
+
+		// Defaults
+		menu_height = parseInt($('#advancedMenu').css('height'));
+		advanced_menu_display('show');
+		
+		$('.options_display').click(function(){
+			var action;
+			if($(this).attr('id') == 'showFiltersButton'){action = 'show'}else{action = 'hide'}
+			advanced_menu_display(action);
+		})
+
+	});
+</script>
+<h1>Browse Mugshows</h1>
+<%= render :partial =>"results" %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>Debug Listing authusers</h1>
+
+<table>
+  <tr>
+    <th>Login</th>
+    <th>Email</th>
+    <th>Crypted password</th>
+    <th>Active</th>
+    <th>Time zone</th>
+    <th>Gender</th>
+    <th>Birthday</th>
+    <th>Prvt</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @authusers.each do |authuser| %>
+  <tr>
+    <td><%= authuser.login %></td>
+    <td><%= authuser.email %></td>
+    <td><%= authuser.crypted_password %></td>
+    <td><%= authuser.active %></td>
+    <td><%= authuser.time_zone %></td>
+    <td><%= authuser.gender %></td>
+    <td><%= authuser.birthday %></td>
+    <td><%= authuser.prvt %></td>
+    <td><%= link_to 'Show', authuser %></td>
+    <td><%= link_to 'Edit', edit_authuser_path(authuser) %></td>
+    <td><%= link_to 'Destroy', authuser, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Authuser', new_authuser_path %>

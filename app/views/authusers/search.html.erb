@@ -1,0 +1,41 @@
+<%= stylesheet_link_tag 'browse' %>
+<script type="text/javascript" charset="utf-8">
+	var menu_height;
+	function advanced_menu_display(action){
+		switch(action){
+			case 'show': $('#hideFiltersButton').show(); $('#advancedMenu').show(), $('#advancedMenu').animate({height:menu_height},500); $('#showFiltersButton').hide();break;
+			case 'hide': $('#hideFiltersButton').hide(); $('#advancedMenu').animate({height:0}, 500, function(){$(this).hide()}); $('#showFiltersButton').show();break;
+			default:break;
+		}
+	}
+	$("#advancedMenu").ready(function(){
+
+		// Defaults
+		menu_height = parseInt($('#advancedMenu').css('height'));
+		advanced_menu_display('show');
+		
+		$('.options_display').click(function(){
+			var action;
+			if($(this).attr('id') == 'showFiltersButton'){action = 'show'}else{action = 'hide'}
+			advanced_menu_display(action);
+		})
+
+	});
+</script>
+<h1>Search Results</h1>
+<%= render :partial =>"results" %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

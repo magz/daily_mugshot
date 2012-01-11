@@ -1,0 +1,333 @@
+/* @group About Page */
+
+#flipbook_banner{
+	width: 520px;
+	height: 230px;
+	background:url(/assets/flipbook_banner.jpg) 0 0 no-repeat;
+	position: relative;
+}
+#flipbook_banner h2{
+	display: none;
+}
+#flipbook_banner .get_started{
+	position: absolute;
+	right: 90px;
+	bottom: 50px;
+}
+#flipbook_steps{
+	background: url(/assets/flipbook_steps2.jpg) 0 0 no-repeat;
+	width: 520px;
+	height: 200px;
+	margin: 1em 0 0 0;
+}
+#flipbook_steps ol{
+	display: none;
+}
+
+/* @end */
+
+#next_button{
+	display:none;
+	margin: 0 auto;
+}
+#indicator{
+	display:none;
+	margin:0 15px 0 0;
+	background:url(/assets/flipbook_progress_bar.gif) 0 0 no-repeat;
+	width:500px;
+	height:26px;
+	clear:both;
+	text-indent: -9000px;
+	overflow: hidden;
+}
+
+
+/* @group Order Frame */
+
+#order_frame{
+	width: 100%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+/* @end */
+
+/* @group Forms */
+
+.dms_form ul{
+	padding:0;
+	margin:0;
+	list-style: none;
+	list-style-image: none;
+	float:left;
+}
+.dms_form label{
+	font-weight: bold;
+	display:block;
+	padding:0.75em 0 .25em 0;
+}
+.dms_form label span{
+	color:#aaa;
+	font-size:0.9em;
+	font-weight: normal;
+}
+.dms_form input.text{
+	width:250px;
+}
+
+/* @end */
+
+/* @group Color List */
+
+#color_choice_label{
+	color: #AAA;
+}
+#color_choice_label #color_choice{
+	color: #555;
+}
+
+.colors{
+	float: right;
+	width: 250px;
+}
+.color_list label{
+	display:block;
+	width: 50px;
+	height:100px;
+	text-indent: -9000px;
+	background:url(/assets/color_overlay.png) 0 0 no-repeat;
+	position: absolute;
+	left: 0;
+	top: 0;
+	cursor: pointer;
+	cursor:hand;
+	z-index: 1;
+}
+/* PNG Filter for IE6 */
+* html .color_list label{
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/color_overlay.png', sizingMethod='crop');	
+}
+
+.color_list li.selected label{
+	top: -40px;
+}
+.color_list li{
+	display:block;
+	width: 40px;
+	height:40px;
+	float: left;
+	position: relative;
+	margin: 0 5px 5px 0;
+	overflow: hidden;
+}
+.color_list li input{
+	display:block;
+	width: 40px;
+	height:40px;
+	visibility: hidden;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 2;
+}
+.color_list li.dms_blue{
+	background:#3D7BDD;
+	color:white;
+}
+.color_list li.dms_green{
+	background:#75A30B;
+	color:white;
+}
+.color_list li.baby_blue{
+	background:#99D6EB;
+	color:#555;
+}
+.color_list li.baby_pink{
+	background:#FFB7DB;
+	color:#555;
+}
+.color_list li.charcoal{
+	background:#444;
+	color:white;
+}
+.color_list li.pearl{
+	background:#EEE;
+}
+.color_list li.teal{
+	background:#33CCFF;
+	color:#444;
+}
+.color_list li.red{
+	background:#EE1C27;
+	color:white;
+}
+.color_list li.marigold{
+	background:#FFCC00;
+}
+.color_list li.grape{
+	background:#993399;
+	color:white;
+}
+
+/* @end */
+
+/* @group Preview */
+
+#flipbook_preview{
+	width:400px;
+	height: 270px;
+	clear: both;
+	margin: 0 auto;
+	text-align: center;
+	background:url(/assets/loading.gif) center center no-repeat;
+}
+#flipbook_preview .title{
+	display:block;
+	padding:0.75em 0 .25em 0;
+}
+
+/* @end */
+
+/* @group Choice Countdown */
+
+.countdown{
+	float:right;
+	text-align: left;
+	line-height:1.2em;
+	padding: 0.8em 0 0 0;
+}
+.countdown h2{
+	background: none;
+	border:none;
+	color:#666;
+	font-size: 20px;
+	margin:0 !important;
+	padding:0 !important;
+	line-height: 1.2em;
+}
+.countdown h2 span{
+	color: #12B8DE;
+}
+.countdown hint{
+	font-size: 12px;
+	font-style: italic;
+	color: #999;
+}
+.countdown #next_design_cover{
+	margin: 0.7em 0 0 0;
+}
+* html .countdown #next_design_cover{
+	margin: 1.6em 0 0 0;
+}
+* + html .countdown #next_design_cover{
+	margin: 1.6em 0 0 0;
+}
+
+
+/* @end */
+
+/* @group Flipbook Image Choice Mosaic */
+
+ul#flip_book_images{
+	margin: 1em 0 0 12px;
+	list-style-image: none;
+	list-style: none;
+	width: 500px;
+	padding: 0;
+}
+#flip_book_images li,
+#flip_book_images a.zoom_thumb,
+#flip_book_images a.zoom_thumb img{
+	width:50px;
+	height:50px;
+	border:0;
+	padding:0;
+	margin:0;
+	display:block;
+	float:left;
+	cursor:pointer;
+	cursor:hand;	
+}
+#flip_book_images a.zoom_thumb{
+	position:relative;
+}
+#flip_book_images a.zoom_thumb:hover{
+	z-index: 9999;
+}
+#flip_book_images a.zoom_thumb img{
+	position:absolute;	
+	left:0px;
+	top:0px;
+}
+#flip_book_images .checkmark{
+	position:absolute;
+	cursor:pointer;
+	cursor:hand;
+	display:block;
+	width: 44px;
+	height:44px; 
+	visibility: hidden;
+	border: 3px solid #33CCFF;
+	z-index:1;
+	left:0px;
+	top:0px;
+	background:url(/assets/checked.png) 0 -50px no-repeat;
+}
+#flip_book_images a.zoom_thumb:hover .tip{
+	top:-50px;
+}
+#flip_book_images .selected .checkmark,
+#flip_book_images a.zoom_thumb:hover .checkmark{
+	visibility: visible;
+}
+#flip_book_images .selected .checkmark{
+	background-position:-4px -2px;
+}
+/* PNG Filter for IE6 */
+* html #flip_book_images li .selected .checkmark{
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/checked.png', sizingMethod='crop');	
+}
+
+/* @end */
+
+/* @group Buttons and Pagination */
+
+.options {
+	padding:1.5em 0 1em 0;
+	float:left;
+	width: 255px;
+}
+#spread_evenly{
+	background-image:url(<%=asset_path "spread_button.gif" %>);
+	width:124px;
+	float: right;
+}
+#unselect_all{
+	background-image:url(<%=asset_path "unselect_button.gif" %>);
+	width:110px;
+	margin-right:1em;
+	float: right;
+}
+#next_design_cover{
+	background-image:url(<%=asset_path "next_design_cover_button.gif" %>);
+	width:150px;	
+}
+#next_order{
+	background-image:url(<%=asset_path "next_step_order.gif" %> );
+	width:132px;
+}
+.pagination{
+	margin:1em 0;
+	float:left;
+}
+.get_started{
+	background-image:url(<%= asset_path "get_started_button.gif" %>);
+	width:115px;	
+	margin: 0 auto;
+}
+
+/* @end */

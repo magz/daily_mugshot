@@ -1,0 +1,182 @@
+/* @group Intro */
+
+#invite_intro img{
+	float: right;
+}
+#invite_intro{
+	font-size: 20px;
+	line-height: 35px;
+}
+
+/* @end */
+
+.highlight_box_content{
+	padding: 15px;
+}
+
+/* @group Enter Credentials */
+#enterCreds{
+	display:none;
+}
+
+#enterCreds label{
+	display: table-cell;
+	display:inline-table; 
+	display:-moz-inline-box;
+	display:inline-block;	
+	width: 5em;
+}
+#enterCreds label, 
+#enterCreds input{
+	margin: 2px 0;	
+}
+
+#securityNotice{
+	float: right;
+	width: 200px;
+	padding-bottom: 5px;
+}
+
+/* @end */
+
+#fetchForm{
+	display:none;
+}
+
+/* @group Found Friends */
+
+#foundFriends{
+	display:none;
+}
+
+#foundFriends .add_to_favorites{
+	background-image: url(<%=asset_path "favorite_button.gif" %>);
+	width: 90px;
+	background-color: transparent;
+	margin: 0 auto;
+	height: 18px;
+}
+#foundFriends li .list_container .favorite{
+	padding-top:5px;
+	display: block;
+	line-height: 18px;
+	width: 90px;
+	margin:0 auto;
+}
+#foundFriends li .zf_hover .tip{
+	left: -255px;
+	top: -24px;
+}
+
+/* @end */
+
+/* @group Buttons */
+
+#send_invites{
+	background-image: url(<%=asset_path "send_invites_button.gif" %>);
+	width: 126px;
+	margin: 10px auto 0 auto !important;
+	background-color: transparent;
+
+}
+#send_creds{
+	background-image: url(<%=asset_path "fetch_contacts_button.gif" %>);
+	width: 147px;
+	margin: 10px auto 0 auto !important;
+	clear: both;
+	background-color: transparent;
+}
+
+/* @end */
+
+/* @group Select Addy Book */
+
+#invite_address_books{
+	margin: 10px 0 0 0;
+	padding: 0;
+	list-style: none;
+	list-style-image: none;
+	height: 120px;
+}
+#invite_address_books li,
+#invite_address_books li label{
+	width: 165px;
+	height: 120px;
+	float: left;
+}
+#invite_address_books li{
+	margin-right: 14px;
+}
+#invite_address_books li input{
+	display: none;
+}
+#invite_address_books li label{
+	text-indent: -9000px;
+	cursor: pointer;
+	cursor: hand;
+}
+#invite_address_books li.hotmail label{
+	background: url(<%=asset_path "hotmail_button.gif" %>) 0 0 no-repeat;		
+}
+#invite_address_books li.yahoo label{
+	background: url(<%=asset_path "yahoo_button.gif" %>) 0 0 no-repeat;	
+}
+#invite_address_books li.gmail{
+	margin: 0;
+}
+#invite_address_books li.gmail label{
+	background: url(<%=asset_path "gmail_button.gif" %>) 0 0 no-repeat;	
+}
+#invite_address_books li.current label{
+	background-position: 0 -120px;
+}
+h3{
+	clear: both;
+}
+.highlight_box{
+	margin: 10px 0;
+	clear: both;
+}
+
+/* @end */
+
+/* @group Fetched Contacts */
+
+#fetchedContacts ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	list-style-image: none;
+	float: left;
+	width: 245px;
+	font-size: 12px;
+}
+#fetchStatus{
+	padding: 10px;
+	clear: both;	
+	display: none;
+	margin-bottom: 10px;
+}
+.fetchError{
+	background: #F8DADA;
+	border: 1px solid #EB9999;
+	color: #CC0000;
+}
+.fetchWaiting{
+	background: #BBD6E6;
+	border: 1px solid #219CE6;
+	color: #0F6DCE;	
+}
+
+/* @end */
+
+/* @group The Message */
+
+#messageBody{
+	width: 480px;
+	height: 100px;
+	margin-top: 10px;
+}
+
+
+/* @end */

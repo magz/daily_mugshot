@@ -1,0 +1,153 @@
+@import url(star_rating.css);
+
+/* @group MOTD Actions */
+
+#motd_actions{
+	margin: 1em auto 0 auto;
+	width: 152px;
+}
+#motd_actions .view_motd_winners{
+	float: left;
+	width: 152px;
+	background-image: url(/assets/view_winners_button.gif);
+}
+#motd_actions .vote_motd{
+	float: right;
+	width: 152px;
+	background-image: url(/assets/vote_motd_button.gif);
+}
+
+/* @end */
+
+/* @group MOTD Winner */
+
+.motd_winner{
+	background: url(/assets/winner_bg.jpg) 0 0 no-repeat;
+	width: 415px;
+	height: 290px;
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+}
+.motd_winner .mugshot_box,
+.motd_winner .mugshot_box_content{
+	width: auto;
+	height: auto;
+	background: none;
+	margin:0;
+	padding:0;
+}
+.motd_winner img{
+	position: absolute;
+	left: 108px;
+	top: 54px;
+}
+.motd_winner h3{
+	color: #555;
+	display: block;
+	text-align: center;
+	width: 415px;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:2;
+	line-height: 1.6em;
+}
+.motd_winner em.ribbon{
+	display: block;
+	width:50px;
+	height: 94px;
+	background: url(/assets/ribbon.png) 0 0 no-repeat;
+	position: absolute;
+	left: 290px;
+	top: 40px;
+	z-index: 1;
+}
+* html .motd_winner em.ribbon{
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/assets/ribbon.png", sizingMethod="crop");
+}
+
+/* @end */
+
+/* @group Comment List */
+
+ul#mugshots_rated{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	list-style-image: none;
+}
+ul#mugshots_rated li{
+	line-height: 2em;
+}
+ul#mugshots_rated li div.content{
+	padding:10px;
+	min-height: 50px;
+}
+* html ul#mugshots_rated li div.content{
+	height: 50px;
+}
+ul#mugshots_rated li.alt{
+	background: #EAEAEA url(/assets/alt_row_top.gif) 0 0 no-repeat;
+}
+ul#mugshots_rated li.alt .content{
+	background: url(/assets/alt_row_bottom.gif) 0 bottom no-repeat;
+}	
+ul#mugshots_rated li strong{
+	display: block;
+}	
+ul#mugshots_rated li .mugshot_pic{
+	border: none;
+	float: left;
+	margin-right: 1em;
+}   	
+ul#mugshots_rated li .rating{
+	background: url(/assets/star.gif) right center no-repeat;
+	padding-right: 16px;
+	font-weight: bold;
+}
+ul#mugshots_rated li .zoom_thumb .tip{
+	top:-55px;
+}
+
+/* @end */
+
+/* @group Time Remaining */
+
+#remaining{
+	text-align: center;
+	display: block;
+	font-size: 0.9em;
+	color: #999;
+}
+#remaining strong{
+	color: #666;
+}
+
+/* @end */
+
+/* @group Mugshot Box */
+
+
+#motd_rating{
+	width: 185px;
+	position:relative;
+	margin: 10px auto 0 auto;
+	text-align: left;
+	line-height: 25px;
+}
+#motd_rating .star-rating{
+	float: right;
+	position:absolute;
+	right:0;
+	top:0;
+}
+.mugshot_box .hint{
+	padding:0;
+	margin:0 0 -5px 0;
+	line-height: 1.2em;
+	font-style: italic;
+}
+
+/* @end */

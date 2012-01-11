@@ -1,0 +1,274 @@
+/* @group Comment List */
+
+ul.comment_list{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	list-style-image: none;
+	width:316px;
+}
+ul.comment_list li{
+	float: left;
+	margin-bottom: 10px;
+	font-size: 13px;
+}
+ul.comment_list li .comment_content{
+	padding:10px 10px 0 10px;
+	float: left;
+	min-height:60px;
+}
+* html ul.comment_list li .comment_content{
+	height:60px;
+}
+ul.comment_list li.comment_odd{
+	background: #EAEAEA url(<%=asset_path "comments_box_top.gif" %>) 0 0 no-repeat;
+}
+ul.comment_list li.comment_odd .comment_content{
+	background: url(<%=asset_path "comments_box_bottom.gif" %>) 0 bottom no-repeat;
+}	
+ul.comment_list li h4.comment_title{
+	color: #999;
+	width: 235px;
+	float: right;
+	line-height:14px;
+	text-align: right;
+}	
+ul.comment_list li h4.comment_title .comment_auth{
+	float: left;
+}
+ul.comment_list li h4.comment_title .comment_delete{
+	background-image: url(<%=asset_path "assets/delete_button.gif" %>);
+	display: table-cell !important;
+	display:inline-table !important; 
+	display:-moz-inline-box !important;
+	display:inline-block !important;	
+	letter-spacing:-1000em;
+	text-indent:-1000em;
+	width: 16px;
+	height: 16px;	
+	cursor: pointer;
+	cursor: hand;
+	overflow: hidden;
+}
+ul.comment_list li h4.comment_title .comment_delete:hover{
+	background-position: 0 -16px;
+	border:none;
+}
+ul.comment_list li .comment_body{
+	width: 235px;
+	float: right;	
+	border-top: 1px solid #CCC;
+}
+
+ul.comment_list li .comment_pic{
+	border: none;
+	float: left;
+}   	
+
+/* @end */
+
+/* @group Add Comment Form */
+
+.add_comment_form{
+	width: 180px;
+	height: 265px;
+	padding: 10px;
+	float: right;
+	color: white;
+	overflow:hidden;
+	background: url(<%=asset_path "comments_form_bg.png" %>) 0 0 no-repeat;
+}
+.add_comment_form textarea{
+	width: 170px !important;
+	height: 115px !important;
+}
+.add_comment_form input[type=text]{
+	width:170px;
+}
+.add_comment_form label span.title{
+	display: block;
+	height: 30px;
+	text-indent: -1000em;
+	background: url(<%=asset_path "comments_form_header.gif" %>) center center no-repeat;
+}
+
+.add_comment_form #add_comment_button{
+	background-image: url(<%=asset_path "post_comment_button.gif" %>);
+	margin: 10px 0 0 30px;
+	background-color:transparent !important;
+}
+
+/* @end */
+
+.postMugshow{
+	float:right;
+}
+
+
+/* @group Mugshow Box */
+
+.mugshow_box #player{
+	float: left;
+}
+.mugshow_meta{
+	font-size: 12px;
+}
+.mugshow_meta h4{
+	font-size: 14px;
+	color: #555;
+	margin: 0;
+}
+/* @end */
+
+/* @group Mugshow Stats */
+
+.mugshow_stats{
+	float: right;
+	width: 174px;
+	color: #888;
+}
+.mugshow_stats dl{
+	margin: 0 0 0 0;
+	padding: 0;
+}
+.mugshow_stats dt{
+	float: left;
+	display: block;
+	width: 87px;
+	text-align: left;
+	padding: 0;
+	margin: 0;
+	padding-right: 10px;
+	white-space: nowrap;
+}
+.mugshow_stats dd{
+	color: #555;
+	width: 67px;
+	float: left;
+	display: block;
+	padding: 0;
+	margin: 0;
+}
+
+/* @end */
+
+/* @group Mugshow Actions */
+
+.mugshow_actions{
+	float: right;
+	clear: right;
+	width: 170px;
+}
+.mugshow_actions img{
+	display: none;
+}
+.mugshow_actions ul{
+	list-style: none;
+	list-style-image: none;
+	margin: 0 0 0 0px;
+	padding: 0;
+}
+.mugshow_actions ul a.flag_abuse{
+	padding-left: 20px;
+	background: url(<%=asset_path "flag_icon.gif" %>) 0 center no-repeat;
+}
+.mugshow_actions ul a.add_friend{
+	padding-left: 20px;
+	background: url(<%=asset_path "add_icon.gif" %>) 0 center no-repeat;
+}
+.mugshow_actions ul a.post_mugshow{
+	padding-left: 20px;
+	background: url(<%=asset_path "post_icon.gif" %>) 0 center no-repeat;
+}
+.mugshow_actions ul a.share_mugshow{
+	padding-left: 20px;
+	background: url(<%=asset_path "share_icon.gif" %>) 0 center no-repeat;
+}
+.mugshow_actions ul a.remove_friend{
+	padding-left: 20px;
+	background: url(<%=asset_path "remove_icon.gif" %>) 0 center no-repeat;
+}
+.mugshow_actions ul a.rss{
+	padding-left: 20px;
+	background: url(<%=asset_path "rss14x14.png" %>) 0 center no-repeat;
+}
+
+/* @end */
+
+/* @group Favorites */
+
+#favorites, #fans{
+	text-align: center;
+}
+#favorites .title, #fans .title{
+	text-align: left;
+}
+#favorites a,
+#favorites a img,
+#fans a,
+#fans a img{
+	border: none;
+	display: inline-block;
+}
+#favorites .zoom_thumb:hover .tip,
+#fans .zoom_thumb:hover .tip{
+	top: -50px;
+}
+* html #favorites .zoom_thumb:hover .tip{
+	top: -55px;
+}
+* + html #favorites .zoom_thumb:hover .tip{
+	top: -55px;
+}
+
+/* @end */
+
+/* @group Mosaic View */
+
+ul#mosaic_list li{
+	margin: 0 !important;
+	padding: 0 !important;
+	list-style-image: none;
+	list-style: none;
+	float: left;
+}
+* html ul#mosaic_list li,
+* + html ul#mosaic_list li{
+	display: inline;
+}
+ul#mosaic_list{
+	margin: 1em 0 1em 12px;
+	list-style-image: none;
+	list-style: none;
+	width: 500px;
+	padding: 0;
+}
+* html ul#mosaic_list,
+* + html ul#mosaic_list{
+	float: left;
+}
+ul#mosaic_list img{
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+ul#mosaic_list span.zoom_thumb{
+	display: block;
+	float: left;
+	padding: 0;
+	margin: 0;
+	width: 50px;
+	height: 50px;
+}
+ul#mosaic_list .zoom_thumb:hover .tip{
+	top: -55px;
+}
+/* @end */
+
+/* @group Pagination */
+
+.pagination{
+	margin: 1em 0;
+}
+
+/* @end */

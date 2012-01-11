@@ -1,0 +1,50 @@
+<%= javascript_tag "$('getReminders').addClassName('current');" %>
+<%= stylesheet_link_tag 'getreminder' %>
+<h1>Get a Reminder</h1>
+
+
+<p>The reminder is the best way to keep the "Daily" in Daily Mugshot!
+<br /><span class="hint"><strong>Remember:</strong> It's optional and you can always download the reminder later.</span></p>
+
+<div class="get_reminder_content">
+    <img width="200" height="200" align="left" src="<%= asset_path "watch_clock.jpg" %>" />
+    <div class="download_options">        
+            <div id="download_links" class="mac">
+                    <div class="mac">
+                            <%= link_to "Macintosh Download", "/reminders/mac/DMSReminder.dmg", :class => "mac_download_button button" %>
+                            <div class="alt_download">or <%= link_to "Windows Download", "/reminders/windows/DMSReminder.exe", :class => "win_download" %></div>
+                    </div>
+                    <div class="win">
+                            <%= link_to "Windows Download", "/reminders/windows/DMSReminder.exe", :class => "win_download_button button" %>
+                            <div class="alt_download">or <%= link_to "Macintosh Download", "/reminders/mac/DMSReminder.dmg", :class => "mac_download" %></div>
+                    </div>
+            </div>
+            
+            <div class="download_reasons">
+                    <strong>It's a no brainer!</strong>
+                    <ul>
+                            <li>
+                                    It's tiny &mdash; <em>less than 1 MB</em>
+                            </li>
+                            <li>
+                                    It's free &mdash; <em>duh!</em>
+                            </li>
+                            <li>
+                                    It's easy &mdash; <em>takes only seconds</em>
+                            </li>
+                    </ul>
+		    <br>
+		    <strong>Want Email Reminders Instead?</strong>
+        		<br>Find em in 
+			<% if logged_in? %>
+				<%= link_to 'Update Account', update_account_path %>
+			<% else %>
+				'Update Account' 
+			<% end %>  
+	</div>
+    </div>
+</div>
+
+<div class="faq_link"><small><%= link_to "OS compatability", :action => "faq" %></small></div>
+<div class="skip_step"></div>
+<div class="clearboth"></div>

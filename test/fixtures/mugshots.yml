@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  authuser_id: 1
+  caption: MyString
+  xoffset: 1
+  yoffset: 1
+  active: false
+
+two:
+  authuser_id: 1
+  caption: MyString
+  xoffset: 1
+  yoffset: 1
+  active: false

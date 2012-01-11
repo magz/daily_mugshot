@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  login: MyString
+  email: MyString
+  crypted_password: MyString
+  active: false
+  time_zone: MyString
+  gender: MyString
+  birthday: 2012-01-10
+  prvt: false
+
+two:
+  login: MyString
+  email: MyString
+  crypted_password: MyString
+  active: false
+  time_zone: MyString
+  gender: MyString
+  birthday: 2012-01-10
+  prvt: false

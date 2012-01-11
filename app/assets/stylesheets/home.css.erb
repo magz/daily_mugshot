@@ -1,0 +1,163 @@
+
+#content{
+	overflow: visible;
+}
+/* @group Status Box */
+
+
+/* @end */
+
+/* @group Widget Rotator */
+#widget_rotator_container{
+	text-align: center;
+}
+#widget_rotator_container small{
+
+}
+
+#widget_rotator{
+}
+
+/* @end */
+
+/* @group Guide Steps */
+
+
+
+#guide_steps{
+	width: 520px;
+	margin: 0 2px; /* margin + width = 524px */
+	height: 200px;
+	margin-top: 10px;
+	background: #EAEAEA url(<%= asset_path 'rounded_grey_bottom.gif' %>) 0 bottom no-repeat;
+}
+#guide_steps ol{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	position: relative;
+	width: 520px;
+	height: 200px;
+	background: url(<%= asset_path 'rounded_grey_top.gif' %>) 0 top no-repeat;	
+}
+#guide_steps ol li{
+	width: 150px;
+	height: 200px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+#guide_steps ol li .desc{
+	position: absolute;
+	width: 520px;
+	top: 10px;
+	left: 0;
+	text-align: center;
+	font-size: 13px;
+	color: #333;
+	line-height: 28px;
+	height: 28px;
+	z-index: 1;
+	visibility: hidden;
+	text-indent:-1000em;
+	background: url(<%= asset_path '4_step_rollovers.gif' %>) center 0 no-repeat;
+}
+#guide_steps ol li .desc p{
+	margin:0;
+	padding: 0;
+}
+
+#guide_steps ol li.hover .desc,
+#guide_steps ol li:hover .desc{
+	visibility: visible;
+}
+#guide_steps ol li h3{
+	text-indent: -1000em;	
+	width: 100%;
+	height: 100%;
+	position: relative;
+	z-index: 2;
+}
+#guide_steps ol li#signup_step{
+	left: -35px;
+	width: 140px;
+}
+#guide_steps ol li#signup_step h3{
+	background: url(<%= asset_path 'signup_step.png' %>) 0 0 no-repeat;	
+}
+* html #guide_steps ol li#signup_step h3{
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/assets/signup_step.png", sizingMethod="crop");	
+}
+#guide_steps ol li#signup_step .desc{
+	left: 35px;
+}
+#guide_steps ol li#reminder_step{
+	left: 105px;
+	width: 130px;
+}
+#guide_steps ol li#reminder_step h3{
+	background: url(<%= asset_path 'reminder_step.png' %>) 0 0 no-repeat;	
+}
+* html #guide_steps ol li#reminder_step h3{
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/assets/reminder_step.png", sizingMethod="crop");	
+}
+
+#guide_steps ol li#reminder_step .desc{
+	left: -105px;
+	background-position: center -28px;	
+}
+#guide_steps ol li#pics_step{
+	left: 235px;
+	width: 120px;	
+}
+#guide_steps ol li#pics_step h3{
+	background: url(<%= asset_path 'pics_step.png' %>) 0 0 no-repeat;	
+}
+* html #guide_steps ol li#pics_step h3{
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/assets/pics_step.png", sizingMethod="crop");	
+}
+#guide_steps ol li#pics_step .desc{
+	left: -235px;
+	background-position: center -56px;
+}
+#guide_steps ol li#post_step{
+	left: 355px;
+	width: 187px;
+}
+#guide_steps ol li#post_step h3{
+	background: url(<%=asset_path "widget_step.png" %>) 0 0 no-repeat;	
+}
+* html #guide_steps ol li#post_step h3{
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%=asset_path "widget_step.png" %>, sizingMethod="crop");	
+}
+#guide_steps ol li#post_step .desc{
+	left: -355px;
+	background-position: center -84px;	
+}
+
+/* @group IE6 Lovin */
+
+/* 	Here's a special IE6 CSS Javascript to make rollovers work on the LI's.
+	Try to keep this rule at the end of the CSS file, because it doesn't validate
+	and may throw other browsers off 
+*/
+
+* html #guide_steps ol li{
+behavior: expression(
+this.onmouseover = function(){this.className += ' hover';},
+this.onmouseout = function(){this.className = this.className.replace('hover','');},
+this.style.behavior='none', 
+this.runtimeStyle.behavior='none'
+);
+
+/* @end */
+
+/* @end */
+

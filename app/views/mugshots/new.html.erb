@@ -1,0 +1,23 @@
+<%= javascript_tag "$('takePic').addClassName('current');" %>
+<script type="text/javascript">
+swfobject.registerObject("fullupload", "9.0.115", "expressInstall.swf");
+</script>
+
+<h1>Take Mugshot: <%= @current_authuser.mugshots.count + 1 %>!</h1>
+<ul id='social_networking' class='bottom10'>
+</ul>
+<div id="whoAmI" me="anotherPic"></div>
+<div id="fullupload" class="flash_container">
+	<script type="text/javascript">
+	try{
+		if ($.browser.mozilla && Math.floor(window.mozInnerScreenX) != window.mozInnerScreenX ) {
+			$('#full_upload').css('margin-left' , '0.5px');
+		}
+	}catch(ex){}
+	var flashvars = {};
+	var params = {userid:<%= @current_authuser.id %>};
+	var attributes = {};
+	swfobject.embedSWF("http://www.dailymugshot.com/swf/fullupload.swf", "fullupload", "480", "540", "9.0.115", flashvars, params, attributes);
+	</script>
+</div>
+

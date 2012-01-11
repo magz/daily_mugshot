@@ -1,0 +1,99 @@
+/* @group Update Account */
+
+#signup_form{
+	
+}
+#signup_form h3{
+	background: none;
+	margin: 0 0 10px 0;	
+	font-size: 18px;
+}
+#signup_form .highlight_box_content{
+	padding: 20px 10px 10px 10px;
+	margin-top: 10px;
+}
+
+.signup_button{
+	background: url(<%=asset_path "signup_button.gif" %>) 0 0 no-repeat;
+	margin-left: 220px;
+	width: 80px;
+}
+#signup_form .fieldWithErrors,
+#signup_form label,
+#signup_form div.authuser_gender{
+	font-weight: bold;
+	display: block;
+	position: relative;
+	z-index: 1;
+}
+#signup_form label input,
+#signup_form label #authuser_time_zone,
+#signup_form .fieldWithErrors input,
+#signup_form div.authuser_gender span.genders{
+	font-weight: normal;
+	position: absolute;
+	left: 100px;
+	width:140px;
+	top: -5px;
+}
+#signup_form div.authuser_gender span.genders{
+	top: 0;
+}
+#signup_form label #authuser_time_zone{
+	width: auto;
+}
+#signup_form .fieldWithErrors{
+	margin-top: -25px;
+	margin-bottom: 25px;
+}
+#signup_form label input#authuser_gender_m,
+#signup_form label input#authuser_gender_f{
+	width: auto;
+	position: relative;
+	top: auto;
+	left: auto;
+	
+}
+#signup_form label #authuser_birthday_1i{
+	margin-left: 3em;
+}
+#signup_form div.authuser_gender span.genders label{
+	display: inline;
+}
+
+
+
+#signup_form .email .hint{
+	position: absolute;
+	left: 200px;
+	top: 0;
+}
+#signup_form label .hint{
+	font-weight: normal;
+}
+#signup_form .hint{
+	font-weight: normal;
+	color: #888;
+}
+#signup_form .old_password{
+	text-align: center;
+}
+#signup_form .i_agree{
+	text-align: center;
+}
+#current_password .hint{
+	display: block;
+}
+#current_password .whats_this{
+	float: right;
+	margin-right: 160px;
+	position: relative;
+	z-index: 2;
+}
+#current_password .why_email{
+	float: right;
+	margin-right: 85px;
+	position: relative;
+	z-index: 2;
+}
+/* @end */

@@ -1,0 +1,139 @@
+/* @group Sequence Actions */
+
+#sequence_actions{
+	list-style: none;
+	list-style-image: none;
+	margin: 0;
+	padding: 0;	
+	text-align: center;
+	margin-bottom: 10px;
+	font-size: 12px;
+	position: relative;
+}
+#sequence_actions li{
+	display: inline;
+	padding: 0 5px;
+}
+#sequence_actions li a{
+	
+}
+#sequence_actions .hint{
+	color: #BBB;
+}
+
+/* @end */
+
+/* @group Sequence Image Actions */
+
+#sequence_image_actions{
+	margin-bottom: 10px;
+	overflow: hidden;
+	width: 524px;
+	position: relative;
+}
+#sequence_image_actions_wrapper{
+}
+
+
+/* @end */
+
+/* @group Sequence Image List */
+
+#sequence_images_list{
+	list-style: none;
+	list-style-image: none;
+	margin: 0;
+	padding:10px 0 10px 20px;
+	width: 504px;
+	height: 105px;
+}
+#sequence_images_list li{
+	height: 105px;
+	width: 60px;
+	float: left;
+	margin-right: 10px;
+	text-align: center;
+}
+#sequence_images_list li a{
+	border: none;
+}
+#sequence_images_list li label{
+	height: 100px;
+	padding-top: 5px;
+	width: 60px;
+	float: left;
+	cursor: pointer;
+	cursor: hand;
+	background:  url(<%=asset_path "sequence_image_background.gif" %>) 0 0 no-repeat;	
+	font-size: 12px;
+}
+#sequence_images_list li label.current{
+	background:  url(<%=asset_path "sequence_image_current_background.gif" %> ) 0 0 no-repeat;	
+	color: white;
+	
+}
+
+/* @end */
+
+/* @group Sequence Date Ranges */
+
+#sequence_date_ranges{
+	clear: both;
+	width: 262px;
+	height: 35px;
+	list-style: none;
+	list-style-image: none;
+	margin: auto;
+	padding: 0;	
+}
+#sequence_date_ranges li{
+	float: left;
+	margin-right: 5px;
+}
+#sequence_date_ranges a{
+	width: 85px;
+}
+#sequence_month_previous{
+	background-image:  url(<%=asset_path "previous_month_button.gif" %>);
+}
+#sequence_month_next{
+	background-image:  url<%=asset_path "next_month_button.gif" %>);
+}
+#sequence_week_previous{
+	background-image:  url(<%=asset_path "previous_week_button.gif" %>);
+}
+#sequence_week_next{
+	background-image:  url(<%=asset_path "next_week_button.gif" %>);
+}
+
+/* @end */
+
+/* @group Sequence Details */
+
+#sequence_details{
+	font-size: 12px;
+	color: #999;
+	text-align: center;
+	margin-bottom: 10px;
+}
+#sequence_details strong{
+	color: #666;
+}
+
+/* @end */
+
+/* @group Updated Status */
+
+#sequence_image_actions .updated{
+	position: absolute;
+	bottom: 15px;
+	right: 10px;
+	z-index: 2;
+}
+#sequence_actions .updated{
+	right: 10px;
+	top:0px;
+	position: absolute;
+}
+
+/* @end */

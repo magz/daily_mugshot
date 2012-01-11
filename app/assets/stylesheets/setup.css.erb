@@ -1,0 +1,166 @@
+#cam_dialogue{
+	display:none;
+}
+#close_apps{
+	display:none;
+}
+
+#find_cam{
+	display:none;
+}
+
+#choose_input{
+	display:none;
+}
+
+#advanced_settings{
+	display:none;
+}
+
+#tip_dialogue{
+	display:none;
+}
+
+#no_camera{
+	font-size:12px;
+}
+
+#firstPic_dialogue{
+	display:none;
+}
+
+#firstLandmarks_dialogue{
+	display:none;
+}
+
+.clear {
+	clear: both;
+}
+/* @group Buttons */
+
+.yes_button{
+	background: url(<%=asset_path "yes_button.gif" %>);
+	width: 46px;
+	float: left;
+	margin: 5px 5px 5px 90px;
+}
+.no_button{
+	background: url(<%=asset_path "no_button.gif" %>);	
+	width: 46px;
+	float: left;
+	margin: 5px 5px 5px 0;
+}
+.take_mugshot_button{
+	background: url(<%=asset_path "take_mugshot_button.gif" %>);
+	width: 156px;
+	margin: 5px 5px 5px 70px;
+}
+.im_ready_button{
+	background: url(<%=asset_path "im_ready_button.gif" %>);		
+	width: 86px;
+	margin: 5px 5px 5px 220px;
+}
+
+/* @end */
+
+/* @group Steps */
+
+#see_cam,
+#find_cam,
+#save_settings{
+	clear: both;
+}
+
+/* @end */
+
+/* @group Camera Dialogue */
+
+#cam_dialogue{
+	position: relative;
+	padding-right: 275px;
+	min-height: 150px;
+}
+#cam_dialogue img{
+	margin: 5px 5px 5px 40px;
+}
+#cam_test{
+	height: 150px;
+	width: 215px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+/* @end */
+
+/* @group Mug Tips */
+
+#mug_tips_list{
+	
+}
+#mug_tips_list li{
+	margin-bottom: 15px;
+}
+#mug_tips_list img{
+	margin: 15px 15px 0 15px;
+}
+/* @end */
+
+/* @group Mugshot Method */
+
+#mugshot_method{
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	list-style-image: none;
+	height: 165px;
+	position: relative;
+	background: url(<%=asset_path "upload_method_or.gif" %>) center 110px no-repeat;
+}
+
+#mugshot_method{
+	padding: 0;
+	margin: 2em 0;
+	list-style: none;
+	list-style-image: none;
+	height: 165px;
+}
+#mugshot_method a{
+	position: absolute;
+	left: 25px;
+	top: 0;
+	width: 190px;
+	height: 165px;
+	display: block;
+	text-indent: -9000px;
+	border: none;	
+}
+#mugshot_method li.webcam a{
+	background: url(<%=asset_path "upload_webcam.jpg" %>) 0 0 no-repeat;
+}
+#mugshot_method li.digicam a{
+	background: url(<%=asset_path "upload_digicam.jpg" %>) 0 0 no-repeat;	
+	left: auto;
+	right: 25px;
+}
+#mugshot_method li a:hover,
+#mugshot_method li a.current{
+	background-position: 0 -165px;
+}
+p.webcam{
+	padding-left: 70px;
+	background: url(<%=asset_path "webcam_mini.gif" %>) 0 center no-repeat;
+	
+}
+p.digicam{
+	border-top: 1px solid #CCC;
+	padding-top: 1em;
+	margin-top: 1em;
+	padding-left: 70px;
+	background: url(<%=asset_path "digicam_mini.gif" %>) 0 center no-repeat;
+}
+/* @end */
+
+
+
+
+
