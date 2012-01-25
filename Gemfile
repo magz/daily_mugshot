@@ -8,7 +8,10 @@ gem 'rails', '3.1.3'
 gem 'sqlite3'
 #gem "mysql", "~> 2.8.1"
 gem "paperclip", "~> 2.4.5"
-
+gem 'aws-sdk'
+gem "twitter_oauth", "~> 0.4.3"
+gem "oauth", "~> 0.4.5"
+gem "koala", "~> 1.3.0"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -19,6 +22,8 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem "rmagick", "~> 2.13.1"
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

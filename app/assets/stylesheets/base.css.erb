@@ -666,7 +666,7 @@ img{
 				(this.nodeName == "IMG" && this.src.match(/.png$/))?
 				(
 					this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "', sizingMethod='image')",
-					this.src = "/assets/transparent.gif"
+					this.src = "<%= asset_path "transparent.gif" %>"
 				)
 				:
 				null

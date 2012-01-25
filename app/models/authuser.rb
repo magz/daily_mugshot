@@ -1,8 +1,12 @@
 class Authuser < ActiveRecord::Base
   has_many :mugshots
   has_many :comments
-
-  #this is the same as authenticat_either in the old code
+  has_many :landmarks
+  has_one :twitter_connect
+  validates :login, :email, :gender, :crypted_password, :birthday, :presence => true
+  validates :login, :uniqueness => true
+  
+  #this is the same as authenticate_either in the old code
   #i don't see much reason to have them be separate functions
   def self.authenticate(login, password)
     u = Authuser.where(:login => login).first || Authuser.where(:email => login).first
@@ -26,4 +30,12 @@ class Authuser < ActiveRecord::Base
   def has_mugshot?
     self.mugshots.first != nil
   end
+  
+  def twittering?
+    self.twitter_connect && self.twitter_connect.active?
+  end
+  def tweeting?
+    self.twittering?
+  end
+
 end

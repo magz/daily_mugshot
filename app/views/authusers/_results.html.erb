@@ -1,20 +1,12 @@
-<div id="showFiltersButton" class='options_display floatleft'>
-  <%= button_to_function "Show Filters", :class => "button" -%>
-</div>
-<div id="hideFiltersButton" class='options_display floatleft'>
-  <%= button_to_function "Hide Filters", :class => "button" -%>
-</div>
-<div id="browseResults">
-			<ul id="sequence_list">
-			<% @authusers.each do |user| %>
-				<li>
-				<%= user.login %>
-				<%= link_to user, :class => "zoom_thumb" do %>
-					  <img src="<%= user.mugshots.last.image(:thumb) %>?large=user.mugshots.last.image(:inner)" />
-			   		  <span class="date">
-						last: <%= user.last_mugshot_date.strftime("%m/%d/%y") %>
-						
-				<% end %>	
-				<% end %>
-			</ul>
-</div>
+<% @authusers.each do |user| %>
+	<% temp = [] %>
+	<% user.mugshots.each do |pic|%>
+	<% temp << pic.image(:inner) %>
+	<% end %>
+	
+	<div class = "mugshow", data-authuser=<%= user.id%>, data-pics=<%= temp %>><img src="<%= user.mugshots.first.image(:inner) %>"></div>
+	<%= user.id.to_s %>
+<% end %>
+	
+
+

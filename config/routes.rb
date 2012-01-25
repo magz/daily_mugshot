@@ -1,8 +1,7 @@
 DailyMugshot::Application.routes.draw do
-  resources :comments
 
-  resources :mugshots
 
+  resources :feedbacks
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -14,21 +13,56 @@ DailyMugshot::Application.routes.draw do
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
+  
+  #user related routes
   match "my_mugshow" => "authusers#show_mine", :as => :my_mugshow 
+  match 'new_pic' => 'mugshots#new', :as => :new_pic, :via => :get
+  match "authuser/signup" => "authusers#signup", :as => :signup
+  match "first_pic" => "mugshots#first_pic", :as => :first_pic
+  match "update_account" => "authusers#edit", :as => :update_account
+  match "authuser/search" => "authusers#search", :as => :search
+  match "browse" => "authusers#index", :as => :browse
+  
+  #main controller, mostly static page routes
   match "main/faq" => "main#faq", :as => :faq
   match "main/about" => "main#about", :as => :about
+  #?? did i do that...?
+  match "main/welcome" => "main#welcome", :as => :oauth_confirm
+  match "main/publish" => "main#publish", :as => :publish
   match "main/get_reminder" => "main#get_reminder", :as => :get_reminder
-  match 'new_pic' => 'mugshots#new', :as => :new_pic, :via => :get
-  match "sessions/login" => "sessions#login", :as => :login
-  match "sessions/logout" => "sessions#logout", :as => :logout
-  match "authuser/new" => "authusers#new", :as => :signup
-  match "authuser/search" => "authusers#search", :as => :search
+  
   match "flipbook/start" => "flipbook#intro", :as => :flipbook_intro
   match "flipbook/new" => "flipbook#new"
-  match "browse" => "authusers#index", :as => :browse
-  match "update_account" => "authusers#edit", :as => :update_account
-  #be careful with this
+  
+  match "feeback/new" => "feedbacks#new", :as => :new_feedback
+  
+  
+  #sessions routes
+  match "sessions/login" => "sessions#login", :as => :login
+  match "sessions/logout" => "sessions#logout", :as => :logout
+  
+  #social networking routes
+  match "publish/new" => "publish#new", as: :publish
+  match "publish/twitter_callback" => "publish#twitter_callback", :as => :twitter_callback
+  match "publish/facebook_callback" => "publish#facebook_callback", :as => :fb_callback
+  
+  
+  #api routes
+  #these are used primarily for the various flash objects
+  #the api calls contained in here were originally separated into 2 controllers
+  #but that's dumb, so now they're not...be careful with security though
+  match "openapis/:action" => "apis##{:action}"
+  match "apis/:action" => "apis##{:action}"
+  match "main/camera_hope" => "apis#camera_hope"
+  
+  #resources routes
+  #be careful with these
   resources :authusers
+  resources :twitter_connects
+  resources :landmarks
+  resources :comments
+  resources :mugshots
+  
   
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

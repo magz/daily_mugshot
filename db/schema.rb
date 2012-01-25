@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120110173737) do
+ActiveRecord::Schema.define(:version => 20120123194033) do
 
   create_table "authusers", :force => true do |t|
     t.string   "login"
@@ -34,6 +34,22 @@ ActiveRecord::Schema.define(:version => 20120110173737) do
     t.datetime "updated_at"
   end
 
+  create_table "feedbacks", :force => true do |t|
+    t.integer  "authuser_id"
+    t.string   "email"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "landmarks", :force => true do |t|
+    t.integer  "xcoord"
+    t.integer  "ycoord"
+    t.integer  "authuser_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "mugshots", :force => true do |t|
     t.integer  "authuser_id"
     t.string   "caption"
@@ -46,6 +62,15 @@ ActiveRecord::Schema.define(:version => 20120110173737) do
     t.integer  "image_file_size"
     t.string   "image_content_type"
     t.datetime "image_updated_at"
+  end
+
+  create_table "twitter_connects", :force => true do |t|
+    t.integer  "authuser_id"
+    t.string   "token"
+    t.string   "secret"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

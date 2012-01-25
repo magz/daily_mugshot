@@ -1,2 +1,0 @@
-class MugshowController < ApplicationController
-end

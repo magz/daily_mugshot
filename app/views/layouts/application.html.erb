@@ -7,7 +7,7 @@
   <%= stylesheet_link_tag "base"%>
   <%= stylesheet_link_tag "public"%>
   <%= javascript_include_tag "application", "swfobject" %>
-  <%= javascript_include_tag "application", "zoom_thumb" %>
+  <%= javascript_include_tag "application", "zoomThumb" %>
 
   <link rel="shortcut icon" href= <% asset_path "favicon.ico" %> >
   <%= csrf_meta_tags %>
@@ -43,7 +43,7 @@
 			                <div id="alert_container" class="side_box_content">
 			                    <div id="alert_box">
 				                    <a href="#" class="new_mugshot">
-															<img border="false" src= <%= asset_path "dmslogo_med.png" %> class="thumbnail" />
+															<img id="dmslogo" border="false" src= <%= asset_path "dmslogo_med.png" %> class="thumbnail" />
 															<strong>Update Area:</strong>
 															<span class="description">Check here for updates!</span>
 				                    </a>
@@ -53,18 +53,20 @@
 									<div id="search_box" class="side_box">
 			                <div class="side_box_header"><!-- --></div>
 			                <div class="side_box_content">
-												<%= form_tag(:search) do %>
+								<%= form_tag(:controller => "authusers", :action => "search", :method => "get") do %>
 										        <input id="search_input" name="search_input" type="text" /></label>
 												<fieldset>
-												  <%#= text_field :email_like_or_login_like, :id => 'search_input', :value => "Search user/email" %>
-												<script type="text/javascript">
+												  <%= label_tag(:search_criteria, "Search for:") %>
+												  <%= text_field_tag(:search_criteria) %>
+												  <%= submit_tag("Search") %>
+												<% end %>												<script type="text/javascript">
 			                   /* <![CDATA[ */
 			                	var searchDOM = document.getElementById('search_input');
 			                   watermark.apply( searchDOM );
 			                   /* ]]> */
 			                  </script>
 												</fieldset>
-			                  <% end %>
+											
 			                </div>
 			            </div>
 			            <!-- END SIDE BOX -->  
@@ -140,7 +142,11 @@
 
 				</body>
 			</html>
-
-
+<img id="mugshow" data="1"><img>
+<script>
+var 
+$("#mugshow").attr(src)
+</script
 </body>
+
 </html>

@@ -10,21 +10,29 @@ class AuthusersController < ApplicationController
       end
     end
     @authusers.sort!{|a,b| a.last_mugshot_date <=> b.last_mugshot_date}
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @authusers }
     end
   end
   def search
+    #this could maybe be slightly better, but it works...was having some odd problems in nil result cases on the search
     @authusers = []
-    #now how to do this search thign?
-    Authuser.where(:prvt => false, :active => true).each do |user|
-      if user.has_mugshot?
-        @authusers << user
+    b = Authuser.where(:prvt => false, :active => true, :login => params[:search_criteria])
+    @authusers << b
+    b = Authuser.where(:prvt => false, :active => true, :email => params[:search_criteria])
+    @authusers << b
+    @authusers.flatten!
+    @authusers.each do |user|
+      unless user.mugshots.count
+        @authusers.delete user 
       end
     end
     @authusers.sort!{|a,b| a.last_mugshot_date <=> b.last_mugshot_date}
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @authusers }
+    end
     
   end
   # GET /authusers/1
@@ -36,7 +44,12 @@ class AuthusersController < ApplicationController
     #original has it include userstats with this..i'm guessing so it can do that thumbnail trick
     #leaving it off for the moment
     @comments = Comment.where(:authuser_id => @authuser).order("created_at DESC")
-
+    if params[:current_tab] == "mosaic"
+      @current_tab = "mosaic"
+      @mugshots = @authuser.mugshots.where(:active => true).sort{|a,b| a.created_at <=> b.created_at}
+    else
+      @current_tab = "mugshow"
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @authuser }
@@ -53,7 +66,7 @@ class AuthusersController < ApplicationController
   end
   # GET /authusers/new
   # GET /authusers/new.json
-  def new
+  def signup
     @authuser = Authuser.new
     #email reminder
     respond_to do |format|
@@ -70,14 +83,16 @@ class AuthusersController < ApplicationController
   # POST /authusers
   # POST /authusers.json
   def create
+    
+    
     @authuser = Authuser.new(params[:authuser])
 
     respond_to do |format|
       if @authuser.save
-        format.html { redirect_to @authuser, notice: 'Authuser was successfully created.' }
+        format.html { redirect_to :new_pic, notice: 'Authuser was successfully created.' }
         format.json { render json: @authuser, status: :created, location: @authuser }
       else
-        format.html { render action: "new" }
+        format.html { render action: "signup" }
         format.json { render json: @authuser.errors, status: :unprocessable_entity }
       end
     end
@@ -110,4 +125,6 @@ class AuthusersController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  
 end

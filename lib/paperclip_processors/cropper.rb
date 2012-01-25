@@ -80,6 +80,7 @@ module Paperclip
       trans << "-resize #{scale} +repage" unless scale.nil?
       trans
     end
+
     protected
     
     # Return true if the format is animated

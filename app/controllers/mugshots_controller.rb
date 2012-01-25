@@ -24,17 +24,28 @@ class MugshotsController < ApplicationController
   # GET /mugshots/new
   # GET /mugshots/new.json
   def new
-    #check if they've taken a pic today
     #check if it's their first pic
     @mugshot = Mugshot.new
-    @current_authuser = Authuser.find 1
+    @authuser = current_authuser
     
+    #check if they've taken a pic today
+    if Mugshot.where(:authuser_id => @authuser, :created_at => Date.today).exists?
+      flash[:notice] << "You've already taken a picture today!  You'll have to have until tomorrow to take another"
+      redirect_to :root
+    end
+    
+    if @authuser.mugshots.count == 0
+      redirect_to :first_pic
+    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @mugshot }
     end
   end
-
+  
+  def first_pic
+    @authuser = current_authuser
+  end
   # GET /mugshots/1/edit
   def edit
     @mugshot = Mugshot.find(params[:id])
