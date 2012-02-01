@@ -9,7 +9,8 @@
         <label for="login_name">Login<input id="login_name" name="login" type="text" /></label>
         <label for="login_password">Password:
             <input id="login_password" name="password" type="password" />
-        </label>
+			<a id="login_forgot" href="<%= forgot_password_path %>">Forgot?</a>
+         </label>
         Remember me, this doesn't work yet: <%= check_box_tag 'remember_me',1,true %>
         <br />
         <button type="submit" class="button login_now">Login Now!</button>

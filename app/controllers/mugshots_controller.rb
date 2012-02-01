@@ -31,11 +31,11 @@ class MugshotsController < ApplicationController
     #check if they've taken a pic today
     if Mugshot.where(:authuser_id => @authuser, :created_at => Date.today).exists?
       flash[:notice] << "You've already taken a picture today!  You'll have to have until tomorrow to take another"
-      redirect_to :root
+      redirect_to :root and return
     end
     
     if @authuser.mugshots.count == 0
-      redirect_to :first_pic
+      redirect_to :first_pic and return
     end
     respond_to do |format|
       format.html # new.html.erb
@@ -82,7 +82,8 @@ class MugshotsController < ApplicationController
       end
     end
   end
-
+  
+  
   # DELETE /mugshots/1
   # DELETE /mugshots/1.json
   def destroy

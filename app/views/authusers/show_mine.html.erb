@@ -1,52 +1,91 @@
-<%= stylesheet_link_tag "comments" %>
-<%# is this necessary? %>
-<%= stylesheet_link_tag "show" %>
-<%= javascript_include_tag 'lowpro' %>
-<%= javascript_include_tag 'show' %>
-
-<script type="text/javascript">
-swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
-</script>
-
-<script src="http://cdn.gigya.com/wildfire/js/wfapiv2.js"></script>
-
-<textarea id="gigya_id" style="display:none">
-  <div style="width:200px !important;position:relative !important;width:200px !important;height:220px !important;overflow:hidden !important;">
-    <object type="application/x-shockwave-flash" data="/swf/newdms3.swf?pathurl=/swf/paths.xml&userid=<%= @authuser.id %>" width="200" height="200">
-      <param name="movie" value="/swf/newdms3.swf?pathurl=/swf/paths.xml&userid=<%= @authuser.id  %>" />
-      <param name="scale" value="noScale" /><param name="salign" value="TL" />
-    </object>
-    <a style="display:block !important;background:url(/images/snag.png) 0 0 no-repeat !important;width:200px !important;height:20px !important;padding:0 !important;position:relative !important;top:-3px !important;text-indent:-1000em !important;overflow:hidden !important;cursor:pointer !important;cursor:hand !important;border:none !important;text-decoration:none !important;" href="/" title="Daily Mugshot">
-      Daily Mugshot
-    </a>
+<%#= javascript_include_tag "$('mySequence').addClassName('current');" %>
+<%= stylesheet_link_tag "sequence" %>
+<h1>My Mugshow</h1>
+<div class="flash_container hint">
+	Email Reminder: <%#= current_authuser.emailreminder.try(:active) ? "ON" : "OFF" %>
+	(<%#= current_authuser.emailreminder.twelve_hour_time %>), 
+	Timezone: <%= current_authuser.time_zone %>
+</div>
+<ul id="sequence_actions">
+	<li>
+	  <%= link_to "update account", :update_account %>
+	</li>
+	<li>
+    <%= link_to "see your Mugshow!", current_authuser %>
+	</li>
+	<li>
+    <%#= link_to "modify Landmarks", :controller => "authuser", :action => 'landmarks' %>
+	</li>
+	<li>
+		<label for="mugshow_prvt">
+		  <strong>Public?</strong>
+      <%= check_box 'authuser', 
+                    'prvt', 
+                    :checked => current_authuser.prvt == 1 ? "unchecked" : "checked",
+                    :OnMouseOver => "renderTooltip(90,'Let others see your mugshow?');",   
+                    :OnMouseOut => "hideTooltip();" %>
+      <span class="hint">Be Brave!</span>
+      <span class="updated" id="bravespan"></span>
+			<script type="text/javascript">
+			// //<![CDATA[
+			// new Form.Element.EventObserver('authuser_prvt', function(element, value) {
+			// 	new Ajax.Request('<%#= toggle_privacy_path %>', {
+			// 		asynchronous:true, 
+			// 		evalScripts:true, 
+			// 		parameters:{"authuser[toggle_prvt]": true, _method:'put', format:'xml'}
+			// 	});
+			// });
+			// //]]>
+			</script>
+		</label>
+	</li>
+</ul>
+<div id="div_thumbs">
+	<div id="sequence_image_actions" class="highlight_box">
+		<div id="sequence_image_actions_wrapper" class="highlight_box_wrapper">
+      <div class="highlight_box_content">
+				<%= render 'show_mine_mugshots', :mugshots => @mugshots %>
+				<span id="visStatus" class="updated"></span>
+				<% if @authuser.mugshots.count > @page_size -%>
+				<ul id="sequence_date_ranges">
+				  <li>
+				    <%= link_to "&lt; First", 
+				          {:page => (@authuser.mugshots.count / @page_size).ceil}, 
+				           :id => "", 
+				           :class => "css3button" %>
+				  </li>
+				  <li>
+				    <%= link_to "&lt; Prev", 
+				          {:page => @current_page == (@authuser.mugshots.count / @page_size).ceil ? @current_page : @current_page + 1}, 
+				           {:id => "", 
+				           :class => "css3button"} %>
+				  </li>
+				  <li>
+				    <%= link_to "Next &gt;", 
+				      {:page => @current_page == 1 ? 1 : @current_page - 1}, 
+		               {:id => "", 
+				           :class => "css3button"} %>
+				  </li>
+				  <li>
+				    <%= link_to "Last &gt;", 
+		          {:page => 1}, 
+				           :id => "", 
+				           :class => "css3button" %>
+				  </li>
+				</ul>
+				<% end %>
+	    </div>
+    </div>
   </div>
-</textarea>
-
-<h1><%= @authuser.login %>'s Mugshow</h1>
-	<span id="tabs"><%#= render :partial => "show_tabs" %></span>
-<div id="mosaic_view"></div>
-<div id="mugshow_view">
-					<div class="mugshow_box">
-						<div class="mugshow_box_content">
-							<div id="player">
-                				<script type="text/javascript">
-								var flashvars = {};
-								var params = {userid:<%= @authuser.id %>};
-								var attributes = {};
-								swfobject.embedSWF("http://localhost:3000/swf/experiment_newdms3.swf", "player", "200", "200", "9.0.115", flashvars, params, attributes);
-								</script>
-				
-							</div>
-							
-							<div class="mugshow_meta">
-								<%#= render :partial => "show_stats" if @authuser.userstat.last_mugshot %>
-								<%#= render :partial => "show_actions" %>
-							</div>	
-							<div class="clearboth"><!--EMPTY--></div>
-						</div>
-					</div> -->
-					<div class="clearboth"><!--EMPTY--></div>
-					<div id="showFriend">
-				    </div>
-				  <h3 class="title">Comments</h3>
-				  <%= render :partial => 'comments' %>
+</div>
+<div id="sequence_details">
+  <strong><%= @authuser.mugshots.count %></strong> 
+	total pictures.  Began: <strong><%= current_authuser.created_at.strftime("%B %d, %Y")%></strong>  
+</div>
+<div id="adjust" class="flash_container">
+<script type=text/javascript>
+</script>
+<p>
+	<%#= link_to 'Download', download_mugshot_path(@pic.mugshot), :popup => true, :class => 'css3button' %>
+</p>
+</div>

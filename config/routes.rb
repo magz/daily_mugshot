@@ -1,6 +1,12 @@
 DailyMugshot::Application.routes.draw do
 
 
+  resources :friendships
+
+  resources :add_some_fieldsto_authusers
+
+  resources :videos
+
   resources :feedbacks
 
   # The priority is based upon order of creation:
@@ -16,12 +22,18 @@ DailyMugshot::Application.routes.draw do
   
   #user related routes
   match "my_mugshow" => "authusers#show_mine", :as => :my_mugshow 
+  match "my_account" => "authusers#edit", :as => :my_account
   match 'new_pic' => 'mugshots#new', :as => :new_pic, :via => :get
   match "authuser/signup" => "authusers#signup", :as => :signup
-  match "first_pic" => "mugshots#first_pic", :as => :first_pic
+  match "first_pic" => "mugshots#first_pic", :as => :first_pic 
   match "update_account" => "authusers#edit", :as => :update_account
   match "authuser/search" => "authusers#search", :as => :search
   match "browse" => "authusers#index", :as => :browse
+  match "account/loginxml" => "iphone#loginxml"
+  match "authusers/forgot_password" => "authusers#forgot_password", :as => :forgot_password
+  match "authusers/submit_forgot_password" => "authusers#submit_forgot_password", :as => :password_submit_reset
+  
+  # match "iphone/forgot" => "authuser/submit_forgot_password"
   
   #main controller, mostly static page routes
   match "main/faq" => "main#faq", :as => :faq

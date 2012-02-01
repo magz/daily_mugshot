@@ -57,8 +57,13 @@ class AuthusersController < ApplicationController
   end
   
   def show_mine
+    @page_size = 7
+    params[:page] ||= 1
+    @current_page = params[:page].to_i
     @authuser = current_authuser
     @comments = Comment.where(:authuser_id => @authuser).order("created_at DESC")
+    #might need to make sure this is ordered by date
+    @mugshots = @authuser.mugshots[(@page_size*(@current_page-1))..(@page_size*@current_page-1)]
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @authuser }
@@ -83,12 +88,12 @@ class AuthusersController < ApplicationController
   # POST /authusers
   # POST /authusers.json
   def create
-    
-    
     @authuser = Authuser.new(params[:authuser])
-
+    @authuser.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{@authuser.login}--")
+    @authuser.crypted_password =  Authuser.encrypt(@authuser.password, @authuser.salt)
     respond_to do |format|
       if @authuser.save
+        session[:authuser] = @authuser.id
         format.html { redirect_to :new_pic, notice: 'Authuser was successfully created.' }
         format.json { render json: @authuser, status: :created, location: @authuser }
       else
@@ -101,16 +106,28 @@ class AuthusersController < ApplicationController
   # PUT /authusers/1
   # PUT /authusers/1.json
   def update
-    @authuser = Authuser.find(params[:id])
+    #i think this should work other than the validation not being in there yet
+    #also set up the routes for all these calls!
+    @authuser = current_authuser
+    #validate!!!
+    
 
-    respond_to do |format|
-      if @authuser.update_attributes(params[:authuser])
-        format.html { redirect_to @authuser, notice: 'Authuser was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @authuser.errors, status: :unprocessable_entity }
+    @authuser.login_was = @authuser.login
+    #what is the point of the above line?
+    if @authuser.update_attributes(params[:authuser])
+      respond_to do |format|
+        format.html do
+          flash[:notice] = "Your account has been updated."
+          redirect_to my_mugshow_url
+        end
+        format.xml{ head :ok }
       end
+    else
+      respond_to do |format|
+        format.html{ render :edit }
+        format.xml{ render :xml => @authuser.errors.to_xml, :status => :unprocessable_entity }
+      end
+      
     end
   end
 
@@ -126,5 +143,34 @@ class AuthusersController < ApplicationController
     end
   end
   
-  
+  def submit_forgot_password
+    #i think this is all pretty good...just gotta get that emailer up and running
+    @authuser = Authuser.find_by_email(params[:email])
+    if @authuser
+      #generates a random alphanumeric sequence of 8 characters...old way was unnecessarily elaborate
+      new_password = (0..8).map{ rand(36).to_s(36) }.join
+      UserMailer.forgot_password(@authuser, new_password).deliver
+      @authuser.crypted_password = Authuser.encrypt(new_password, @authuser.salt)
+      @authuser.save
+          respond_to do |format|
+            format.html do
+              flash[:notice] = "Success! Your password was reset and emailed to #{@authuser.email}"
+              redirect_to :root
+            end
+            format.xml { head :ok }
+          end
+        else
+          @error_messages = "Sorry, we could not find your email. Please try again."
+          respond_to do |format|
+            format.html { render :action => :forgot_password }
+            format.xml  { render :xml => {:message => @error_messages}, :status => :unprocessable_entity }
+          end
+        end
+    end
+
+    def forgot_password
+      
+    end
 end
+
+

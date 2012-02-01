@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120123194033) do
+ActiveRecord::Schema.define(:version => 20120131213139) do
 
   create_table "authusers", :force => true do |t|
     t.string   "login"
@@ -24,6 +24,10 @@ ActiveRecord::Schema.define(:version => 20120123194033) do
     t.boolean  "prvt"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "salt"
+    t.string   "remember_token"
+    t.datetime "remember_token_expires_at"
+    t.datetime "deleted_at"
   end
 
   create_table "comments", :force => true do |t|
@@ -42,10 +46,9 @@ ActiveRecord::Schema.define(:version => 20120123194033) do
     t.datetime "updated_at"
   end
 
-  create_table "landmarks", :force => true do |t|
-    t.integer  "xcoord"
-    t.integer  "ycoord"
+  create_table "friendships", :force => true do |t|
     t.integer  "authuser_id"
+    t.integer  "friend_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -55,13 +58,30 @@ ActiveRecord::Schema.define(:version => 20120123194033) do
     t.string   "caption"
     t.integer  "xoffset"
     t.integer  "yoffset"
-    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"
     t.integer  "image_file_size"
     t.string   "image_content_type"
     t.datetime "image_updated_at"
+    t.datetime "deleted_at"
+  end
+
+  create_table "transferred_mugshots", :id => false, :force => true do |t|
+    t.integer  "id",                 :default => 0, :null => false
+    t.integer  "authuser_id"
+    t.datetime "created_at"
+    t.integer  "xoffset"
+    t.integer  "yoffset"
+    t.datetime "deleted_at"
+    t.boolean  "active"
+    t.string   "image_file_name"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "caption"
+    t.datetime "updated_at"
+    t.string   "image_content_type"
+    t.boolean  "transfer_error"
   end
 
   create_table "twitter_connects", :force => true do |t|
@@ -69,6 +89,14 @@ ActiveRecord::Schema.define(:version => 20120123194033) do
     t.string   "token"
     t.string   "secret"
     t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "videos", :force => true do |t|
+    t.integer  "authuser_id"
+    t.string   "description"
+    t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

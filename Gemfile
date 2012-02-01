@@ -5,13 +5,17 @@ gem 'rails', '3.1.3'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+# gem 'sqlite3'
 #gem "mysql", "~> 2.8.1"
-gem "paperclip", "~> 2.4.5"
+gem "paperclip", "~> 2.5.0"
 gem 'aws-sdk'
 gem "twitter_oauth", "~> 0.4.3"
 gem "oauth", "~> 0.4.5"
 gem "koala", "~> 1.3.0"
+gem "mysql2", "~> 0.3.11"
+gem "cocaine", "~> 0.2.1"
+gem "aws", "~> 2.5.6"
+
 
 # Gems used only for assets and not required
 # in production environments by default.

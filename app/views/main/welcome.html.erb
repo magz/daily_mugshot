@@ -48,7 +48,11 @@ swfobject.embedSWF("http://localhost:3000/swf/flow.swf", "widget_rotator", "525"
 </script>
   </div>
 </div>
-<div id="guide_steps">
+<img src="<%=Authuser.first.mugshots.last.image%>" height=170 width=170 >
+<img src="<%=Authuser.first.mugshots.last.image%>" height=170 width=170 >
+<img src="<%=Authuser.first.mugshots.last.image%>" height=170 width=170 >
+
+<!-- <div id="guide_steps">
   <ol>
     <li id="signup_step">
       <h3>Signup <small>free!</small></h3>
@@ -67,7 +71,7 @@ swfobject.embedSWF("http://localhost:3000/swf/flow.swf", "widget_rotator", "525"
       <div class="desc"><p><strong>Put your mugshow on your profile</strong></p></div>
     </li>
   </ol>
-</div>
+</div> -->
 
 <div id="iphone">
 	<div id='iphone_app'><%= image_tag('iphone_app.jpg') %></div>
@@ -92,12 +96,6 @@ swfobject.embedSWF("http://localhost:3000/swf/flow.swf", "widget_rotator", "525"
 	<li>We have widgets which you can place on your profile or blog and they automatically update when you take new mugshots. (You can always make your mugshots private so only you can see them.)
 	<li>Getting started is really easy, all you need is a webcam, digital camera, or camera-phone! <%#= link_to "Get Started!", signup_path %>
 </ul>
-<div class="mugshow" id="myMugshow" data=1><hola></div>
-<div class="mugshow" id="myMugshow2" data=2>hola</div>
-<% @mugshots.each do |shot| %>
-<div class="mugshow" id="myMugshow" data=1><img class="iteratedshot" src="<%= shot %>"><hola></div>
-<% end %>
-<script>
 
 
 
