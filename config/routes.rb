@@ -32,6 +32,8 @@ DailyMugshot::Application.routes.draw do
   match "account/loginxml" => "iphone#loginxml"
   match "authusers/forgot_password" => "authusers#forgot_password", :as => :forgot_password
   match "authusers/submit_forgot_password" => "authusers#submit_forgot_password", :as => :password_submit_reset
+  match "/toggle_privacy" => "authusers#update_privacy", :as => :toggle_privacy
+  
   
   # match "iphone/forgot" => "authuser/submit_forgot_password"
   
@@ -67,6 +69,7 @@ DailyMugshot::Application.routes.draw do
   match "apis/:action" => "apis##{:action}"
   match "main/camera_hope" => "apis#camera_hope"
   
+  match "mugshots/ajax_active_update/" => "mugshots#ajax_active_update"
   #resources routes
   #be careful with these
   resources :authusers

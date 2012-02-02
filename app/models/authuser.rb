@@ -9,6 +9,7 @@ class Authuser < ActiveRecord::Base
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :authuser
+  has_many :landmarks
   
   validates :terms_of_service, :acceptance => true
   validates :login, :email, :gender, :crypted_password, :birthday, :presence => true

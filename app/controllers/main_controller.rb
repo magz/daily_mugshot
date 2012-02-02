@@ -1,10 +1,8 @@
 class MainController < ApplicationController
   
   def welcome
-    @mugshots = []
-    Authuser.first.mugshots.each do |shot|
-      @mugshots << shot.image(:inner)
-    end
+    @mugshots = Mugshot.where("image_file_name != 'nil'").first 3
+    
     
     # @authuser = current_authuser
     # @logged_in = @authuser.logged_in  

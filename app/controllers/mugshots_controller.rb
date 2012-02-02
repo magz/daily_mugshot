@@ -82,8 +82,15 @@ class MugshotsController < ApplicationController
       end
     end
   end
-  
-  
+  def ajax_active_update
+    @mugshot = Mugshot.find(params[:id])
+    
+    @mugshot.active = @mugshot.active ? false : true
+    @mugshot.save
+    respond_to do |format|
+      format.json { head :ok }
+    end
+  end
   # DELETE /mugshots/1
   # DELETE /mugshots/1.json
   def destroy

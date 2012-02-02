@@ -5,6 +5,7 @@ swfobject.registerObject("fullupload", "9.0.115", "expressInstall.swf");
 
 <h1>Take Mugshot: <%= @current_authuser.mugshots.count + 1 %>!</h1>
 <ul id='social_networking' class='bottom10'>
+	put notices about managing twitter and fb here
 </ul>
 <div id="whoAmI" me="anotherPic"></div>
 <div id="fullupload" class="flash_container">
@@ -15,9 +16,9 @@ swfobject.registerObject("fullupload", "9.0.115", "expressInstall.swf");
 		}
 	}catch(ex){}
 	var flashvars = {};
-	var params = {userid:<%= @current_authuser.id %>, auth:0};
+	var params = {userid:<%= @current_authuser.id %>, auth:0, pathurl: "http://localhost:3000/swf/paths.xml"};
 	var attributes = {};
-	swfobject.embedSWF("http://localhost:3000/swf/camgrab_8_localhost.swf", "fullupload", "480", "540", "9.0.115", flashvars, params, attributes);
+	swfobject.embedSWF("http://localhost:3000/swf/fullupload.swf", "fullupload", "480", "540", "9.0.115", flashvars, params, attributes);
 	</script>
 </div>
 

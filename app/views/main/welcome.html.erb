@@ -48,10 +48,12 @@ swfobject.embedSWF("http://localhost:3000/swf/flow.swf", "widget_rotator", "525"
 </script>
   </div>
 </div>
-<img src="<%=Authuser.first.mugshots.last.image%>" height=170 width=170 >
-<img src="<%=Authuser.first.mugshots.last.image%>" height=170 width=170 >
-<img src="<%=Authuser.first.mugshots.last.image%>" height=170 width=170 >
-
+<% @mugshots.each do |m|%>
+	<div class="latest_mugshot">
+	<img class="alert_boxes" src="<%= m.image :inner %>" height=170 width=170 >
+	<%= m.authuser.login %>
+	</div>
+<% end %>
 <!-- <div id="guide_steps">
   <ol>
     <li id="signup_step">
@@ -96,6 +98,33 @@ swfobject.embedSWF("http://localhost:3000/swf/flow.swf", "widget_rotator", "525"
 	<li>We have widgets which you can place on your profile or blog and they automatically update when you take new mugshots. (You can always make your mugshots private so only you can see them.)
 	<li>Getting started is really easy, all you need is a webcam, digital camera, or camera-phone! <%#= link_to "Get Started!", signup_path %>
 </ul>
+<script>
 
 
+var update_image = function(data) {
+	var randomnumber=Math.floor(Math.random()*3);
+	$(".alert_boxes")[randomnumber].src = data["image"];
+};
 
+var start_update = function() {
+	$.get("/apis/get_multi_box_update.json", function(data) {
+	var should_update=1;
+	if($(".alert_boxes")[0].src == data["image"]){
+	should_update=0;
+	}
+	if($(".alert_boxes")[1].src == data["image"]){
+	should_update=0;
+	}
+	if($(".alert_boxes")[2].src == data["image"]){
+	should_update=0;
+	}
+	alert(should_update);
+	if(should_update == 1){
+	update_image(data);}
+	});
+};
+
+//to do: fade in / fade out via .fadeout .fadein
+//put in space for text
+//setup periodic execution
+</script>
