@@ -11,7 +11,7 @@ gem "paperclip", "~> 2.5.0"
 gem 'aws-sdk'
 gem "twitter_oauth", "~> 0.4.3"
 gem "oauth", "~> 0.4.5"
-gem "koala", "~> 1.3.0"
+#gem "koala", "~> 1.3.0"
 gem "mysql2", "~> 0.3.11"
 gem "cocaine", "~> 0.2.1"
 gem "aws", "~> 2.5.6"
@@ -27,7 +27,9 @@ end
 
 gem 'jquery-rails'
 gem "rmagick", "~> 2.13.1"
-
+gem "delayed_job"
+gem "delayed_job_active_record"
+gem "daemons"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -2,14 +2,23 @@ class AuthusersController < ApplicationController
   # GET /authusers
   # GET /authusers.json
   def index
+    @page_size = 12
+    @current_page = params[:page] == nil ? 0 : params[:page].to_i
+    if @current_page < 0
+      @current_page = 0
+    end
     #this could maybe be slightly more efficient
     @authusers = []
-    Authuser.where(:prvt => false, :active => true).each do |user|
-      if user.has_mugshot?
-        @authusers << user
+    # ((Mugshot.count - (@current_page +1)*@page_size)..(Mugshot.count - (@current_page)*@page_size)).each do |x|
+    #   @authusers << Mugshot.find(x).authuser
+    # end
+    size=Mugshot.count
+    while @authusers.count < @page_size
+      temp = Mugshot.find(rand size)
+      if temp.image_file_name != nil && temp.authuser != nil
+        @authuser << temp.authuser
       end
     end
-    @authusers.sort!{|a,b| a.last_mugshot_date <=> b.last_mugshot_date}
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @authusers }
@@ -144,8 +153,12 @@ class AuthusersController < ApplicationController
   # POST /authusers.json
   def create
     @authuser = Authuser.new(params[:authuser])
+    
     @authuser.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{@authuser.login}--")
-    @authuser.crypted_password =  Authuser.encrypt(@authuser.password, @authuser.salt)
+    @authuser.crypted_password =  Authuser.encrypt(params[:password], @authuser.salt)
+    
+    
+
     respond_to do |format|
       if @authuser.save
         session[:authuser] = @authuser.id

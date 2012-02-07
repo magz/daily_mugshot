@@ -1,12 +1,10 @@
 <% @authusers.each do |user| %>
-	<% temp = [] %>
-	<% user.mugshots.each do |pic|%>
-	<% temp << pic.image(:inner) %>
-	<% end %>
 	
-	<div class = "mugshow", data-authuser=<%= user.id%>, data-pics=<%= temp %>><img src="<%= user.mugshots.first.image(:inner) %>"></div>
+		<img src="<%= user.mugshots.last.image :inner %>">
 	<%= user.id.to_s %>
+	<%= user.login %>'s total mugshots are
+	<%= user.mugshots.count %>
+	
 <% end %>
 	
-
-
+<%= @current_page %>   is the current page

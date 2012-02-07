@@ -26,54 +26,32 @@
 <% end %>
 
 <script type="text/javascript">
-swfobject.registerObject("dms_flow", "9.0.115", "expressInstall.swf");
+// swfobject.registerObject("dms_flow", "9.0.115", "expressInstall.swf");
 </script>
 
 <%= stylesheet_link_tag "home" %>
 
-<h1>Welcome to Daily Mugshot!</h1>
-<!-- N10:35AM -->
 <div id="widget_rotator_container" OnMouseOver="renderTooltip(180,'check out a random mugshow!');" OnMouseOut="hideTooltip();">
   <div id="widget_rotator">
 <script type="text/javascript">
-var flashvars = {};
-var params = {userid:60581};
-var attributes = {};
-swfobject.embedSWF("http://localhost:3000/swf/flow.swf", "widget_rotator", "525", "220", "9.0.115", flashvars, params, attributes);
+//var flashvars = {};
+//var params = {userid:60581};
+//var attributes = {};
+//swfobject.embedSWF("http://localhost:3000/swf/flow.swf", "widget_rotator", "525", "220", "9.0.115", flashvars, params, attributes);
 </script>
     <div id="myContent">
-      <p>Alternative content</p>
+      <!-- <p>Alternative content</p> -->
     </div>
 
 </script>
   </div>
 </div>
+Some recent updates <br><br>
 <% @mugshots.each do |m|%>
-	<div class="latest_mugshot">
+	<a class="alert_box_link" href="http://localhost:3000/authusers/<%= m.authuser.id %>">
 	<img class="alert_boxes" src="<%= m.image :inner %>" height=170 width=170 >
-	<%= m.authuser.login %>
-	</div>
+	</a>
 <% end %>
-<!-- <div id="guide_steps">
-  <ol>
-    <li id="signup_step">
-      <h3>Signup <small>free!</small></h3>
-      <div class="desc"><p><strong>It takes less than a minute!</strong></p></div>
-    </li>
-    <li id="reminder_step">
-      <h3>Get Reminder <small>easy</small></h3>
-      <div class="desc"><p><strong>puts the 'daily' in Daily Mugshot</strong></p></div>
-    </li>
-    <li id="pics_step">
-      <h3>Take Pics <small>fun!</small></h3>
-      <div class="desc"><p><strong>the site works with your webcam</strong></p></div>
-    </li>
-    <li id="post_step">
-      <h3>Post Widget <small>share!</small></h3>
-      <div class="desc"><p><strong>Put your mugshow on your profile</strong></p></div>
-    </li>
-  </ol>
-</div> -->
 
 <div id="iphone">
 	<div id='iphone_app'><%= image_tag('iphone_app.jpg') %></div>
@@ -101,9 +79,14 @@ swfobject.embedSWF("http://localhost:3000/swf/flow.swf", "widget_rotator", "525"
 <script>
 
 
-var update_image = function(data) {
-	var randomnumber=Math.floor(Math.random()*3);
+var update_image_and_link = function(data) {
+	var randomnumber=Math.floor(Math.random()*6);
+	//$($(".alert_boxes")[randomnumber]).animate({opacity: "0.0"});
 	$(".alert_boxes")[randomnumber].src = data["image"];
+	$(".alert_box_link")[randomnumber].href = "http://localhost:3000/authusers/" + data["userid"]
+	//$($(".alert_boxes")[1]).animate({opacity: "1.0"});
+	//$($(".alert_boxes")[randomnumber]).fadeIn();
+	
 };
 
 var start_update = function() {
@@ -118,13 +101,25 @@ var start_update = function() {
 	if($(".alert_boxes")[2].src == data["image"]){
 	should_update=0;
 	}
-	alert(should_update);
+	if($(".alert_boxes")[3].src == data["image"]){
+	should_update=0;
+	}
+	if($(".alert_boxes")[4].src == data["image"]){
+	should_update=0;
+	}
+	if($(".alert_boxes")[5].src == data["image"]){
+	should_update=0;
+	}
 	if(should_update == 1){
-	update_image(data);}
+	update_image_and_link(data);}
 	});
 };
 
 //to do: fade in / fade out via .fadeout .fadein
 //put in space for text
 //setup periodic execution
+$.periodic.defaults.period = 5000;
+$.periodic(function() {
+	start_update();
+});
 </script>

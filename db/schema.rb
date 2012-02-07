@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131213139) do
+ActiveRecord::Schema.define(:version => 20120206223536) do
 
   create_table "authusers", :force => true do |t|
     t.string   "login"
@@ -38,6 +38,31 @@ ActiveRecord::Schema.define(:version => 20120131213139) do
     t.datetime "updated_at"
   end
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "email_reminders", :force => true do |t|
+    t.integer  "authuser_id"
+    t.integer  "hour"
+    t.boolean  "active"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "feedbacks", :force => true do |t|
     t.integer  "authuser_id"
     t.string   "email"
@@ -53,22 +78,15 @@ ActiveRecord::Schema.define(:version => 20120131213139) do
     t.datetime "updated_at"
   end
 
-  create_table "mugshots", :force => true do |t|
+  create_table "landmarks", :force => true do |t|
     t.integer  "authuser_id"
-    t.string   "caption"
-    t.integer  "xoffset"
-    t.integer  "yoffset"
+    t.integer  "xcoord"
+    t.integer  "ycoord"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image_file_name"
-    t.integer  "image_file_size"
-    t.string   "image_content_type"
-    t.datetime "image_updated_at"
-    t.datetime "deleted_at"
   end
 
-  create_table "transferred_mugshots", :id => false, :force => true do |t|
-    t.integer  "id",                 :default => 0, :null => false
+  create_table "mugshots", :force => true do |t|
     t.integer  "authuser_id"
     t.datetime "created_at"
     t.integer  "xoffset"
@@ -82,6 +100,30 @@ ActiveRecord::Schema.define(:version => 20120131213139) do
     t.datetime "updated_at"
     t.string   "image_content_type"
     t.boolean  "transfer_error"
+    t.string   "filename"
+  end
+
+  create_table "old_mugshots", :force => true do |t|
+    t.integer  "authuser_id"
+    t.string   "caption"
+    t.integer  "xoffset"
+    t.integer  "yoffset"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.integer  "image_file_size"
+    t.string   "image_content_type"
+    t.datetime "image_updated_at"
+    t.datetime "deleted_at"
+  end
+
+  create_table "reminders", :force => true do |t|
+    t.integer  "authuser_id"
+    t.string   "platform"
+    t.string   "version"
+    t.string   "release_notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "twitter_connects", :force => true do |t|

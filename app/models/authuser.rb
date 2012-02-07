@@ -14,9 +14,20 @@ class Authuser < ActiveRecord::Base
   validates :terms_of_service, :acceptance => true
   validates :login, :email, :gender, :crypted_password, :birthday, :presence => true
   validates :login, :email, :uniqueness => true
+  
+  before_save :set_init_vals
   # before_save :encrypt_password
   #this is the same as authenticate_either in the old code
   #i don't see much reason to have them be separate functions
+  def set_init_vals
+    self.time_zone ||= "US/Eastern"
+    self.active ||= true
+    self.gender ||= "m"
+  end
+  
+  def deleted?
+    !self.delted_at == nil
+  end
   def self.authenticate(login, password)
     
     u = Authuser.where(:login => login).first || Authuser.where(:email => login).first
@@ -97,6 +108,9 @@ class Authuser < ActiveRecord::Base
     self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
     self.crypted_password =  Authuser.encrypt(password, salt)
   end
-  
+  def already_taken_today?
+    #take into account tz here
+    self.mugshots.last.created_at.to_date == Date.today
+  end
   
 end

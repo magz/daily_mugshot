@@ -18,8 +18,13 @@ class Mugshot < ActiveRecord::Base
   :styles => {:full => "400x400", :inner => "200x200", :thumb => "50x50"}, 
   :processors => [:cropper] 
   #:storage => :s3, :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "rails3_development" 
-  
-  
+
+  def try_image(size)
+    result = self.image(size)
+    if result.to_s.last(11) == "missing.png" 
+      File.open File.join(Rails.root, "you_are_fucked_star_wars.jpg")
+    end
+  end
   def download(download_path)
     
   end
@@ -61,7 +66,11 @@ end
     end  
     
   end
-  
+  def self.queue_delayed_batch(section)
+    Mugshot.all[section*1000..(section+1)*1000].each do |x|
+      x.delay.populate_image
+    end
+  end
   def s3_get_private_url
     if s3_connect?
       prv_url = Aws::S3::S3Object.url_for(self.filename,s3_config[:bucket_name])
