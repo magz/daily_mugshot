@@ -2,17 +2,15 @@ class Mugshot < ActiveRecord::Base
   belongs_to :authuser
   has_many :comments
   validates :authuser, :presence => true
-  # has_attached_file :image, PAPERCLIP_CONFIG.merge({
-  #   :styles => {:full => "400x400", :inner => "200x200", :thumb => "50x50"},
-  #   :processors => [:cropper]
-  # })
+
+
   #cropper is a custom processor
   #it takes in the xoffset and yoffset and does cropping accordingly
   
   #i think this is set up correctly but double check it
   has_attached_file :image, 
   :storage => :s3,
-  :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
+  #:s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
   :path => ":class/:attachment/:id/:style_:basename.:extension",
   :bucket => 'rails3_production',
   :styles => {:full => "400x400", :inner => "200x200", :thumb => "50x50"}, 
@@ -20,10 +18,12 @@ class Mugshot < ActiveRecord::Base
   #:storage => :s3, :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "rails3_development" 
 
   def try_image(size)
-    result = self.image(size)
-    if result.to_s.last(11) == "missing.png" 
-      File.open File.join(Rails.root, "you_are_fucked_star_wars.jpg")
+    if self.image.to_s.match "missing" == nil
+      self.image = AWS::S3.new.buckets[:dailymugshotprod].objects[self.filename].url_for(:read).open
+      self.save
     end
+    return self.image size
+    
   end
   def download(download_path)
     
@@ -65,11 +65,6 @@ end
       end
     end  
     
-  end
-  def self.queue_delayed_batch(section)
-    Mugshot.all[section*1000..(section+1)*1000].each do |x|
-      x.delay.populate_image
-    end
   end
   def s3_get_private_url
     if s3_connect?

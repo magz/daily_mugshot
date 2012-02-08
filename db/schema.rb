@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120206223536) do
+ActiveRecord::Schema.define(:version => 20120207220538) do
 
   create_table "authusers", :force => true do |t|
     t.string   "login"
@@ -88,19 +88,19 @@ ActiveRecord::Schema.define(:version => 20120206223536) do
 
   create_table "mugshots", :force => true do |t|
     t.integer  "authuser_id"
-    t.datetime "created_at"
+    t.string   "caption"
     t.integer  "xoffset"
     t.integer  "yoffset"
-    t.datetime "deleted_at"
     t.boolean  "active"
     t.string   "image_file_name"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "caption"
     t.datetime "updated_at"
     t.string   "image_content_type"
     t.boolean  "transfer_error"
     t.string   "filename"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
   end
 
   create_table "old_mugshots", :force => true do |t|

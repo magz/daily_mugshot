@@ -31,11 +31,9 @@
         <!-- BEGINNING NAVIGATION COLUMN -->
         <div id="nav_column">
 			          <div id="logo_box">
-			            <%= Date.today.strftime("%m_%d")  %>
-				<%= link_to image_tag(@a), :root, :id => "logo"  %>
+				<%= link_to image_tag("dates/" + Date.today.strftime("%m_%d") + ".png"), :root, :id => "logo"  %>
 				            <h1 id="title">Daily Mugshot</h1>
 			         	</div>
-
 			          <!-- BEGINNING SIDE BOX -->
 			          <div id="status_box" class="side_box">
 			                <div class="side_box_header">
