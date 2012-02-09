@@ -25,7 +25,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 body {
 	line-height: 1;
 	color: black;
-	background: #ADBDD9 ;
+	background: white;
 }
 input, textarea{
 	font-family: inherit;
@@ -55,7 +55,7 @@ blockquote, q {
 /* @group Tag Level Styles */
 
 body{
-	background: ##F5F7FD;
+	background: #D5D6BC;
 	font: 14px/17px "Trebuchet MS", Verdana, Helvetica,sans-serif;
 	color: #666;
 	line-height: 1.5em;
@@ -70,15 +70,15 @@ h1,h2,h3,h4,h5{
 }
 h1{
 	font-size: 30px;
-	background:  0 bottom repeat-x;
+	background: url(<%= asset_path "header_border.gif" %>) 0 bottom repeat-x;
 }
 h2{
 	font-size: 28px;
-	background: 0 bottom repeat-x;
+	background: url(<%= asset_path "header_border.gif" %>) 0 bottom repeat-x;
 }
 h3{
 	font-size: 22px;
-	background:  0 bottom repeat-x;
+	background: url(<%= asset_path "header_border.gif" %>) 0 bottom repeat-x;
 }
 
 h1 small,
@@ -199,7 +199,7 @@ ol{
 .highlight_box{
 	background:url(<%= asset_path "highlight_box_middle.gif" %>) 0 0 repeat-y;	
 	margin-bottom: 10px;
-	width: 700px;
+	width: 524px;
 }
 .highlight_box_wrapper{
 	background: url(<%= asset_path "highlight_box_bottom.gif" %>) 0 bottom no-repeat;				
@@ -272,18 +272,19 @@ ol{
 .side_box{
 	width: 190px;
 	margin: 0 0 8px 0;
-	background: #FFEBC6;
+	background: url(<%= asset_path "side_box_bg.png" %>) 0 0 repeat-y;
 }
 .side_box_header{
+	background: url(<%= asset_path "side_box_header.png" %>) 0 0 no-repeat;
 	height: 10px;	
 }
 .side_box_content{
 	padding: 5px 13px 16px 13px;
-	background: #FFEBC6;
+	background: url(<%= asset_path "side_box_footer.png" %>) 0 bottom no-repeat;
 }
 .side_box label{
 	text-transform: uppercase;
-	color: black;
+	color:#333;
 	line-height: 2em;
 }
 
@@ -301,7 +302,7 @@ ol{
 /* @group Footer Text */
 
 #footer_text{
-	color:  black;
+	color:  #A9AA95;
 	text-align: center;
 	padding-left:210px;	
 }
@@ -367,7 +368,7 @@ ol{
 	margin-left:60px;
 }
 #status_box .new_mugshot strong{
-	color: black;
+	color: #87AF40;
 	border-bottom: 1px solid #ccc;
 	display: block;
 	margin-bottom: .2em;
@@ -381,15 +382,15 @@ ol{
 /* @group Locations List */
 
 #nav_locations{
-	background: #B38481;
+	background: #C9D162 url(<%= asset_path "nav_bg.png" %>) 0 bottom no-repeat;
 	width: 190px;
 }
 #nav_locations .side_box_header{
-	background: B38481;
+	background: url(<%= asset_path "nav_seperator.png" %>) 0 0 no-repeat;
 	height: 15px;	
 }
 #nav_locations .side_box_content{
-	background: B38481;
+	background: url(<%= asset_path "nav_footer.png" %>) 0 bottom no-repeat;
 }
 #nav_locations ul{
 	list-style: none;
@@ -429,6 +430,7 @@ ol{
 /* @group New Items */
 
 #nav_locations li.new{
+	background: url(<%= asset_path "nav_new.gif" %>) 0 0 no-repeat;
 	line-height: 75px;
 	left: -45px;
 	margin-top: -25px;
@@ -445,6 +447,7 @@ ol{
 /* @group Current Item */
 
 #nav_locations li.current{
+	background: url(<%= asset_path "nav_current_item_top.gif" %>) 0 0 no-repeat !important;
 	padding-top: 5px !important;
 	left: 0 !important;
 	line-height: 1.2em !important;
@@ -453,6 +456,7 @@ ol{
 }
 
 #nav_locations li.current a{
+	background: url(<%= asset_path "nav_current_item_bottom.gif" %>) 0 bottom no-repeat;
 	padding-bottom: 5px;
 	color: white;
 }
@@ -473,7 +477,7 @@ ol{
 	display: block;
 	height: 15px;
 	text-indent: -1000em;
-	background: white;
+	background: url(<%= asset_path "or_text.gif" %>) center center no-repeat;
 }
 
 #account_login .login_now{
@@ -535,7 +539,6 @@ ol{
 	text-align: left;
 	position: relative;
 	padding-top: 20px;
-	
 }
 
 /* @end */
@@ -543,27 +546,33 @@ ol{
 /* @group Content */
 
 #content{
-	width: 550px;
+	width: 710px;
 	float: right;
 	margin: 0;
 	padding: 0;
 	margin-top:0;
+	border: 5px solid #e1e2cf;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 }
 .content_box{
-	width: 900px;
+	width: 550px;
 	margin: 0 0 10px 0;
-	background: white;
+	background: white url(<%= asset_path "content_bg.gif" %>) 0 0 repeat-y;
 }
-/*.content_box_header{
+.content_box_header{
 	background: url(<%= asset_path "content_header.gif" %>) 0 0 no-repeat;
-	height: 10px;	
-}*/
+	height: 10px;
+	display: none;	
+}
 .content_box_content{
 	padding: 5px 13px 16px 13px; /* Leaves 524px of usable width */
 	background: white 0 bottom no-repeat;
+	border-radius: 10px;
 }
 .content_box_content h1{
 	text-align: center;
+	
 }
 * html .content_box_content{
 	height:1%;
@@ -599,7 +608,7 @@ ol{
 	margin: 0 0 2px 0;
 	position: relative;
 	top: -5px;
-	background: white;
+	background: url(<%= asset_path "dms_logo_bg.gif" %>) 0 0 no-repeat;
 }
 #logo_box #home_link{
 	background: none;
@@ -649,7 +658,7 @@ ol{
 
 /* @group IE PNGFix */
 
-/*img{
+img{
 	behavior: expression(	
 		(
 		this.origBg = this.origBg? 
@@ -680,7 +689,7 @@ ol{
 		this.behaviorSet = true
 	);
 }
-*/
+
 /* @end */
 
 /* @group Zoom Thumb */
@@ -762,10 +771,12 @@ ol{
 .mugshow_box{
 	width: 400px;
 	margin: 0 auto;
+	background: url(<%= asset_path "mugshow_box_top.gif" %>) 0 0 no-repeat;
 	padding: 8px 0 0 0;
 }
 .mugshot_box_content,
 .mugshow_box_content{
+	background: url(<%= asset_path "mugshow_box_bottom.gif" %>) 0 bottom no-repeat;
 	padding: 7px 15px 15px 15px;
 	float: left;
 	width: 384px;

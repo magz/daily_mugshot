@@ -47,11 +47,11 @@
   </div>
 </div>
 Some recent updates <br><br>
-<% @mugshots.each do |m|%>
-	<a class="alert_box_link" href="http://localhost:3000/authusers/<%= m.authuser.id %>">
-	<img class="alert_boxes" src="<%= m.image :inner %>" height=170 width=170 >
-	</a>
-<% end %>
+<%# @mugshots.each do |m|%>
+/*     <a class="alert_box_link" href="http://localhost:3000/authusers/<%#= m.authuser.id %>">
+	<img class="alert_boxes" src="<%#= m.image :inner %>" height=170 width=170 >
+	</a> */
+<%# end %>
 
 <div id="iphone">
 	<div id='iphone_app'><%= image_tag('iphone_app.jpg') %></div>

@@ -1,7 +1,7 @@
 class MainController < ApplicationController
   
   def welcome
-    @mugshots = Mugshot.where("image_file_name != 'nil'").last 6
+    #@mugshots = Mugshot.where("image_file_name != 'nil'").last 6
     
     
     # @authuser = current_authuser

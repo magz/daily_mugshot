@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>DailyMugshot</title>
-  <%= stylesheet_link_tag "application"%>
+  <%#= stylesheet_link_tag "application"%>
   <%= stylesheet_link_tag "quickstyles"%>
   <%= stylesheet_link_tag "base"%>
   <%= stylesheet_link_tag "public"%>
@@ -100,6 +100,13 @@
 							</div>
 						</div>
 						<% end %>
+						<%= link_to "http://itunes.apple.com/us/app/dailymugshot/id393861180?mt=8", :popup => true, :class => 'app_store' do %>
+							<%= image_tag("app_store.jpg", align: "right") %>
+						<% end %>
+						<%= link_to "https://market.android.com/details?id=com.fuzz.dms&feature=search_result", :popup => true, :class => 'android_store' do %>
+							<%= image_tag("android_store.png", align: "right") %>
+						<% end %>
+						
 			        <div id="content" class="content_box">
 			           <div class="content_box_header">
 			                <!--BLANK-->
