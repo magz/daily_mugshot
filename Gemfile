@@ -12,6 +12,8 @@ gem "oauth", "~> 0.4.5"
 gem "mysql2", "~> 0.3.11"
 gem "cocaine", "~> 0.2.1"
 gem "capistrano", "~> 2.9.0"
+gem "execjs"
+gem 'therubyracer'
 
 
 # Gems used only for assets and not required
