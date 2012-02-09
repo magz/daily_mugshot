@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  authuser_id: 1
+  hour: 1
+  active: false
+  deleted_at: 2012-02-06 17:35:36
+
+two:
+  authuser_id: 1
+  hour: 1
+  active: false
+  deleted_at: 2012-02-06 17:35:36

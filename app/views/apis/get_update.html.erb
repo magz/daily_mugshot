@@ -1,0 +1,9 @@
+<%#= @identifier %>
+<%# link_to image_tag(@image_url, :border => false, :class => 'thumbnail') +
+	"<strong>" + @header + "</strong><span class='description'>" + @description + "</span>",
+	@new_url, :class => @class %>
+<%= link_to @new_url, :class => @class do %>
+	<%= image_tag(@image_url, :border => false, :class => 'thumbnail') %>
+	<strong><%= @header %></strong>
+	<span class='description'><%= @description %></span>
+<% end %>

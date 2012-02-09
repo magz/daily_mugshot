@@ -1,0 +1,97 @@
+<%= stylesheet_link_tag "update_account" %>
+<h1>Update Account</h1>
+        <fieldset>
+            <%= form_for @authuser do |f| -%>
+							<%#= @authuser.error_messages %>
+	            <div class="highlight_box" id="current_password">
+	              <div class="highlight_box_wrapper">
+	                <div class="highlight_box_content" OnMouseOver="renderTooltip(180,'We need this for your protection');" OnMouseOut="hideTooltip();">
+	                  <h3>
+	                    Enter your current password
+	                    <span class="hint">
+	                      All account updates require your current password.
+	                    </span>
+	                  </h3>
+                    <%#= link_to "Forgot?", {:controller => "main", :action => "reminder"}, :class => "forgot_password" %>	
+                    <label for="old_password">
+	                    Current Password:
+	                    <%= f.password_field :old_password  %>
+                    </label> 
+	                </div>
+	              </div>
+              </div> 
+        
+               <div class="highlight_box">
+                <div class="highlight_box_wrapper">
+									<div class="highlight_box_content">
+									  <h3>Change Password?</h3>
+									  <label for="password">
+						          New Password: 
+						          <%= f.password_field :password %>
+									  </label>
+									  <br />
+									  <label for="password_confirmation">
+						          Confirm New Pwd:
+						          <%= f.password_field :password_confirmation %>
+									  </label>
+									</div>
+                </div>
+               </div>
+                
+               <div class="highlight_box">
+                   <div class="highlight_box_wrapper">
+                       <div class="highlight_box_content" >
+                        <h3>Change login?</h3>
+                        <label for="login">
+                         New Login:
+                         <%= f.text_field :login %>
+                        </label>	
+                       </div>
+                   </div>
+               </div>
+                
+                
+                <div class="highlight_box">
+                    <div class="highlight_box_wrapper">
+                        <div class="highlight_box_content" >
+                          <h3>Change email?</h3>
+                          <label for="email">
+                            New Email:
+                            <%= f.text_field :email %>
+                          </label>	
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight_box">
+                    <div class="highlight_box_wrapper">
+                        <div class="highlight_box_content">
+                         <h3>Change Time Zone?</h3>
+                         <label for="time_zone">
+                           New Time Zone:
+													<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => 'Eastern Time (US & Canada)' %>
+                         </label>	
+                        </div>
+                    </div>
+                </div>
+                
+		<div class="highlight_box">
+			<div class="highlight_box_wrapper">
+				<div class="highlight_box_content">
+					<h3>
+						Post To DMS by Mobile (Email)
+					</h3>
+					<ul>
+						<li>Email '<b>mobile<span>@</span>dailymugshot.<span>c</span>om</b>' with your mugshot as an attachment</li>
+						<li>The subject of the email will be your comment.  
+						<li>Yes, this is perfect for on the go mobile mugshoting!
+					</ul>
+					<br>
+				</div>
+			</div>
+		</div>
+      <%#= error_messages_for @authuser %> 
+      <button class="button update_button" name="commit" type="submit" value="update">Update</button>
+			<%#= link_to "Destroy My Account", destroy_my_account_path, :class => "floatright" %>
+		<% end %>
+	</fieldset>

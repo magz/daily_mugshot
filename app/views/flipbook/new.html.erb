@@ -1,0 +1,27 @@
+<%= stylesheet_link_tag "flipbook" %>
+<%= javascript_include_tag "flipbook" %>
+<%= javascript_include_tag 'lowpro' %>
+<h1>Make Your Flipbook!</h1>
+<div class="tips">
+  <ul>
+     <li>Select your favorite 64 mugshots.</li>
+     <li>We can help you get started if you hit the 'SPREAD EVENLY' button.</li>
+     <li>For best flipbook quality, choose the <b>lighter</b> mugshots</li>
+  </ul>
+</div>
+<% current_authuser.mugshots.each do |mugshot| %>
+<%= image_tag(mugshot.image :inner)%>
+<% end %>
+<div class="countdown" id="countdown">
+	<%#= render :partial => "flipbook_cover_button" %>
+</div>
+<hr class="clearboth"/>
+<div id="mosaic">
+	<%#= render :partial => "flipbook_mosaic" %>
+	
+	<%# show.js makes pagination use ajax.  Since document.ready is not being used, show.js needs to be placed after 
+	the pagination markup is printed in the dom. %>
+	<%= javascript_include_tag 'show' %>
+	
+</div>
+<div class="clearboth"></div>

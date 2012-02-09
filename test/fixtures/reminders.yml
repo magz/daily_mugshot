@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  authuser_id: 1
+  platform: MyString
+  version: MyString
+  release_notes: MyString
+
+two:
+  authuser_id: 1
+  platform: MyString
+  version: MyString
+  release_notes: MyString

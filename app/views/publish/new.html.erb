@@ -1,0 +1,24 @@
+<% unless current_authuser.twittering? %>
+<%= link_to "Authuorize to twitter", @twitter_request_token.authorize_url %>
+<% end %>
+
+This fb one is broken for now...issues with the authorized domanin for the api registration
+<%= link_to "Authuorize to facebook", @fb_client.url_for_oauth_code(:callback => "http://127.0.0.1:3000/"+fb_callback_url) %>
+
+<textarea id="gigya_id" style="display:none">
+	<div style="width:200px !important;position:relative !important;width:200px !important;height:220px !important;overflow:hidden !important;">
+		<embed width="200" height="200" src="http://www.dailymugshot.com/swf/newdms3.swf?userid=<%= current_authuser.id %>" quality="high" salign="TL" wmode="tranparent" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">
+		<a style="display:block !important;background:url(http://www.dailymugshot.com/images/snag.png) 0 0 no-repeat !important;width:200px !important;height:20px !important;padding:0 !important;position:relative !important;top:-3px !important;text-indent:-1000em !important;overflow:hidden !important;cursor:pointer !important;cursor:hand !important;border:none !important;text-decoration:none !important;" href="http://www.dailymugshot.com?r=1" title="Daily Mugshot">
+			Daily Mugshot
+		</a>
+	</div>
+</textarea>
+
+<div class="flash_container" id="divWildfirePost"></div>
+<SCRIPT>
+    var pconf= {
+           UIConfig: '<config><body><background corner-roundness="4" background-color="#FFFFFF" /></body></config>',
+           defaultContent: 'gigya_id'
+    };
+    Wildfire.initPost("94301", "divWildfirePost", 400, 300, pconf);
+</SCRIPT>

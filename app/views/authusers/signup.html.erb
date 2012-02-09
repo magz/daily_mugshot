@@ -1,0 +1,59 @@
+
+<%= form_for(@authuser) do |f| %>
+  <% if @authuser.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@authuser.errors.count, "error") %> prohibited this authuser from being saved:</h2>
+
+      <ul>
+      <% @authuser.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :login %><br />
+    <%= f.text_field :login %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= label_tag :password %><br />
+    <%= text_field_tag :password %>
+  </div>
+  <div class="field">
+    <%#= f.label :time_zone %><br />
+    <%#= f.text_field :time_zone %>
+  </div>
+  <div class="field">
+	<%= f.radio_button(:gender, "m") %>
+	<%= f.label(:gender_m, "male") %>
+	<%= f.radio_button(:gender, "f") %>
+	<%= f.label(:gender_f, "female") %>  
+	</div>
+  <div class="field">
+    <%= f.label :birthday %><br />
+    <%= f.date_select :birthday %>
+  </div>
+	<div class="field">
+    <%= f.label :time_zone %><br />
+	<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {:default => "Eastern Time (US & Canada)"} %>
+  </div>
+  
+
+  <div class="field">
+    <%= f.label :prvt %><br />
+    <%= f.check_box :prvt %>
+  </div>
+  <div class="i_agree">
+    <%= check_box_tag :terms_of_service %>
+    #I agree to the <%= link_to 'Terms of Service','/tos.html' %>
+  </div>	 
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

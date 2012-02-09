@@ -1,0 +1,29 @@
+<%= form_for(@landmark) do |f| %>
+  <% if @landmark.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@landmark.errors.count, "error") %> prohibited this landmark from being saved:</h2>
+
+      <ul>
+      <% @landmark.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :xcoord %><br />
+    <%= f.number_field :xcoord %>
+  </div>
+  <div class="field">
+    <%= f.label :ycoord %><br />
+    <%= f.number_field :ycoord %>
+  </div>
+  <div class="field">
+    <%= f.label :authuser_id %><br />
+    <%= f.number_field :authuser_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

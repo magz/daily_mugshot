@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Xcoord:</b>
+  <%= @landmark.xcoord %>
+</p>
+
+<p>
+  <b>Ycoord:</b>
+  <%= @landmark.ycoord %>
+</p>
+
+<p>
+  <b>Authuser:</b>
+  <%= @landmark.authuser_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_landmark_path(@landmark) %> |
+<%= link_to 'Back', landmarks_path %>

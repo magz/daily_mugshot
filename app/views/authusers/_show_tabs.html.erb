@@ -1,0 +1,20 @@
+<ul class="tabs">
+    <% if @current_tab == "mugshow" %>
+	<li class="mugshow_view current">
+	<span>Mugshow View</span>
+	<% else %>
+	<li class="mugshow_view">
+	<%=	link_to( "Mugshow View", :action => 'show', :id => @authuser.id, :current_tab => "mugshow") %>
+	<% end %>
+	</li>
+	
+    <% if @current_tab == "mosaic" %>
+	<li class="mosaic_view current">
+	<span>Mosaic View</span> 
+	<% else %>
+	<li class="mosaic_view">
+	<%=	link_to( "Mosaic View", :action => 'show', :id => @authuser.id, :current_tab => "mosaic") %>
+	<% end %>
+     </li>
+
+</ul>

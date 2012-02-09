@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  xcoord: 1
+  ycoord: 1
+  authuser_id: 1
+
+two:
+  xcoord: 1
+  ycoord: 1
+  authuser_id: 1
