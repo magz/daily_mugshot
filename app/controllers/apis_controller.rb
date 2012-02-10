@@ -163,63 +163,65 @@ class ApisController < ApplicationController
       format.js
     end
     end
-  def upload
-    #this is i think the function for both the flash object and mobile uploading
-    #impt impt impt
-    #i think this should be working
-    #make sure we did not already take a picture today.
-    unless current_authuser.already_taken_today?
-      @returnstatus = 0
-      unless params["method"] == nil
-        if params["method"] == "webcam" 
-          if params["bindata"] != nil
-            decoded = Base64.decode64(params["bindata"])
-            #I...can't say i like this random thing...it'd be better if it was more programattic
-            filename = "snapshot" + rand(100000).to_s + ".jpg"
-            full_path = File.join(Rails.root, "tmp", "uploads",  filename)
-            Dir.mkdir('tmp/uploads') unless Dir.entries('tmp').include?('uploads')
-            #can you do this?  do you not need to use cocaine to do this sort of commandline ju jitsu?
-            `touch #{full_path}`
-            File.open(full_path,'w') do |f|
-                f.puts decoded
+    def upload
+      #this is i think the function for both the flash object and mobile uploading
+      #impt impt impt
+      #i think this should be working
+      #make sure we did not already take a picture today.
+      @authuser = Authuser.first
+      unless @authuser.already_taken_today?
+        @returnstatus = 0
+        unless params["method"] == nil
+          if params["method"] == "webcam" 
+            if params["bindata"] != nil
+              decoded = Base64.decode64 params["bindata"]
+              #I...can't say i like this random thing...it'd be better if it was more programattic
+              filename = "snapshot" + rand(100000).to_s + ".jpg"
+              full_path = File.join(Rails.root, "tmp", "uploads",  filename)
+              Dir.mkdir('tmp/uploads') unless Dir.entries('tmp').include?('uploads')
+              #can you do this?  do you not need to use cocaine to do this sort of commandline ju jitsu?
+              `touch #{full_path}`
+              f=File.open full_path, "wb"
+              f.write decoded
+            else
+              @returnstatus = 1
+              @msg = "no image info"
+            end
+          elsif params["method"] == "file"
+            if params["filename"] == nil
+              @returnstatus = 1
+              @msg = "undefined filename"
+            else
+              full_path = File.join(Rails.root, "public","tmp", params["filename"])
             end
           else
             @returnstatus = 1
-            @msg = "no image info"
+            @msg = "undefined method"
           end
-        elsif params["method"] == "file"
-          if params["filename"] == nil
-            @returnstatus = 1
-            @msg = "undefined filename"
-          else
-            full_path = File.join(Rails.root, "public","tmp", params["filename"])
-          end
-        else
-          @returnstatus = 1
-          @msg = "undefined method"
         end
-      end
 
-      if @returnstatus == 0
-        m=Mughsot.new
-        m.caption = params["caption"] == nil ? nil : params["caption"].gsub(/[^A-Za-z0-9_\s\?\(\)\!\.\,]/,'').chomp!
-        m.xoffset = params["xoffset"].to_i
-        m.yoffset = params["yoffset"].to_i
-        m.image =  File.open(full_path)
-        #do we really need all that complicated return status stuff?  Can i just give them an up or down?
-        #make sure save happened and give returnstatus accordingly
-        m.save
-        @msg = @returnstatus
-        #do social networking push
+        if @returnstatus == 0
+          m=Mugshot.new
+          m.caption = params["caption"] == nil ? nil : params["caption"].gsub(/[^A-Za-z0-9_\s\?\(\)\!\.\,]/,'').chomp!
+          m.xoffset = params["xoffset"].to_i
+          m.yoffset = params["yoffset"].to_i
+          m.image =  File.open(full_path)
+          `rm #{full_path}`
+          m.authuser_id = @authuser
+          #do we really need all that complicated return status stuff?  Can i just give them an up or down?
+          #make sure save happened and give returnstatus accordingly
+          m.save
+          @msg = @returnstatus
+          #do social networking push
+        end
+      else
+          @returnstatus = 1
+          @msg = "already taken image today"
       end
-    else
-        @returnstatus = 1
-        @msg = "already taken image today"
+      respond_to do |format|
+        format.xml { render :layout => false }
+      end
     end
-    respond_to do |format|
-      format.xml { render :layout => false }
-    end
-  end
   def get_multi_box_update
     @mugshot = Mugshot.where("image_file_name != 'nil'").last
     @authuser = @mugshot.authuser

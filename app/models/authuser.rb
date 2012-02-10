@@ -110,7 +110,11 @@ class Authuser < ActiveRecord::Base
   end
   def already_taken_today?
     #take into account tz here
-    self.mugshots.last.created_at.to_date == Date.today
+    if self.has_mugshot?
+      self.mugshots.last.created_at.to_date == Date.today
+    else
+      false
+    end
   end
   
 end

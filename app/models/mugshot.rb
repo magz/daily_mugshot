@@ -10,7 +10,7 @@ class Mugshot < ActiveRecord::Base
   #i think this is set up correctly but double check it
   has_attached_file :image, 
   :storage => :s3,
-  #:s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
+  :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
   :path => ":class/:attachment/:id/:style_:basename.:extension",
   :bucket => 'rails3_production',
   :styles => {:full => "400x400", :inner => "200x200", :thumb => "50x50"}, 
