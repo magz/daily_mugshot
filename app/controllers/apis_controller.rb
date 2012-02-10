@@ -208,7 +208,7 @@ class ApisController < ApplicationController
           m.image =  File.open(full_path)
           `rm #{full_path}`
           m.authuser_id = @authuser
-          #do we really need all that complicated return status stuff?  Can i just give them an up or down?
+          #do _we_ really need all that complicated return status stuff?  Can i just give them an up or down?
           #make sure save happened and give returnstatus accordingly
           m.save
           @msg = @returnstatus
