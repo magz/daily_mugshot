@@ -109,7 +109,7 @@ class ApisController < ApplicationController
       @returnstatus = 1 # post arguments missing
     end
     respond_to do |format|
-      format.xml  { render :layout => false,  }
+      format.xml { render :layout => false }
     end
   end
   def get_update

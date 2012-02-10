@@ -5,7 +5,7 @@
 #   gem 'sqlite3'
 development:
     adapter: mysql2
-    database: new_mugshot
+    database: rails3_mugshot
     username: magzmugshot
     password: roebling909
     host: 208.75.85.9
