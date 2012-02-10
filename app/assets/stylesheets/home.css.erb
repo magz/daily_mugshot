@@ -142,22 +142,6 @@
 	background-position: center -84px;	
 }
 
-/* @group IE6 Lovin */
-
-/* 	Here's a special IE6 CSS Javascript to make rollovers work on the LI's.
-	Try to keep this rule at the end of the CSS file, because it doesn't validate
-	and may throw other browsers off 
-*/
-
-* html #guide_steps ol li{
-behavior: expression(
-this.onmouseover = function(){this.className += ' hover';},
-this.onmouseout = function(){this.className = this.className.replace('hover','');},
-this.style.behavior='none', 
-this.runtimeStyle.behavior='none'
-);
-
-/* @end */
 
 /* @end */
 
