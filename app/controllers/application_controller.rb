@@ -23,10 +23,10 @@ class ApplicationController < ActionController::Base
   end
   
   def require_login
-    unless current_authuser
+    #unless current_authuser
       flash[:error] = "You must be logged in to access this section"
       redirect_to :root
-    end
+    #end
   end
 
   def require_admin

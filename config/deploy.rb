@@ -48,9 +48,9 @@ namespace :deploy do
 #    after "deploy:setup", "deploy:gems"     
 #   
 #    #before "deploy", "deploy:web:disable"  
-#    #after "deploy", "deploy:web:enable"  
+#    #after "deploy", "de=ploy:web:enable"  
   task :pipeline_precompile do
-    run "cd #{deploy_to}; RAILS_ENV=production bundle exec rake assets:precompile"
+    run "cd #{deploy_to} + '/current/'; RAILS_ENV=production bundle exec rake assets:precompile"
   end
 
 end  
