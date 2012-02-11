@@ -20,7 +20,7 @@ role :db,  "67.207.144.45", :primary => true # This is where Rails migrations wi
 
 default_run_options[:pty] = true  
 
-after "deploy:symlink", "deploy:pipeline_precompile"
+# after "deploy:symlink", "deploy:pipeline_precompile"
 
 # if you're still using the script/reaper helper you will need
 # these http://github.com/rails/irs_process_scripts
@@ -49,8 +49,8 @@ namespace :deploy do
 #   
 #    #before "deploy", "deploy:web:disable"  
 #    #after "deploy", "de=ploy:web:enable"  
-  task :pipeline_precompile do
-    run "cd #{deploy_to}/current ; RAILS_ENV=production bundle exec rake assets:precompile"
-  end
+  # task :pipeline_precompile do
+  #   run "cd #{deploy_to}/current ; RAILS_ENV=production bundle exec rake assets:precompile"
+  # end
 
 end  

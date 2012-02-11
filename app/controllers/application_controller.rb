@@ -24,14 +24,16 @@ class ApplicationController < ActionController::Base
   
   def require_login
     unless current_authuser
-      flash[:error] = "You must be logged in to access this section"
+      flash[:notice] = "You must be logged in to access this section"
       redirect_to :root
     end
   end
 
   def require_admin
     unless current_authuser && (current_authuser.id == 1 || current_authuser.id == 60581)
-    flash[:notice] = "Admin area only"
-    redirect_to :root 
+      flash[:notice] = "Admin area only"
+      redirect_to :root 
+    end
   end
+  
 end

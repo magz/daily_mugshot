@@ -139,6 +139,7 @@ class AuthusersController < ApplicationController
       flash[:notice] = "You'll need to take a picture first!"
       
       redirect_to :first_pic
+    end
   end
   # GET /authusers/new
   # GET /authusers/new.json

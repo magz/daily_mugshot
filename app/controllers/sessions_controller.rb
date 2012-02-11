@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_filter :require_login, :only => [:login, :logout]
   def login
     return unless request.post?
     current_authuser = Authuser.authenticate(params[:login], params[:password])

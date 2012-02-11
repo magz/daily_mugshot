@@ -1,4 +1,5 @@
 class ApisController < ApplicationController
+  skip_before_filter :require_login
   #this is almost exclusively code for the flash objects
   #it integrates code from both the api and openapis controllers
   #as a result of it being based on some of the last remaining (yay!) legacy code, the functions here may be a bit wonky 

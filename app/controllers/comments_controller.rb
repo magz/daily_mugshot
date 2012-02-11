@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  skip_before_filter :require_login, :only => [:new, :create]
   # GET /comments
   # GET /comments.json
   def index
