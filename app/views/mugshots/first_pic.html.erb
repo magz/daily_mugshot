@@ -80,7 +80,7 @@ swfobject.registerObject("testcam", "9.0.115", "expressInstall.swf");
 	var flashvars = {};
 	var params = {};
 	var attributes = {};
-	swfobject.embedSWF("http://<%=#{request.host}%>/swf/testcam.swf", "cam_test", "215", "300", "9.0.115", flashvars, params, attributes);
+	swfobject.embedSWF("http://<%= request.host %>/swf/testcam.swf", "cam_test", "215", "300", "9.0.115", flashvars, params, attributes);
 	</script>
     </div>
 </div>
@@ -100,7 +100,7 @@ swfobject.registerObject("testcam", "9.0.115", "expressInstall.swf");
 	var flashvars = {};
 	var params = {};
 	var attributes = {};
-	swfobject.embedSWF("http://<%=#{request.host}%>/swf/flow.swf", "fullupload", "215", "300", "9.0.115", flashvars, params, attributes);
+	swfobject.embedSWF("http://<%= request.host %>/swf/flow.swf", "fullupload", "215", "300", "9.0.115", flashvars, params, attributes);
 	</script>
     </div>
 </div>

@@ -83,7 +83,7 @@ var update_image_and_link = function(data) {
 	var randomnumber=Math.floor(Math.random()*6);
 	//$($(".alert_boxes")[randomnumber]).animate({opacity: "0.0"});
 	$(".alert_boxes")[randomnumber].src = data["image"];
-	$(".alert_box_link")[randomnumber].href = "http://<%=#{request.host}%>/authusers/" + data["userid"]
+	$(".alert_box_link")[randomnumber].href = "http://<%= request.host %>/authusers/" + data["userid"]
 	//$($(".alert_boxes")[1]).animate({opacity: "1.0"});
 	//$($(".alert_boxes")[randomnumber]).fadeIn();
 	
