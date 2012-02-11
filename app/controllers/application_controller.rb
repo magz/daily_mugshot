@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :login_from_cookie
+  before_filter :login_from_cookie, :require_login
   
   # Returns true or false if the user is logged in.
   # Preloads @current_authuser with the user model if they're logged in.
@@ -22,5 +22,16 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def require_login
+    unless current_authuser
+      flash[:error] = "You must be logged in to access this section"
+      redirect_to :root
+    end
+  end
 
+  def require_admin
+    unless current_authuser && (current_authuser.id == 1 || current_authuser.id == 60581)
+    flash[:notice] = "Admin area only"
+    redirect_to :root 
+  end
 end

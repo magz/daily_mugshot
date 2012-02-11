@@ -1,4 +1,6 @@
 class FeedbacksController < ApplicationController
+  skip_before_filter :require_login, :only => [:new, :create]
+  before_filter :require_admin, :except => [:new, :create]
   # GET /feedbacks
   # GET /feedbacks.json
   def index

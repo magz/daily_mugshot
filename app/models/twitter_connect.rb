@@ -15,8 +15,10 @@ class TwitterConnect < ActiveRecord::Base
         :token => self.token, 
         :secret => self.secret
     )
-
+    
+    #does this do anything?
     twitter_client.authorized?
+    
     twitter_client.update(message)
   end
   

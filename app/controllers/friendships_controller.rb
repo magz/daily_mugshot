@@ -1,6 +1,9 @@
 class FriendshipsController < ApplicationController
   # GET /friendships
   # GET /friendships.json
+  
+  before_filter :require_admin
+  
   def index
     @friendships = Friendship.all
 

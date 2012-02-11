@@ -1,8 +1,10 @@
 class Mugshot < ActiveRecord::Base
   belongs_to :authuser
   has_many :comments
+  
   validates :authuser, :presence => true
 
+  after_create :do_social
 
   #cropper is a custom processor
   #it takes in the xoffset and yoffset and does cropping accordingly
@@ -23,9 +25,6 @@ class Mugshot < ActiveRecord::Base
       self.save
     end
     return self.image size
-    
-  end
-  def download(download_path)
     
   end
   
@@ -66,6 +65,7 @@ end
     end  
     
   end
+  
   def s3_get_private_url
     if s3_connect?
       prv_url = Aws::S3::S3Object.url_for(self.filename,s3_config[:bucket_name])
@@ -89,4 +89,10 @@ end
     return AWS::S3::Base.connected?
   end
   
+  def do_social
+    if self.authuser.tweeting?
+      @authuser = self.authuser
+      self.authuser.twitter_connect.tweet("#{@authuser.login} just took #{@authuser.gender_possessive} #{@authuser.mugshots.count.ordinalize} mugshot at www.dailymugshot.com!")
+    end
+  end
 end

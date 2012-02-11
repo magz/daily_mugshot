@@ -1,4 +1,6 @@
 class AuthusersController < ApplicationController
+   skip_before_filter :require_login, :only => [:new, :create, :index, :search, :show, :signup, :submit_forgot_password]
+  
   # GET /authusers
   # GET /authusers.json
   def index
@@ -67,71 +69,76 @@ class AuthusersController < ApplicationController
   
   def show_mine
     @authuser = current_authuser
-    @page_size = 7
-    @page_count = (@authuser.mugshots.count.to_f / @page_size.to_f).ceil
-    if params[:page] != nil
-      @current_page = params[:page].to_i
-      if @current_page < 0
-        @current_page = 0
-      end
-      if @current_page > @page_count
-        @current_page = @page_count
-      end
-      if @current_page * @page_size == @authuser.mugshots.count
-        @current_page -= 1
-      end
-      @mugshots = @authuser.mugshots[@current_page * @page_size..(@current_page * (@page_size +1)-1)].reverse
+    unless @authuser == nil || !@authuser.has_mugshot?
+      @page_size = 7
+      @page_count = (@authuser.mugshots.count.to_f / @page_size.to_f).ceil
+      if params[:page] != nil
+        @current_page = params[:page].to_i
+        if @current_page < 0
+          @current_page = 0
+        end
+        if @current_page > @page_count
+          @current_page = @page_count
+        end
+        if @current_page * @page_size == @authuser.mugshots.count
+          @current_page -= 1
+        end
+        @mugshots = @authuser.mugshots[@current_page * @page_size..(@current_page * (@page_size +1)-1)].reverse
     
-    else
-      if params[:focused_mugshot] != nil
-        @focused_mugshot = Mugshot.find(params[:focused_mugshot].to_i)
-        ind=@authuser.mugshots.index @focused_mugshot
-        @current_page = (@authuser.mugshots.count.to_f / ind).ceil
+      else
+        if params[:focused_mugshot] != nil
+          @focused_mugshot = Mugshot.find(params[:focused_mugshot].to_i)
+          ind=@authuser.mugshots.index @focused_mugshot
+          @current_page = (@authuser.mugshots.count.to_f / ind).ceil
         
       
-      else
-        @current_page = 0
+        else
+          @current_page = 0
+        end
       end
-    end
     
     
     
-    @mugshots = @authuser.mugshots[@current_page * @page_size..(@page_size * (@current_page +1)-1)].reverse
-    @focused_mugshot ||= @mugshots.first
+      @mugshots = @authuser.mugshots[@current_page * @page_size..(@page_size * (@current_page +1)-1)].reverse
+      @focused_mugshot ||= @mugshots.first
     
     
-    # if params[:page] != nil
-    #   if params[:page].to_i < 0
-    #     params[:page] = 0
-    #   end
-    #   if params[:page].to_i > @page_count
-    #     params[:page] = @page_count
-    #   end
-    #   @current_page = params[:page].to_i
-    #   if @current_page == @page_count && @authuser.mugshots.count % @page_size == 0
-    #     @current_page -= 1
-    #   end
-    #   @mugshots = @authuser.mugshots[@current_page * @page_size..((@current_page + 1)*@page_size)-1].reverse
-    #   @focused_mugshot = @mugshots.first
-    # else  
-    #   if params[:focused_mugshot]
-    #     @focused_mugshot = Mugshot.find params[:focused_mugshot]
-    #   else
-    #     @focused_mugshot = @authuser.mugshots.last
-    #   end
-    #   ind=@authuser.mugshots.index(@focused_mugshot)
-    #   @current_page = (ind.to_f / @authuser.mugshots.count.to_f).floor
-    #   @mugshots = @authuser.mugshots[ind-@page_size..ind].reverse   
-    #   
-    # end
-    # @page_count = (@authuser.mugshots.count.to_f / @page_size.to_f).ceil
-    #@comments = Comment.where(:authuser_id => @authuser).order("created_at DESC")
-    #might need to make sure this is ordered by date
+      # if params[:page] != nil
+      #   if params[:page].to_i < 0
+      #     params[:page] = 0
+      #   end
+      #   if params[:page].to_i > @page_count
+      #     params[:page] = @page_count
+      #   end
+      #   @current_page = params[:page].to_i
+      #   if @current_page == @page_count && @authuser.mugshots.count % @page_size == 0
+      #     @current_page -= 1
+      #   end
+      #   @mugshots = @authuser.mugshots[@current_page * @page_size..((@current_page + 1)*@page_size)-1].reverse
+      #   @focused_mugshot = @mugshots.first
+      # else  
+      #   if params[:focused_mugshot]
+      #     @focused_mugshot = Mugshot.find params[:focused_mugshot]
+      #   else
+      #     @focused_mugshot = @authuser.mugshots.last
+      #   end
+      #   ind=@authuser.mugshots.index(@focused_mugshot)
+      #   @current_page = (ind.to_f / @authuser.mugshots.count.to_f).floor
+      #   @mugshots = @authuser.mugshots[ind-@page_size..ind].reverse   
+      #   
+      # end
+      # @page_count = (@authuser.mugshots.count.to_f / @page_size.to_f).ceil
+      #@comments = Comment.where(:authuser_id => @authuser).order("created_at DESC")
+      #might need to make sure this is ordered by date
     
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @authuser }
-    end
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @authuser }
+      end
+    else
+      flash[:notice] = "You'll need to take a picture first!"
+      
+      redirect_to :first_pic
   end
   # GET /authusers/new
   # GET /authusers/new.json

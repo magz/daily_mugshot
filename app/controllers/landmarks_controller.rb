@@ -1,6 +1,8 @@
 class LandmarksController < ApplicationController
   # GET /landmarks
   # GET /landmarks.json
+  
+  
   def index
     @landmarks = Landmark.all
 

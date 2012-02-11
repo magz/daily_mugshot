@@ -25,6 +25,13 @@ class Authuser < ActiveRecord::Base
     self.gender ||= "m"
   end
   
+  def gender_possessive
+    if self.gender == "f"
+      "her"
+    else
+      "his"
+    end
+  end
   def deleted?
     !self.delted_at == nil
   end
