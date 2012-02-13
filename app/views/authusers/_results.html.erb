@@ -1,6 +1,6 @@
 <% @authusers.each do |user| %>
 	
-		<img src="<%= user.mugshots.last.image :inner %>">
+		<img src="<%= user.mugshots.last.try_image "inner" %>">
 	<%= user.id.to_s %>
 	<%= user.login %>'s total mugshots are
 	<%= user.mugshots.count %>

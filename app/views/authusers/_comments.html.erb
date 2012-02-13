@@ -15,7 +15,7 @@
                   </h4>
                   <%= comment.authuser_id == -1 ? 
                           image_tag("dmslogo_med.png", :class => "comment_pic") : 
-						  image_tag(comment.authuser.mugshots.last.image :thumb) 
+						  image_tag(comment.authuser.mugshots.last.try_image "thumb") 
 						  #need to incorporate the zoom thumb thing here
 											%>
 		                  

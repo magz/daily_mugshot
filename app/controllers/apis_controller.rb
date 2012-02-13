@@ -129,7 +129,7 @@ class ApisController < ApplicationController
 
     @description = @authuser.login + " just took "+ gender + " " + pic_num + " mugshot!"
 
-    @image_url = new_mug.image :thumb
+    @image_url = new_mug.try_image "thumb"
     @new_url = "http://localhost:3000"
 
     #css class
@@ -152,7 +152,7 @@ class ApisController < ApplicationController
     @authuser = Authuser.find(params[:authuser])
     @result << @authuser.id
     @authuser.mugshots.each do |pic|
-      @result << pic.image(:inner)
+      @result << pic.try_image("inner")
     end 
     # temp = Mugshot.where(:authuser_id => params[:authuser]).sort! {|a,b| a.created_at <=> b.created_at}
     # temp.each do |shot|
@@ -227,7 +227,7 @@ class ApisController < ApplicationController
     @mugshot = Mugshot.where("image_file_name != 'nil'").last
     @authuser = @mugshot.authuser
     gender = @authuser.gender == "m" ? "his" : "her"
-    @hash = {image: @mugshot.image(:inner), userid: @authuser.id, message: (@authuser.login + " just took " + gender + " " + @authuser.mugshots.count.ordinalize + " mugshot!")}
+    @hash = {image: @mugshot.try_image("inner"), userid: @authuser.id, message: (@authuser.login + " just took " + gender + " " + @authuser.mugshots.count.ordinalize + " mugshot!")}
     respond_to do |format|
       format.html { render :layout => false }
       format.json { render json: @hash }

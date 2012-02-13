@@ -23,7 +23,7 @@ class IphoneController < ApplicationController
         @last = last_mugshot.created_at.strftime("%Y-%m-%d %H:%M:%S")
         #this is batshit insane...i'm going to send the 200x200 for now and figure out how to downsize the 400x400 to 320x320 later 
         #@my_url = pull_down_iphone(pic_full)
-        @my_url = last_mugshot.image :inner
+        @my_url = last_mugshot.try_image "inner"
       else
         @last = "-1"
         @my_url = "-1"

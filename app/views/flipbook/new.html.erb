@@ -10,7 +10,7 @@
   </ul>
 </div>
 <% current_authuser.mugshots.each do |mugshot| %>
-<%= image_tag(mugshot.image :inner)%>
+<%= image_tag(mugshot.try_image "inner")%>
 <% end %>
 <div class="countdown" id="countdown">
 	<%#= render :partial => "flipbook_cover_button" %>
