@@ -21,8 +21,10 @@ class Mugshot < ActiveRecord::Base
 
   def try_image(size="full")
     if self.image.to_s.match("missing").class != NilClass
-      self.image = AWS::S3.new.buckets[:dailymugshotprod].objects[self.filename].url_for(:read).open
+      f = AWS::S3.new.buckets[:dailymugshotprod].objects[self.filename].url_for(:read).open
+      self.image = f
       self.save
+      f.close
     end
     return self.image size.to_sym
     
