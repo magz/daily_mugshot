@@ -14,11 +14,13 @@ class AuthusersController < ApplicationController
     # ((Mugshot.count - (@current_page +1)*@page_size)..(Mugshot.count - (@current_page)*@page_size)).each do |x|
     #   @authusers << Mugshot.find(x).authuser
     # end
-    size=Mugshot.count
+    size = Mugshot.count
     while @authusers.count < @page_size
-      temp = Mugshot.find(rand size)
-      if temp.image_file_name != nil && temp.authuser != nil
-        @authuser << temp.authuser
+      begin
+        temp = Mugshot.find(rand size)
+        temp.try_image
+        @authusers << temp.authuser
+      rescue
       end
     end
     respond_to do |format|
