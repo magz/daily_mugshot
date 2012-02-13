@@ -34,9 +34,6 @@ class MugshotsController < ApplicationController
       redirect_to :root and return
     end
     
-    if @authuser.mugshots.count == 0
-      redirect_to :first_pic and return
-    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @mugshot }

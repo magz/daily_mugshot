@@ -186,11 +186,14 @@ class AuthusersController < ApplicationController
     #also set up the routes for all these calls!
     @authuser = current_authuser
     #validate!!!
+      #done below, but make sure it works!
     
-
-    @authuser.login_was = @authuser.login
+    
+    #@authuser.login_was = @authuser.login
     #what is the point of the above line?
-    if @authuser.update_attributes(params[:authuser])
+    
+    
+    if @authuser && Authuser.authenticate(@authuser.login, params[:authuser][:old_password]) && @authuser.update_attributes(params[:authuser])
       respond_to do |format|
         format.html do
           flash[:notice] = "Your account has been updated."

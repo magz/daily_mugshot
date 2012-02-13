@@ -3,7 +3,7 @@
 
 //These two functions used to manage the tooltip
 function renderTooltip(ycoord, message){
-        $("tooltip_helper").update(message);
+        $("tooltip_helper").html(message);
         $("tooltip").style.top= ycoord + "px";   
         $("tooltip").style.visibility="visible";
 }
@@ -31,13 +31,13 @@ function gotoCloseApps(){
 function gotoCameraSetup(){
 	$('#choose_method').hide();
 	$('#cam_dialogue').show();
-	$('#setupHeader').update('Camera Setup');
+	$('#setupHeader').html("Camera Setup")
 }
 
 function gotoSkip(){
 	$('#choose_method').hide();
 	$('#tip_dialogue').show();
-	$('#setupHeader').update('First Mugshot Tips');
+	$('#setupHeader').html('First Mugshot Tips');
 }
 
 function gotoChooseInput(){
@@ -54,13 +54,13 @@ function gotoAdvanced(){
 
 function gotoMugTips(){
 	$('#cam_dialogue').hide();
-	$('#setupHeader').update('First Mugshot Tips');
+	$('#setupHeader').html("First Mugshot Tips")
 	$('#tip_dialogue').show();
 }
 
 function firstPic(){
 	$('#tip_dialogue').hide();
-	$('#setupHeader').update('Time for your First Mugshot!');
+	$('#setupHeader').html('Time for your First Mugshot!');
 	$('#firstPic_dialogue').show();
 }
 

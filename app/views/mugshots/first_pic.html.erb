@@ -1,9 +1,9 @@
 
 <%= stylesheet_link_tag "setup" %>
-<%= javascript_include_tag "swfobject" %>
+<%= javascript_include_tag "swfobject", "navigation" %>
 <script type="text/javascript"> 
 swfobject.registerObject("testcam", "9.0.115", "expressInstall.swf");
-
+swfobject.registerObject("fullupload", "9.0.115", "expressInstall.swf");
 </script>
 
 <div class="setupContainer">
@@ -32,7 +32,7 @@ swfobject.registerObject("testcam", "9.0.115", "expressInstall.swf");
     Note: If your camera is working and you already see yourself, go and head right-click (for Macs, ctrl-click) in the camera area and choose 'Settings', because you will want to see save some settings: see below.
     <br><br>
     An options box will appear like the one below.
-    <img src="/images/allowremember.png"/>
+    <%= image_tag "allowremember.png"%>
     <br>
     Click on the tab that looks like a monitor with an eye (strange huh?).  Make sure both 'Allow' and 'Remember' are checked off.
     <br>
@@ -52,7 +52,7 @@ swfobject.registerObject("testcam", "9.0.115", "expressInstall.swf");
     <b>Choosing Proper Camera</b><br>
     Click the 'Flash Settings' button to the right.  An options box will appear like the one below.
     <br>
-    <img src="/images/select_input.png"/>
+    <%= image_tag "select_input.png"%>
     <br>
     Click on the camera tab.  Then <b>try the different options from the dropdown menu.</b>  One of them should bring up the Camera.
     <br><br>
@@ -65,10 +65,10 @@ swfobject.registerObject("testcam", "9.0.115", "expressInstall.swf");
     <b>Check Advanced Flash Settings</b><br>
     If things are still not working, don't worry, there is still ONE MORE issue we can check.
     <br>
-    <img src="/images/select_advanced.png"/>
-    If settings are not already open, then open them by clicking the 'Flash Settings' button to the right.  Select the privacy tab, which looks like a monitor with an eye in it.  Click the 'Advanced' Button, which will open a new page in your browser as seen below:
+    <%= image_tag "select_advanced.png"%>
+	If settings are not already open, then open them by clicking the 'Flash Settings' button to the right.  Select the privacy tab, which looks like a monitor with an eye in it.  Click the 'Advanced' Button, which will open a new page in your browser as seen below:
     <br>
-    <img src="/images/advanced_options.png"/>
+    <%= image_tag "advanced_options.png"%>
     <br>
     In this 'Flash Player Help' page, click on the 'Website Privacy Settings Panel', as seen above. When the panel opens, search through the list of websites to find 'www.dailymugshot.com'.  Make sure it is checked to 'always allow'  Then close this page, and refresh the Daily Mughshot page.  Do you see yourself?
     <br>
@@ -88,21 +88,10 @@ swfobject.registerObject("testcam", "9.0.115", "expressInstall.swf");
   <br>
   <ol id="mug_tips_list">
     <li><strong>Get Close</strong>:  Make sure you fill the frame.  Your face is beautiful.  Show it off!<br>
-        <img src="/images/get_close.jpg" width="450" height="200" alt="Get Close"/></li>
-        <li><strong>Continuity matters</strong>: you want to have a similar expression in each photo.  The easiest is dead-pan.  Smiling too much is hard to replicate. <br /><img src="/images/similar_expression.jpg" width="450" height="200" alt="Continuity Matters. Use an expression that is easy to replicate." /></li>
+        <img src= <%= asset_path "get_close.jpg" %> width="450" height="200" alt="Get Close"/></li>
+        <li><strong>Continuity matters</strong>: you want to have a similar expression in each photo.  The easiest is dead-pan.  Smiling too much is hard to replicate. <br /><img src= <%= asset_path "similar_expression.jpg" %> width="450" height="200" alt="Continuity Matters. Use an expression that is easy to replicate." /></li>
   </ol>
-  <button class="button im_ready_button" onmouseup="firstPic()">I'm Ready!!</button>
-</div>
-<div id="firstPic_dialogue">
-    <div id="whoAmI" me="firstPic"></div>
-    <div id="fullupload" class="flash_container">
-	<script>
-	var flashvars = {};
-	var params = {};
-	var attributes = {};
-	swfobject.embedSWF("http://<%= request.host %>/swf/flow.swf", "fullupload", "215", "300", "9.0.115", flashvars, params, attributes);
-	</script>
-    </div>
+	<a href=<% new_pic_path %>><button class="button im_ready_button">I'm Ready!!</button> </a>
 </div>
 <div class="clear"></div>
 </div>

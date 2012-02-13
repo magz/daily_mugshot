@@ -4,7 +4,11 @@
 	
 	<li id="mySequence"><%= link_to "My Mugshow", my_mugshow_path %></li>
 	<li id="myAcounnt"><%= link_to "My Account", my_account_path %></li>
-	<li id="takePic"><%= link_to "Take a Pic", new_pic_path %></li>
+	<% if current_authuser.has_mugshot? %>
+		<li id="takePic"><%= link_to "Take a Pic", new_pic_path %></li>
+	<% else%>
+		<li id="takePic"><%= link_to "Take a Pic", controller: "mugshots", action: "first_pic" %></li>
+	<% end %>
 	</br>
 	<li id="invites"><%#= link_to "Find Your Friends", {:controller => "authuser", :action => "find_friends" } %></li>
 	<li id="invites" class = "new"><%#= link_to "Youtube It -- NEW!", {:controller => "video", :action => "new" } %></li>
