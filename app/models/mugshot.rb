@@ -19,12 +19,12 @@ class Mugshot < ActiveRecord::Base
   :processors => [:cropper] 
   #:storage => :s3, :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "rails3_development" 
 
-  def try_image(size)
-    if self.image.to_s.match "missing" == nil
+  def try_image(size="full")
+    if self.image.to_s.match("missing").class != NilClass
       self.image = AWS::S3.new.buckets[:dailymugshotprod].objects[self.filename].url_for(:read).open
       self.save
     end
-    return self.image size
+    return self.image size.to_sym
     
   end
   
