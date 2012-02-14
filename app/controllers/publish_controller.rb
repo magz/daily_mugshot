@@ -7,7 +7,7 @@ class PublishController < ApplicationController
     )
     @twitter_request_token = twitter_client.request_token(:oauth_callback => "http://localhost:3000/publish/twitter_callback")
     session[:twitter_request_token] = @twitter_request_token
-    @fb_client = Koala::Facebook::OAuth.new
+    # @fb_client = Koala::Facebook::OAuth.new
     
   end
   

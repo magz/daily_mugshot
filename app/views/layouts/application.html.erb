@@ -10,7 +10,8 @@
   <%= javascript_include_tag "zoomThumb" %>
   <%= javascript_include_tag "navigation" %>
 
-  <link rel="shortcut icon" href= <% asset_path "favicon.ico" %> >
+	<%= favicon_link_tag asset_path "favicon.ico" %>
+	
   <%= csrf_meta_tags %>
 	<%= yield :head %>
 

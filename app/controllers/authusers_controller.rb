@@ -4,7 +4,7 @@ class AuthusersController < ApplicationController
   # GET /authusers
   # GET /authusers.json
   def index
-    @page_size = 12
+    @page_size = 6
     @current_page = params[:page] == nil ? 0 : params[:page].to_i
     if @current_page < 0
       @current_page = 0

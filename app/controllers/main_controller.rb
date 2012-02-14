@@ -1,7 +1,7 @@
 class MainController < ApplicationController
   skip_before_filter :require_login, :only => [:welcome, :faq, :about]
   def welcome
-    #@mugshots = Mugshot.where("image_file_name != 'nil'").last 6
+    @mugshots = Mugshot.where("image_file_name != 'nil'").last 6
     
   end
   
