@@ -1,5 +1,5 @@
 class AuthusersController < ApplicationController
-  skip_before_filter :require_login, :only => [:new, :create, :index, :search, :show, :signup, :submit_forgot_password, :submit_forgot_password]
+  skip_before_filter :require_login, :only => [:new, :create, :index, :search, :show, :signup, :forgot_password, :submit_forgot_password, :submit_forgot_password]
   
   # GET /authusers
   # GET /authusers.json
@@ -157,8 +157,10 @@ class AuthusersController < ApplicationController
 
   # GET /authusers/1/edit
   def edit
-    @authuser = Authuser.find(current_authuser)
+    @authuser = current_authuser
+    @errors = []
   end
+  
 
   # POST /authusers
   # POST /authusers.json
@@ -185,18 +187,29 @@ class AuthusersController < ApplicationController
   # PUT /authusers/1
   # PUT /authusers/1.json
   def update
-    #i think this should work other than the validation not being in there yet
-    #also set up the routes for all these calls!
+    
+    #this is a bit messy...sorry he who comes after / future me!
+    #to do: unify this with the edit call, which it is currently kinda paired with..messy messy
+    
     @authuser = current_authuser
-    #validate!!!
-      #done below, but make sure it works!
+    @errors = []
+    if @authuser.id != params[:id].to_i
+      @errors << "You can't update another user's account"
+    end
+    @params = params
+    if !Authuser.authenticate(@authuser.login, params[:authuser][:old_password])
+      @errors << "Your old password is incorrect.  Please try again.  If you've lost your password, we can generate you a new one"
+    end
     
-    
-    #@authuser.login_was = @authuser.login
-    #what is the point of the above line?
-    
-    
-    if @authuser && Authuser.authenticate(@authuser.login, params[:authuser][:old_password]) && @authuser.update_attributes(params[:authuser])
+    if params[:authuser][:password] != params[:authuser][:password_confirmation]
+      @errors << "Your new password did not match the confirmation provided.  Please try again"
+    end
+    if @errors == []
+      unless @authuser.update_attributes(email: params[:authuser][:email], login: params[:authuser][:login], time_zone: params[:authuser][:time_zone], crypted_password: Authuser.encrypt(params[:authuser][:password], @authuser.salt))
+        @errors << "Problem updating your account.  Please try again"
+      end
+    end
+    if @errors == []
       respond_to do |format|
         format.html do
           flash[:notice] = "Your account has been updated."
@@ -205,9 +218,10 @@ class AuthusersController < ApplicationController
         format.xml{ head :ok }
       end
     else
+      
       respond_to do |format|
         format.html{ render :edit }
-        format.xml{ render :xml => @authuser.errors.to_xml, :status => :unprocessable_entity }
+        format.xml{ render :xml => @errors.to_xml, :status => :unprocessable_entity }
       end
       
     end

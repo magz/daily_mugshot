@@ -100,6 +100,10 @@
 								<p><%= flash[:notice] %></p>
 							</div>
 						</div>
+						    <% if flash[:error] %>
+						      <p class="error"><%= flash[:error] %></p>
+						    <% end %>
+						
 						<% end %>
 						<%= link_to "http://itunes.apple.com/us/app/dailymugshot/id393861180?mt=8", :popup => true, :class => 'app_store' do %>
 							<%= image_tag("app_store.jpg", align: "right") %>

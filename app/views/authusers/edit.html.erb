@@ -1,8 +1,14 @@
 <%= stylesheet_link_tag "update_account" %>
+
 <h1>Update Account</h1>
         <fieldset>
             <%= form_for @authuser do |f| -%>
-							<%#= @authuser.error_messages %>
+					<% unless @errors == [] %>
+						<% @errors.each do |x| %> 
+							<%= x %>
+						<% end %>
+					<% end %>
+							
 	            <div class="highlight_box" id="current_password">
 	              <div class="highlight_box_wrapper">
 	                <div class="highlight_box_content" OnMouseOver="renderTooltip(180,'We need this for your protection');" OnMouseOut="hideTooltip();">
