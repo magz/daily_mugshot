@@ -4,15 +4,8 @@
    <li>
 	   <label>
         <%=(m.created_at).strftime("%m/%d/%y")%>
-        <%= link_to (image_tag(m.try_image ("thumb"))), 
-		            :controller => "authusers", 
-		            :action => "show_mine", 
-		            :focused_mugshot => m.id %>
-        <% x=m.id.to_s %>
+        <%= image_tag(m.try_image ("thumb"), :onclick => "alert('hi magz)")%>
 		<%= check_box("m", "active", checked: m.active, onchange: "$.post('mugshots/ajax_active_update.json', {id:"+ x + "})")  %>
-
-				<script type="text/javascript">
-				</script>
 
 	   </label>
    </li>
