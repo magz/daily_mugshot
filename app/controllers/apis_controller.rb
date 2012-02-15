@@ -63,23 +63,34 @@ class ApisController < ApplicationController
       format.xml  { render :layout => false }
     end
   end
-
-
+  
   def get_full
-    if params[:filename] =~ /(open.+[\z^.*?])/ix 
-      s = $1
-      s = s.chop.chop
+    if params[:filename]
+      @full = Mugshot.find(params[:filename])
     end
-    @authuser = Authuser.find params[:userid]
-    @full = @authuser.mugshots.find_by_image_file_name s
-    #sorry there are some finer points of respond_to i'm missing
-    #forgive me my ignorance if i don't make it back to fix this up
     request.format = "xml"
-    
-    respond_to do |format|
-      format.xml  { render :layout => false, :status => (@full ? :ok : 404) }
+      respond_to do |format|
+      format.xml  { render :layout => false }
     end
+  
+  
   end
+  #this is based on the old method of keeping track of image files...we're not doing that anymore
+  # def get_full
+  #   if params[:filename] =~ /(open.+[\z^.*?])/ix 
+  #     s = $1
+  #     s = s.chop.chop
+  #   end
+  #   @authuser = Authuser.find params[:userid]
+  #   @full = @authuser.mugshots.find_by_image_file_name s
+  #   #sorry there are some finer points of respond_to i'm missing
+  #   #forgive me my ignorance if i don't make it back to fix this up
+  #   request.format = "xml"
+  #   
+  #   respond_to do |format|
+  #     format.xml  { render :layout => false, :status => (@full ? :ok : 404) }
+  #   end
+  # end
   
   def set_inner
     #this is called by the adjust object to update the offset of a mugshot

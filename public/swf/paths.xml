@@ -1,4 +1,4 @@
 <Paths> 
-	<apipath>http://localhost:3000/</apipath> 
-	<uploadpath>http://localhost:3000/</uploadpath> 
+	<apipath>/</apipath> 
+	<uploadpath>/</uploadpath> 
 </Paths> 
