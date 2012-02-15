@@ -14,7 +14,7 @@ gem "cocaine", "~> 0.2.1"
 gem "capistrano", "~> 2.9.0"
 gem "execjs"
 gem 'therubyracer'
-
+gem "pg", "0.12.0"
 
 # Gems used only for assets and not required
 # in production environments by default.

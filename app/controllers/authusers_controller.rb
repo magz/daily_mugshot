@@ -59,7 +59,8 @@ class AuthusersController < ApplicationController
     @comments = Comment.where(:authuser_id => @authuser).order("created_at DESC")
     if params[:current_tab] == "mosaic"
       @current_tab = "mosaic"
-      @mugshots = @authuser.mugshots.where(:active => true).sort{|a,b| a.created_at <=> b.created_at}
+      #add a thing to only get active ones
+      @mugshots = @authuser.mugshots.sort{|a,b| a.created_at <=> b.created_at}
     else
       @current_tab = "mugshow"
     end

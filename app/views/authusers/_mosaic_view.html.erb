@@ -1,3 +1,5 @@
 <% @mugshots.each do |mugshot| %>
 	<%= image_tag mugshot.try_image "thumb" %>
+	<%= check_box("mugshot", "active", checked: mugshot.active, onchange: "$.post('/mugshots/ajax_active_update.json', {id:"+ mugshot.id.to_s + "})")  %>
+	
 <% end %>

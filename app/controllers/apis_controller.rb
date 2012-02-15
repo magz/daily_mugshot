@@ -22,8 +22,7 @@ class ApisController < ApplicationController
       @pics = nil
     end
     respond_to do |format|
-      format.xml
-      format.json  { render :json => @pics }
+      format.xml { render :layout => false }
     end
   end
   
