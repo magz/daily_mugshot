@@ -1,5 +1,5 @@
 class AuthusersController < ApplicationController
-  skip_before_filter :require_login, :only => [:new, :create, :index, :search, :show, :signup, :submit_forgot_password]
+  skip_before_filter :require_login, :only => [:new, :create, :index, :search, :show, :signup, :submit_forgot_password, :submit_forgot_password]
   
   # GET /authusers
   # GET /authusers.json

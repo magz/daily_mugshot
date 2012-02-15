@@ -36,6 +36,7 @@ class Authuser < ActiveRecord::Base
     !self.delted_at == nil
   end
   def self.authenticate(login, password)
+    #authentication for login
     
     u = Authuser.where(:login => login).first || Authuser.where(:email => login).first
     if u && u.crypted_password == Authuser.encrypt(password, u.salt)
@@ -46,6 +47,7 @@ class Authuser < ActiveRecord::Base
   end 
   
   def consistency
+    #maybe cut people some slack on this to account for downtime?  i dunno w/e
     if self.has_mugshot?
       (self.mugshots.count / ((Date.today - self.mugshots.first.created_at.to_datetime).to_f)) * 100 
     else
@@ -55,16 +57,6 @@ class Authuser < ActiveRecord::Base
   def last_mugshot_date
     self.mugshots.last.created_at
   end
-  
-  def self.users_with_mugshots
-    temp = []
-    Authuser.all.each do |user|
-      if user.has_mugshot?
-        temp << user
-      end
-    end
-    temp
-  end 
   def has_mugshot?
     self.mugshots.first != nil
   end
@@ -77,6 +69,7 @@ class Authuser < ActiveRecord::Base
   end
   
   def self.encrypt(password, salt)
+    #encryption for login
     Digest::SHA1.hexdigest("--#{salt}--#{password}--")
   end
 
@@ -102,6 +95,7 @@ class Authuser < ActiveRecord::Base
   end
 
   def forget_me
+    #destroy remmeber token
     self.remember_token_expires_at = nil
     self.remember_token            = nil
     save

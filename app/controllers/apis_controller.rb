@@ -9,7 +9,6 @@ class ApisController < ApplicationController
   #be careful with security on this
   def get_sequence
     #verify we have a populated parameter
-    Rails.logger.info "bam"
     if params[:userid] != nil
       #verify user
       user = Authuser.find(params[:userid])
@@ -21,12 +20,16 @@ class ApisController < ApplicationController
     else
       @pics = nil
     end
+    #sorry there are some finer points of respond_to i'm missing
+    #forgive me my ignorance if i don't make it back to fix this up
+    request.format = "xml"
     respond_to do |format|
-      format.xml { render :layout => false }
+      format.xml
     end
   end
   
   def upload_file
+  
     #i am neither sure if this is going to work or if it's actually used
     #i am, for example, not clear how this funciton relates to the primary upload funciton
     #or how it sets up which user is the uploader
@@ -42,6 +45,7 @@ class ApisController < ApplicationController
   end
   
   def get_landmarks
+    #this is called by the fullupload object
     unless params[:userid] == nil
       #verify user exists and is the same as logged in user
       @authuser = Authuser.find(params[:userid])
@@ -70,7 +74,8 @@ class ApisController < ApplicationController
   end
   
   def set_inner
-    #what's it trying to do here?
+    #this is called by the adjust object to update the offset of a mugshot
+    #this necessicates a recropping of the mugshot images i think
     #verify arguments
     unless (params[:userid] == nil) || (params[:filename == nil]) || (params[:xoffset] == nil) || (params[:yoffset] == nil)
       xoffset = params[:xoffset].to_i
@@ -113,6 +118,7 @@ class ApisController < ApplicationController
     end
   end
   def get_update
+    #get new update for the alert box
     @header = "New Mugshot!"
     new_mug = Mugshot.last
     unless new_mug
@@ -129,6 +135,7 @@ class ApisController < ApplicationController
     @description = @authuser.login + " just took "+ gender + " " + pic_num + " mugshot!"
 
     @image_url = new_mug.try_image "thumb"
+    #change this to adapt with the host via request.host and maybe request.port
     @new_url = "http://localhost:3000"
 
     #css class
@@ -147,6 +154,7 @@ class ApisController < ApplicationController
     end
 
     def new_get_sequence
+      #updating of get_sequence call for new data models...not used atm
     @result = []
     @authuser = Authuser.find(params[:authuser])
     @result << @authuser.id
@@ -164,6 +172,7 @@ class ApisController < ApplicationController
     end
     end
     def upload
+      #this is the real upload function for both mobile and web...impt!
       #this is i think the function for both the flash object and mobile uploading
       #impt impt impt
       #i think this should be working
@@ -223,6 +232,7 @@ class ApisController < ApplicationController
       end
     end
   def get_multi_box_update
+    #this is my new ajax call for the front page..magz
     @mugshot = Mugshot.where("image_file_name != 'nil'").last
     @authuser = @mugshot.authuser
     gender = @authuser.gender == "m" ? "his" : "her"
@@ -234,6 +244,8 @@ class ApisController < ApplicationController
     end
   end
   def alarm
+    #this is the alarm for the desktop alerter
+    #probably not all done up for time zones yet
     unless params[:user] == nil
       #verify user
       @user = Authuser.find_by_login(params[:user])
