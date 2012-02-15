@@ -54,7 +54,11 @@ class ApisController < ApplicationController
       else
         redirect_to :action => 'wrong_user'
       end
-    end   
+    end 
+    #sorry there are some finer points of respond_to i'm missing
+    #forgive me my ignorance if i don't make it back to fix this up
+    request.format = "xml"
+      
     respond_to do |format|
       format.xml  { render :layout => false }
     end
@@ -68,6 +72,10 @@ class ApisController < ApplicationController
     end
     @authuser = Authuser.find params[:userid]
     @full = @authuser.mugshots.find_by_image_file_name s
+    #sorry there are some finer points of respond_to i'm missing
+    #forgive me my ignorance if i don't make it back to fix this up
+    request.format = "xml"
+    
     respond_to do |format|
       format.xml  { render :layout => false, :status => (@full ? :ok : 404) }
     end

@@ -8,7 +8,7 @@ set :scm_passphrase, "starmane999"
 set :branch, "master"
 ssh_options[:forward_agent] = true
 
-# set :deploy_via, :remote_cache
+set :deploy_via, :remote_cache
 
 
 set :deploy_to, "/var/www/apps/#{application}"

@@ -9,11 +9,7 @@ class ApplicationController < ActionController::Base
   end
   
   def current_authuser
-    begin
-      Authuser.find_by_id(session[:authuser])
-    rescue
-      false
-    end
+    @current_authuser ||= Authuser.find_by_id(session[:authuser])
   end
   
   def login_from_cookie
