@@ -29,7 +29,7 @@ class MugshotsController < ApplicationController
     @authuser = current_authuser
     
     #check if they've taken a pic today
-    if Mugshot.where(:authuser_id => @authuser, :created_at => Date.today).exists?
+    if Mugshot.where(:authuser_id => @authuser.id, :created_at => Date.today).exists?
       flash[:notice] << "You've already taken a picture today!  You'll have to have until tomorrow to take another"
       redirect_to :root and return
     end
