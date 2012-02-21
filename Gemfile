@@ -15,6 +15,7 @@ gem "capistrano", "~> 2.9.0"
 gem "execjs"
 gem 'therubyracer'
 gem "pg", "0.12.0"
+gem "whenever"
 
 # Gems used only for assets and not required
 # in production environments by default.

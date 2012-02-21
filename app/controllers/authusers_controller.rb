@@ -14,7 +14,7 @@ class AuthusersController < ApplicationController
     # ((Mugshot.count - (@current_page +1)*@page_size)..(Mugshot.count - (@current_page)*@page_size)).each do |x|
     #   @authusers << Mugshot.find(x).authuser
     # end
-    size = Mugshot.count
+    size = Mugshot.count 
     while @authusers.count < @page_size
       begin
         temp = Mugshot.find(rand size)
@@ -158,6 +158,14 @@ class AuthusersController < ApplicationController
   # GET /authusers/1/edit
   def edit
     @authuser = current_authuser
+    # if @authuser.email_reminder.present?
+    #   @email_reminder = @authuser.email_reminder
+    # else
+    #   @email_reminder = EmailReminder.new
+    #   @email_reminder.active = true
+    #   @email_reminder.authuser_id = @authuser.id
+    #   
+    # end  
     @errors = []
   end
   
@@ -196,7 +204,6 @@ class AuthusersController < ApplicationController
     if @authuser.id != params[:id].to_i
       @errors << "You can't update another user's account"
     end
-    @params = params
     if !Authuser.authenticate(@authuser.login, params[:authuser][:old_password])
       @errors << "Your old password is incorrect.  Please try again.  If you've lost your password, we can generate you a new one"
     end
@@ -204,11 +211,27 @@ class AuthusersController < ApplicationController
     if params[:authuser][:password] != params[:authuser][:password_confirmation]
       @errors << "Your new password did not match the confirmation provided.  Please try again"
     end
+    if params[:authuser][:password] == ""
+      params[:authuser][:password] = params[:authuser][:old_password]
+    end
     if @errors == []
       unless @authuser.update_attributes(email: params[:authuser][:email], login: params[:authuser][:login], time_zone: params[:authuser][:time_zone], crypted_password: Authuser.encrypt(params[:authuser][:password], @authuser.salt))
         @errors << "Problem updating your account.  Please try again"
       end
     end
+    #checks if present because it wont' be if active is set to false
+    # if @errors ==[] 
+    #   @email_reminder = @authuser.email_reminder
+    #   if params[:email_reminder].present?
+    #     @email_reminder.active = true
+    #   else
+    #     @email_reminder.active = false
+    #   end
+    #   @email_reminder.hour = params[:date][:hour]
+    #   @email_reminder.save
+    # end
+      
+        
     if @errors == []
       respond_to do |format|
         format.html do

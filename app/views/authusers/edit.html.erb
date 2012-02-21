@@ -1,7 +1,8 @@
 <%= stylesheet_link_tag "update_account" %>
 
 <h1>Update Account</h1>
-        <fieldset>
+
+      	<fieldset>
             <%= form_for @authuser do |f| -%>
 					<% unless @errors == [] %>
 						<% @errors.each do |x| %> 
@@ -80,7 +81,7 @@
                         </div>
                     </div>
                 </div>
-                
+	            
 		<div class="highlight_box">
 			<div class="highlight_box_wrapper">
 				<div class="highlight_box_content">

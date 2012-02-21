@@ -5,6 +5,7 @@ class Authuser < ActiveRecord::Base
   has_many :comments
   has_many :landmarks
   has_one :twitter_connect
+  has_one :email_reminder
   has_many :friendships
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
@@ -15,14 +16,20 @@ class Authuser < ActiveRecord::Base
   validates :login, :email, :gender, :crypted_password, :birthday, :presence => true
   validates :login, :email, :uniqueness => true
   
-  before_save :set_init_vals
+  after_create :init
   # before_save :encrypt_password
   #this is the same as authenticate_either in the old code
   #i don't see much reason to have them be separate functions
-  def set_init_vals
+  def init
     self.time_zone ||= "US/Eastern"
     self.active ||= true
     self.gender ||= "m"
+    @email_reminder = EmailReminder.new
+    @email_reminder.hour = 12
+    @email_reminder.authuser_id = self.id
+    @email_reminder.active = true
+    @email_reminder.save
+    self.save
   end
   
   def gender_possessive

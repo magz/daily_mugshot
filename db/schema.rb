@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120207220538) do
+ActiveRecord::Schema.define(:version => 20120221161133) do
 
   create_table "authusers", :force => true do |t|
     t.string   "login"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20120207220538) do
 
   create_table "email_reminders", :force => true do |t|
     t.integer  "authuser_id"
-    t.integer  "hour"
+    t.datetime "hour"
     t.boolean  "active"
     t.datetime "deleted_at"
     t.datetime "created_at"
@@ -124,6 +124,36 @@ ActiveRecord::Schema.define(:version => 20120207220538) do
     t.string   "release_notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "transition_authusers", :id => false, :force => true do |t|
+    t.integer  "id",                                      :default => 0, :null => false
+    t.string   "login",                     :limit => 16
+    t.string   "email"
+    t.string   "crypted_password",          :limit => 40
+    t.string   "salt",                      :limit => 40
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "remember_token"
+    t.datetime "remember_token_expires_at"
+    t.integer  "active",                                  :default => 1
+    t.string   "time_zone"
+    t.string   "gender"
+    t.date     "birthday"
+    t.integer  "invites"
+    t.integer  "prvt",                                    :default => 0
+    t.datetime "deleted_at"
+    t.string   "type"
+  end
+
+  create_table "transition_pics_table", :id => false, :force => true do |t|
+    t.integer  "id",          :default => 0, :null => false
+    t.integer  "authuser_id"
+    t.datetime "created"
+    t.integer  "xoffset"
+    t.integer  "yoffset"
+    t.string   "filename"
+    t.datetime "deleted_at"
   end
 
   create_table "twitter_connects", :force => true do |t|

@@ -77,6 +77,7 @@ DailyMugshot::Application.routes.draw do
   resources :landmarks
   resources :comments
   resources :mugshots
+  resources :email_reminders
   
   
   # Sample resource route (maps HTTP verbs to controller actions automatically):
