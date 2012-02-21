@@ -4,16 +4,9 @@ class AuthusersController < ApplicationController
   # GET /authusers
   # GET /authusers.json
   def index
-    @page_size = 6
-    @current_page = params[:page] == nil ? 0 : params[:page].to_i
-    if @current_page < 0
-      @current_page = 0
-    end
+    @page_size = 18
     #this could maybe be slightly more efficient
     @authusers = []
-    # ((Mugshot.count - (@current_page +1)*@page_size)..(Mugshot.count - (@current_page)*@page_size)).each do |x|
-    #   @authusers << Mugshot.find(x).authuser
-    # end
     size = Mugshot.count 
     while @authusers.count < @page_size
       begin

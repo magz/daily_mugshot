@@ -1,10 +1,8 @@
 <% @authusers.each do |user| %>
 	
-		<img src="<%= user.mugshots.last.try_image "inner" %>">
-	<%= user.id.to_s %>
-	<%= user.login %>'s total mugshots are
-	<%= user.mugshots.count %>
-	
+<div class="user">
+	<a href=<%= authuser_path(user.id) %>><div class="username"><%= user.login %></div></a>
+	<a href="#"><div class="userpic"><%= image_tag user.mugshots.last.try_image("inner"), size: "141x141"%></div></a>
+	<a href="#"><div class="usershots"><%= user.mugshots.count %></div></a>
+</div>
 <% end %>
-	
-<%= @current_page %>   is the current page
