@@ -57,7 +57,7 @@
 										        <input id="search_input" name="search_input" type="text" /></label>
 												<fieldset>
 												  <%= label_tag(:search_criteria, "Search for:") %>
-												  <%= text_field_tag :search_criteria, "search" %>
+												  <%= text_field_tag :search_criteria, "search", :onfocus => "alert('hi magz')"%>
 												  <%= submit_tag("Search") %>
 												<% end %>												
 												</fieldset>
@@ -100,9 +100,6 @@
 								<p><%= flash[:notice] %></p>
 							</div>
 						</div>
-						    <% if flash[:error] %>
-						      <p class="error"><%= flash[:error] %></p>
-						    <% end %>
 						
 						<% end %>
 						<%= link_to "http://itunes.apple.com/us/app/dailymugshot/id393861180?mt=8", :popup => true, :class => 'top_app_store' do %>

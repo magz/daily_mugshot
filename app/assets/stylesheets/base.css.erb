@@ -662,78 +662,6 @@ img{
 
 /* @end */
 
-/* @group Zoom Thumb */
-
-.zoom_thumb{
-	width: 50px;
-	height: 50px;
-}
-.zoom_thumb img{
-	width: 50px;
-	height: 50px;
-}
-.zoom_thumb .tip{
-	position: absolute;
-	left: -9000px;
-	top: 0px;
-	width: 250px;
-	height: 240px;
-	display: block;
-	z-index: 9999;
-	line-height: 240px;
-	color: #999;
-	font-size: 0.9em;
-	font-style: italic;
-	text-align: center;
-	background: url(<%= asset_path "tip_overlay.png" %>) 0 0 no-repeat;	
-}
-* html .zoom_thumb .tip{
-	background: none;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path "tip_overlay.png" %>, sizingMethod='crop');
-}
-.zoom_thumb  .tip img{
-	width: 200px !important;
-	height: 200px !important;
-	position: absolute !important;
-	left: 20px !important;
-	top: 19px !important;
-	z-index: 2 !important;
-	display: none;
-}
-.zf_hover,
-.zoom_thumb:hover{
-	position: relative;
-  z-index: 999999;
-}
-.zf_hover .tip,
-.zoom_thumb:hover .tip{
-	left: -250px;
-	top: -55px;
-	display: block;
-}
-* html .zf_hover .tip,
-* html .zoom_thumb:hover .tip{
-	top: -60px;
-}
-* + html .zoom_thumb:hover .tip{
-	top: -60px;
-}
-.zoom_thumb .tip{
-	opacity: 0.7;
-	-moz-opacity:0.7;
-}
-.zf_hover .tip img,
-.zoom_thumb:hover .tip img{
-	display: block;
-}
-.zoom_thumb  .tip:hover{
-	visibility: hidden;
-}
-.loaded .tip{
-	opacity: 1 !important;
-	-moz-opacity:1 !important;
-}
-/* @end */
 
 /* @group Mugshot Box */
 
@@ -900,6 +828,6 @@ input.watermark{
 
 }
 
-.recent_mugshots {
-	width: 33%;
+.alert_box {
+	padding-left: 10px;
 }
