@@ -15,7 +15,6 @@
 
 <% end %>
 
-<%= will_paginate @authusers %>
 <script>
 $('.user_image').each(function(index) {
 	var target_url = "/mugshots/ajax_image_fetch.json?id=" + $(this).attr('data') + "&index=" + index;
@@ -25,3 +24,6 @@ $('.user_image').each(function(index) {
 });	
 
 </script>
+<div class="clearboth"></div>
+
+<%= will_paginate @authusers %>

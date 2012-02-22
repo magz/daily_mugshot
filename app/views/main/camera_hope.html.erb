@@ -1,0 +1,99 @@
+<!-- 
+<%= stylesheet_link_tag "setup" %>
+<%= javascript_include_tag "swfobject", "navigation" %>
+<script type="text/javascript"> 
+swfobject.registerObject("testcam", "9.0.115", "expressInstall.swf");
+swfobject.registerObject("fullupload", "9.0.115", "expressInstall.swf");
+</script>
+
+<div class="setupContainer">
+   <h1 id="setupHeader">Webcam or Digital Camera?</h1>
+  <div id="choose_method">
+
+  <ul id="mugshot_method">
+    <li class="webcam"><a href="#" onclick="gotoCameraSetup();">Web Camera</a></li>
+    <li class="digicam"><a href="#" onclick="gotoSkip();">Digital Camera</a></li>
+  </ul>
+
+  <div class="clearboth"></div>
+
+  <h3>Tell me about each</h3>
+  <p class="webcam">This is by far the easiest and fastest method of taking your Dailymugshot.  Using your webcam, you can take your mugshot right from within the website, so there is no hassle of file uploads.  If you have a webcam this is the way to go.
+  </p><p class="clearboth digicam">Some people either don't have a webcam or prefer the freedom of location a digital camera offers.  With this method you take a mugshot, save it to your computer, then use our simple upload process to upload the pic.
+  </p>
+  <div class="clearboth"><!--EMPTY--></div>
+  </div>
+  <div id="cam_dialogue">
+    <div id="allow_access">
+    <br>
+    <b>Allow Access to Daily Mugshot</b><br>
+    Congratulations, you have a brand new Daily Mugshot account!  The first thing we have to do is get your camera working.  Click the 'Flash Settings' button to the right.
+    <br><br>
+    Note: If your camera is working and you already see yourself, go and head right-click (for Macs, ctrl-click) in the camera area and choose 'Settings', because you will want to see save some settings: see below.
+    <br><br>
+    An options box will appear like the one below.
+    <%= image_tag "allowremember.png"%>
+    <br>
+    Click on the tab that looks like a monitor with an eye (strange huh?).  Make sure both 'Allow' and 'Remember' are checked off.
+    <br>
+    Do you see yourself?
+    <br>
+    <button class="button yes_button" onmouseup="gotoMugTips();">Yes</button>
+    <button class="button no_button" onmouseup="gotoCloseApps();">No</button>
+  </div>
+  <div id="close_apps">
+        <b>Closing the Trouble Apps.</b><br>
+    Only one application is allowed to access the camera at a time.  So if you have a video-chat application like Skype or iChat or Photobooth or Yahoo video chat open, then Daily Mugshot MIGHT not have access to your web-cam.  So the next step is to shut these applications down.  Refresh the browser and see if the camera comes up in the box to the right. Do you see yourself?
+    <br>
+    <button class="button yes_button" onmouseup="gotoMugTips();">Yes</button>
+    <button class="button no_button" onmouseup="gotoChooseInput();">No</button>
+  </div>
+  <div id="choose_input">
+    <b>Choosing Proper Camera</b><br>
+    Click the 'Flash Settings' button to the right.  An options box will appear like the one below.
+    <br>
+    <%= image_tag "select_input.png"%>
+    <br>
+    Click on the camera tab.  Then <b>try the different options from the dropdown menu.</b>  One of them should bring up the Camera.
+    <br><br>
+    Do you see yourself?
+    <br>
+    <button class="button yes_button" onmouseup="gotoMugTips();">Yes</button>
+    <button class="button no_button" onmouseup="gotoAdvanced();">No</button>
+  </div>
+  <div id="advanced_settings">
+    <b>Check Advanced Flash Settings</b><br>
+    If things are still not working, don't worry, there is still ONE MORE issue we can check.
+    <br>
+    <%= image_tag "select_advanced.png"%>
+  If settings are not already open, then open them by clicking the 'Flash Settings' button to the right.  Select the privacy tab, which looks like a monitor with an eye in it.  Click the 'Advanced' Button, which will open a new page in your browser as seen below:
+    <br>
+    <%= image_tag "advanced_options.png"%>
+    <br>
+    In this 'Flash Player Help' page, click on the 'Website Privacy Settings Panel', as seen above. When the panel opens, search through the list of websites to find 'www.dailymugshot.com'.  Make sure it is checked to 'always allow'  Then close this page, and refresh the Daily Mughshot page.  Do you see yourself?
+    <br>
+    <button class="button yes_button" onmouseup="gotoMugTips();">Yes</button>
+    <button class="button no_button" onmouseup="window.location='/main/feedback';">No</button>
+  </div>    
+  <div id="cam_test">
+  <script type="text/javascript">
+  var flashvars = {};
+  var params = {};
+  var attributes = {};
+  swfobject.embedSWF("http://<%= request.host %>/swf/testcam.swf", "cam_test", "215", "300", "9.0.115", flashvars, params, attributes);
+  </script>
+    </div>
+</div>
+<div id="tip_dialogue">
+  <br>
+  <ol id="mug_tips_list">
+    <li><strong>Get Close</strong>:  Make sure you fill the frame.  Your face is beautiful.  Show it off!<br>
+        <img src= <%= asset_path "get_close.jpg" %> width="450" height="200" alt="Get Close"/></li>
+        <li><strong>Continuity matters</strong>: you want to have a similar expression in each photo.  The easiest is dead-pan.  Smiling too much is hard to replicate. <br /><img src= <%= asset_path "similar_expression.jpg" %> width="450" height="200" alt="Continuity Matters. Use an expression that is easy to replicate." /></li>
+  </ol>
+  //gotta get this button to work one way or another
+  <a href=<% new_pic_path %>>I'm Ready!!</a>
+</div>
+<div class="clear"></div>
+</div>
+ -->

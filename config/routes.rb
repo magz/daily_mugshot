@@ -28,6 +28,7 @@ DailyMugshot::Application.routes.draw do
   match "first_pic" => "mugshots#first_pic", :as => :first_pic 
   match "update_account" => "authusers#edit", :as => :update_account
   match "authuser/search" => "authusers#search", :as => :search
+  match "search" => "authusers#search"
   match "browse" => "authusers#index", :as => :browse
   match "account/loginxml" => "iphone#loginxml"
   match "authusers/forgot_password" => "authusers#forgot_password", :as => :forgot_password
