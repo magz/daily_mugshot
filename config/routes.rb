@@ -33,7 +33,7 @@ DailyMugshot::Application.routes.draw do
   match "authusers/forgot_password" => "authusers#forgot_password", :as => :forgot_password
   match "authusers/submit_forgot_password" => "authusers#submit_forgot_password", :as => :password_submit_reset
   match "/toggle_privacy" => "authusers#update_privacy", :as => :toggle_privacy
-  
+  match "/mugshots/ajax_image_fetch" => "mugshots#ajax_image_fetch", :as => :ajax_image_fetch
   
   # match "iphone/forgot" => "authuser/submit_forgot_password"
   

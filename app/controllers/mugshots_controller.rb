@@ -92,6 +92,26 @@ class MugshotsController < ApplicationController
       format.json { head :ok }
     end
   end
+  def ajax_image_fetch
+    @mugshot_url = Authuser.find(params[:id]).mugshots.last.try_image
+    respond_to do |format|
+      format.json { render json: {image: @mugshot_url, id: params[:index].to_s} }
+    end
+  end
+ 
+  # def get_multi_box_update
+  #   #this is my new ajax call for the front page..magz
+  #   @mugshot = Mugshot.where("image_file_name != 'nil'").last
+  #   @authuser = @mugshot.authuser
+  #   gender = @authuser.gender == "m" ? "his" : "her"
+  #   @hash = {image: @mugshot.try_image("inner"), userid: @authuser.id, message: (@authuser.login + " just took " + gender + " " + @authuser.mugshots.count.ordinalize + " mugshot!")}
+  #   respond_to do |format|
+  #     format.html { render :layout => false }
+  #     format.json { render json: @hash }
+  #     format.js
+  #   end
+  # end
+
   # DELETE /mugshots/1
   # DELETE /mugshots/1.json
   def destroy
