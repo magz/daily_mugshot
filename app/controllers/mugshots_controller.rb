@@ -55,6 +55,7 @@ class MugshotsController < ApplicationController
 
     respond_to do |format|
       if @mugshot.save
+        @mugshot.authuser.update_mugshot_count
         format.html { redirect_to @mugshot, notice: 'Mugshot was successfully created.' }
         format.json { render json: @mugshot, status: :created, location: @mugshot }
       else
@@ -83,7 +84,10 @@ class MugshotsController < ApplicationController
     @mugshot = Mugshot.find(params[:id])
     
     @mugshot.active = @mugshot.active ? false : true
+    
     @mugshot.save
+    @mugshot.authuser.update_mugshot_count
+
     respond_to do |format|
       format.json { head :ok }
     end
@@ -93,6 +97,8 @@ class MugshotsController < ApplicationController
   def destroy
     @mugshot = Mugshot.find(params[:id])
     @mugshot.destroy
+    @mugshot.authuser.update_mugshot_count
+
 
     respond_to do |format|
       format.html { redirect_to mugshots_url }

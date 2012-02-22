@@ -125,5 +125,8 @@ class Authuser < ActiveRecord::Base
       false
     end
   end
-  
+  def update_mugshot_count
+    self.mugshot_count = self.mugshots.where(active: true).count
+    self.save
+  end
 end

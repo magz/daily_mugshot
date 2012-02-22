@@ -1,14 +1,12 @@
 <%= stylesheet_link_tag 'new_browse' %>
-<%= render :partial =>"results" %>
 
-
-
-
-
-
-
-
-
-
-
-
+<% @authusers.each do |user| %>
+	<% if user.has_mugshot? %>
+<div class="user">
+	<a href=<%= authuser_path(user.id) %>><div class="username"><%= user.login %></div></a>
+	<a href=<%= authuser_path(user.id) %>><div class="userpic"><%= image_tag user.mugshots.last.try_image("inner"), size: "141x141"%></div></a>
+	<a href=<%= authuser_path(user.id) %>><div class="usershots"><%= user.mugshots.count %></div></a>
+</div>
+<% end %>
+<% end %>
+<%= will_paginate @authusers %>

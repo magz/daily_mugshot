@@ -5,7 +5,7 @@ class AuthusersController < ApplicationController
   # GET /authusers.json
   def index
     #this could maybe be slightly more efficient
-    @authuser = Authuser.paginate(:page => params[:page])
+    @authusers = Authuser.paginate(:page => params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @authusers }
