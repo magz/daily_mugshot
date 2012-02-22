@@ -1,5 +1,13 @@
-<% @mugshots.each do |mugshot| %>
+<table>
+<tr>
+<% @mugshots.each_index do |index| %>
+	<td height=60px, width=60px>
+	<% if index % 9 == 0 %>
+	</tr><tr>	
+	<% end %>	
 	<%= image_tag mugshot.try_image "thumb" %>
-	<%= check_box("mugshot", "active", checked: mugshot.active, onchange: "$.post('/mugshots/ajax_active_update.json', {id:"+ mugshot.id.to_s + "})")  %>
-	
+	<% if @authuser == current_authuser %>
+	<%= check_box("mugshot", "active", checked: @mugshots[index].active, onchange: "$.post('/mugshots/ajax_active_update.json', {id:"+ @mugshots[index].id.to_s + "})")  %>
+	<% end %>
 <% end %>
+</table>
