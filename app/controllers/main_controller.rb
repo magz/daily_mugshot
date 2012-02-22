@@ -17,6 +17,9 @@ class MainController < ApplicationController
   
   end
   
+  def camera_hope
+
+  end
   def publish
     client = TwitterOAuth::Client.new(
         :consumer_key => 'CMeT41r3DM1cKvQMTZQ1RA',

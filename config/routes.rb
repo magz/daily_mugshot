@@ -48,7 +48,7 @@ DailyMugshot::Application.routes.draw do
   match "flipbook/start" => "flipbook#intro", :as => :flipbook_intro
   match "flipbook/new" => "flipbook#new"
   
-  match "feeback/new" => "feedbacks#new", :as => :new_feedback
+  match "feedback/new" => "feedbacks#new", :as => :new_feedback
   
   
   #sessions routes
@@ -67,7 +67,7 @@ DailyMugshot::Application.routes.draw do
   #but that's dumb, so now they're not...be careful with security though
   match "openapis/:action" => "apis##{:action}"
   match "apis/:action" => "apis##{:action}"
-  match "main/camera_hope" => "apis#camera_hope"
+  match "/camera_hope" => "mugshots#first_pic"
   
   match "mugshots/ajax_active_update/" => "mugshots#ajax_active_update"
   #resources routes

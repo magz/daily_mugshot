@@ -1,13 +1,9 @@
-<table>
-<tr>
+<!-- for some reason this doesn't work if i open with table, i have no idea why -->
 <% @mugshots.each_index do |index| %>
-	<td height=60px, width=60px>
-	<% if index % 9 == 0 %>
+	<td height=62px, width=62px>
+	<% if index % 13 == 0 %>
 	</tr><tr>	
 	<% end %>	
-	<%= image_tag mugshot.try_image "thumb" %>
-	<% if @authuser == current_authuser %>
-	<%= check_box("mugshot", "active", checked: @mugshots[index].active, onchange: "$.post('/mugshots/ajax_active_update.json', {id:"+ @mugshots[index].id.to_s + "})")  %>
-	<% end %>
+	<%= image_tag(@mugshots[index].try_image("thumb"), size: "53x53") %>
 <% end %>
 </table>
