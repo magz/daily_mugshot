@@ -1,0 +1,12 @@
+development:
+  username: foo@bar.com
+  password: g3tD3mMugsh0tsFr3ak!
+
+staging:
+  username: foo@bar.com
+  password: g3tD3mMugsh0tsFr3ak!
+
+production:
+  username: mobile@dailymugshot.com
+  password: g3tD3mMugsh0tsFr3ak!
+  

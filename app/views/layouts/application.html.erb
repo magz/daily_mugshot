@@ -57,7 +57,7 @@
 										        <input id="search_input" name="search_input" type="text" /></label>
 												<fieldset>
 												  <%= label_tag(:search_criteria, "Search for:") %>
-												  <%= text_field_tag :search_criteria, "search", :onfocus => "alert('hi magz')"%>
+												  <%= text_field_tag :search_criteria, "search", :onfocus => "if($('#search_criteria').attr('value')=='search') {$('#search_criteria').attr('value','')}", :onblur => "if($('#search_criteria').attr('value')=='') {$('#search_criteria').attr('value','search')}"%>
 												  <%= submit_tag("Search") %>
 												<% end %>												
 												</fieldset>
