@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :login_from_cookie, :require_login
-  
+  #before_filter :maintenance
   # Returns true or false if the user is logged in.
   # Preloads @current_authuser with the user model if they're logged in.
   def logged_in?
@@ -35,5 +35,4 @@ class ApplicationController < ActionController::Base
       redirect_to :root 
     end
   end
-  
 end

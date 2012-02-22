@@ -4,18 +4,8 @@ class AuthusersController < ApplicationController
   # GET /authusers
   # GET /authusers.json
   def index
-    @page_size = 18
     #this could maybe be slightly more efficient
-    @authusers = []
-    size = Mugshot.count 
-    while @authusers.count < @page_size
-      begin
-        temp = Mugshot.find(rand size)
-        temp.try_image
-        @authusers << temp.authuser
-      rescue
-      end
-    end
+    @authuser = Authuser.paginate(:page => params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @authusers }
@@ -23,6 +13,7 @@ class AuthusersController < ApplicationController
   end
   def search
     #this could maybe be slightly better, but it works...was having some odd problems in nil result cases on the search
+    
     @authusers = []
     b = Authuser.where(:prvt => false, :active => true, :login => params[:search_criteria])
     @authusers << b
@@ -34,6 +25,7 @@ class AuthusersController < ApplicationController
         @authusers.delete user 
       end
     end
+    
     @authusers.sort!{|a,b| a.last_mugshot_date <=> b.last_mugshot_date}
     respond_to do |format|
       format.html # index.html.erb

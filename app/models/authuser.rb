@@ -16,6 +16,7 @@ class Authuser < ActiveRecord::Base
   validates :login, :email, :gender, :crypted_password, :birthday, :presence => true
   validates :login, :email, :uniqueness => true
   
+  self.per_page = 18
   after_create :init
   # before_save :encrypt_password
   #this is the same as authenticate_either in the old code

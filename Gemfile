@@ -16,6 +16,7 @@ gem "execjs"
 gem 'therubyracer'
 gem "pg", "0.12.0"
 gem "whenever"
+gem "will_paginate"
 
 # Gems used only for assets and not required
 # in production environments by default.
