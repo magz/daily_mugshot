@@ -158,6 +158,7 @@ GEM
     whenever (0.7.2)
       activesupport (>= 2.3.4)
       chronic (~> 0.6.3)
+    will_paginate (3.0.2)
 
 PLATFORMS
   ruby
@@ -184,3 +185,4 @@ DEPENDENCIES
   twitter_oauth (~> 0.4.3)
   uglifier (>= 1.0.3)
   whenever
+  will_paginate
