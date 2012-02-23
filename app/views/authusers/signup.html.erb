@@ -1,59 +1,82 @@
+<%= stylesheet_link_tag "signup" %>
 
-<%= form_for(@authuser) do |f| %>
-  <% if @authuser.errors.any? %>
+<h1>Account Setup</h1>
+	<fieldset>
+    <%= form_for @authuser do |f| -%>
+  <% if @errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@authuser.errors.count, "error") %> prohibited this authuser from being saved:</h2>
+      <h2><%= pluralize(@errors.count, "error") %> prevented your account from being created:</h2>
 
       <ul>
-      <% @authuser.errors.full_messages.each do |msg| %>
+      <% @errors.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
+		<div class="highlight_box" id="current_password">
+		<div class="highlight_box_wrapper">
+		<div class="highlight_box_content">
+     <br>      
+                  
+			<label for="authuser_login">
+				Login:
+                                <%= f.text_field :login, :class => "text" %>
+			</label>
+			<br />
+       <br>      
 
-  <div class="field">
-    <%= f.label :login %><br />
-    <%= f.text_field :login %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= label_tag :password %><br />
-    <%= text_field_tag :password %>
-  </div>
-  <div class="field">
-    <%#= f.label :time_zone %><br />
-    <%#= f.text_field :time_zone %>
-  </div>
-  <div class="field">
-	<%= f.radio_button(:gender, "m") %>
-	<%= f.label(:gender_m, "male") %>
-	<%= f.radio_button(:gender, "f") %>
-	<%= f.label(:gender_f, "female") %>  
-	</div>
-  <div class="field">
-    <%= f.label :birthday %><br />
-    <%= f.date_select :birthday %>
-  </div>
-	<div class="field">
-    <%= f.label :time_zone %><br />
-	<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {:default => "Eastern Time (US & Canada)"} %>
-  </div>
-  
+                      
+                        <%= link_to "Why do we need email?", {:controller => "main", :action => "faq"},:class => "why_email" %>  
+			<label for="authuser_email" class="email" >
+				Email:
+                                <%= f.text_field :email, :value => @i_email, :size => "30", :class => "text" %>
+			</label>
+            <br>      
+      <br>      
 
-  <div class="field">
-    <%= f.label :prvt %><br />
-    <%= f.check_box :prvt %>
-  </div>
-  <div class="i_agree">
-    <%= check_box_tag :terms_of_service %>
-    #I agree to the <%= link_to 'Terms of Service','/tos.html' %>
-  </div>	 
+      <div class="authuser_gender">
+				<label for="authuser_gender">Gender:</label>
+				<span class="genders">
+				<!-- <label for="authuser_gender_m">Guy</label> -->
+                              <%= f.radio_button(:gender, "m") %>
+                              <%= f.label(:gender_m, "Male") %>
+                              <%= f.radio_button(:gender, "f") %>
+                              <%= f.label(:gender_f, "Female") %>  
+				</span>
+      </div>
+			<br />
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+			<label for="authuser_password">
+				Password:     
+                                <%= f.password_field :password, :class => "text", :size => "30" %>
+			</label>	
+			<br />
+			      <br>      
+
+			<label for="authuser_password_confirmation">
+				Confirm Pwd:
+        <%= f.password_field :password_confirmation, :class => "text", :size => "30" %>
+		  </label>
+		  <br />
+      <br>      
+		  <label for="authuser_time_zone" >
+				Time Zone:
+				<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {:default => "Eastern Time (US & Canada)"} %>
+		  </label>
+		  <br />
+      <br>      
+		  <div class="i_agree">
+		    <%= check_box_tag :tos %>
+		    I agree to the <%= link_to 'Terms of Service','/tos.html' %>
+		  </div>	 
+		<br>
+		</div>
+		</div>
+		</div> 
+                		
+                <button class="button signup_button" name="commit" type="submit" value="Sign up">Update</button>
+                <% end %> 
+
+		
+	</fieldset>

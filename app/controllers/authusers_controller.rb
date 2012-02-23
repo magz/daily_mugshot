@@ -129,13 +129,12 @@ class AuthusersController < ApplicationController
       redirect_to :first_pic
     end
   end
-  # GET /authusers/new
-  # GET /authusers/new.json
+
   def signup
     @authuser = Authuser.new
-    #email reminder
+    @errors ||= []
     respond_to do |format|
-      format.html # new.html.erb
+      format.html 
       format.json { render json: @authuser }
     end
   end
@@ -158,15 +157,57 @@ class AuthusersController < ApplicationController
   # POST /authusers
   # POST /authusers.json
   def create
-    @authuser = Authuser.new(params[:authuser])
+    @authuser = Authuser.new()
+    @errors = []
     
-    @authuser.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{@authuser.login}--")
-    @authuser.crypted_password =  Authuser.encrypt(params[:password], @authuser.salt)
+    if params[:authuser][:password] == params[:authuser][:password_confirmation] && params[:authuser][:password] != ""
+      @authuser.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{@authuser.login}--")
+      @authuser.crypted_password =  Authuser.encrypt(params[:password], @authuser.salt)
+    else
+      if params[:authuser][:password] == "" 
+        @errors << "You cannot leave your password blank"
+      else
+        @errors << "Your password and password confirmation didn't match"
+      end
+    end
     
+    unless params[:authuser][:email]
+      @errors << "You left your email blank!"
+    end
     
+    unless params[:authuser][:time_zone]
+      @errors << "You left your time_zone blank!"
+    end
+    
+    unless params[:authuser][:login]
+      @errors << "You left your login blank!"
+    end
+    
+    unless params[:authuser][:gender]
+      @errors << "You left your login blank!"
+    end
+
+    unless Authuser.find_by_email(params[:authuser][:email]) == nil
+      @errors << "Sorry, but you've already used that email address!"
+    end
+    
+    unless Authuser.find_by_login(params[:authuser][:login]) == nil
+      @errors << "Sorry, but that login name is already taken!"
+    end
+
+    unless params[:tos].present?
+      @errors << "Sorry, but you must agree to our Terms of Service"
+    end
+
+    @authuser.email = params[:authuser][:email]
+    @authuser.email = params[:authuser][:time_zone]
+    @authuser.login = params[:authuser][:login]
+    @authuser.gender = params[:authuser][:gender]
+    @authuser.prvt = false
+
 
     respond_to do |format|
-      if @authuser.save
+      if @errors == [] && @authuser.save
         session[:authuser] = @authuser.id
         format.html { redirect_to :new_pic, notice: 'Authuser was successfully created.' }
         format.json { render json: @authuser, status: :created, location: @authuser }
@@ -190,7 +231,7 @@ class AuthusersController < ApplicationController
       @errors << "You can't update another user's account"
     end
     if !Authuser.authenticate(@authuser.login, params[:authuser][:old_password])
-      @errors << "Your old password is incorrect.  Please try again.  If you've lost your password, we can generate you a new one"
+      @errors << "Your the password that your provided is incorrect.  Please try again.  If you've lost your password, we can generate a new one for you"
     end
     
     if params[:authuser][:password] != params[:authuser][:password_confirmation]
@@ -199,8 +240,15 @@ class AuthusersController < ApplicationController
     if params[:authuser][:password] == ""
       params[:authuser][:password] = params[:authuser][:old_password]
     end
+    unless Authuser.find_by_email(params[:authuser][:email]) != nil || Authuser.find_by_email(params[:authuser][:email]) == Authuser.find(params[:id].to_i)
+      @errors << "Sorry, but that email address has already been used"
+    end
+    unless Authuser.find_by_login(params[:authuser][:login]) != nil || Authuser.find_by_login(params[:authuser][:email]) == Authuser.find(params[:id].to_i)
+      @errors << "Sorry, but that login has already been taken.  Please choose another."
+    end
+
     if @errors == []
-      unless @authuser.update_attributes(email: params[:authuser][:email], login: params[:authuser][:login], time_zone: params[:authuser][:time_zone], crypted_password: Authuser.encrypt(params[:authuser][:password], @authuser.salt))
+      unless @authuser.update_attributes(prvt: params[:authuser][:prvt], email: params[:authuser][:email], login: params[:authuser][:login], time_zone: params[:authuser][:time_zone], crypted_password: Authuser.encrypt(params[:authuser][:password], @authuser.salt))
         @errors << "Problem updating your account.  Please try again"
       end
     end

@@ -69,7 +69,8 @@ DailyMugshot::Application.routes.draw do
   match "openapis/:action" => "apis##{:action}"
   match "apis/:action" => "apis##{:action}"
   match "/camera_hope" => "mugshots#first_pic"
-  
+  match "main/camera_hope" => "mugshots#first_pic"
+
   match "mugshots/ajax_active_update/" => "mugshots#ajax_active_update"
   #resources routes
   #be careful with these
