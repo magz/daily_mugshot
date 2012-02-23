@@ -30,7 +30,7 @@
                         <%= link_to "Why do we need email?", {:controller => "main", :action => "faq"},:class => "why_email" %>  
 			<label for="authuser_email" class="email" >
 				Email:
-                                <%= f.text_field :email, :value => @i_email, :size => "30", :class => "text" %>
+                                <%= f.text_field :email %>
 			</label>
             <br>      
       <br>      
@@ -62,7 +62,7 @@
       <br>      
 		  <label for="authuser_time_zone" >
 				Time Zone:
-				<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {:default => "Eastern Time (US & Canada)"} %>
+				<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
 		  </label>
 		  <br />
       <br>      

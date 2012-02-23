@@ -209,7 +209,7 @@ class AuthusersController < ApplicationController
     respond_to do |format|
       if @errors == [] && @authuser.save
         session[:authuser] = @authuser.id
-        format.html { redirect_to :new_pic, notice: 'Authuser was successfully created.' }
+        format.html { redirect_to :first_pic, notice: 'Authuser was successfully created.' }
         format.json { render json: @authuser, status: :created, location: @authuser }
       else
         format.html { render action: "signup" }
