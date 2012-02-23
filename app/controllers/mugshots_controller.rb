@@ -1,4 +1,5 @@
 class MugshotsController < ApplicationController
+  skip_before_filter :require_login, :only => [:ajax_image_fetch]
   # GET /mugshots
   # GET /mugshots.json
   def index
