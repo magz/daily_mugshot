@@ -20,6 +20,8 @@ DailyMugshot::Application.routes.draw do
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
   
+  match "full_upload_get_api_paths/:id" => "apis#full_upload_get_api_paths"
+  match "apis/upload_with_id/:id" => "apis#upload_with_id"
   #user related routes
   match "my_mugshow" => "authusers#show_mine", :as => :my_mugshow 
   match "my_account" => "authusers#edit", :as => :my_account

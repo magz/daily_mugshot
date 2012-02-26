@@ -5,7 +5,18 @@ class ApisController < ApplicationController
   #as a result of it being based on some of the last remaining (yay!) legacy code, the functions here may be a bit wonky 
   #eventually i hope to replace the flash objects with html5/JS
   
-  
+  #holy god, i can't believe this is necessary
+  #short version: stupid upload flash obj doesn't pass userid
+  #i api/upload used to be able to get the userid from the session, but at least now it can't (really not sure how it ever worked)
+  #so what this is doing is generating a path to api/upload that contains within it the userid, so it's passed that way
+  #if you're looking at this and not named magz, i know, it's insane...gimme an email at michael.magner@gmail.com and i'll try to walk you through it
+  def full_upload_get_api_paths
+    @id = params[:id]
+    respond_to do |format|
+      format.xml 
+    end
+
+  end
   #be careful with security on this
   def get_sequence
     #verify we have a populated parameter
@@ -51,6 +62,7 @@ class ApisController < ApplicationController
       @authuser = Authuser.find(params[:userid])
       unless @authuser == nil 
           @landmarks = @authuser.landmarks
+          
       else
         redirect_to :action => 'wrong_user'
       end
@@ -250,6 +262,67 @@ class ApisController < ApplicationController
         format.xml { render :layout => false }
       end
     end
+    def upload_with_id
+    #this is the real upload function for both mobile and web...impt!
+    #this is i think the function for both the flash object and mobile uploading
+    #impt impt impt
+    #i think this should be working
+    #make sure we did not already take a picture today.
+    @authuser = Authuser.find(params[:id])
+    unless @authuser.already_taken_today?
+      @returnstatus = 0
+      unless params["method"] == nil
+        if params["method"] == "webcam" 
+          if params["bindata"] != nil
+            decoded = Base64.decode64 params["bindata"]
+            #I...can't say i like this random thing...it'd be better if it was more programattic
+            filename = "snapshot" + rand(100000).to_s + ".jpg"
+            full_path = File.join(Rails.root, "tmp", "uploads",  filename)
+            Dir.mkdir('tmp/uploads') unless Dir.entries('tmp').include?('uploads')
+            #can you do this?  do you not need to use cocaine to do this sort of commandline ju jitsu?
+            `touch #{full_path}`
+            f=File.open full_path, "wb"
+            f.write decoded
+          else
+            @returnstatus = 1
+            @msg = "no image info"
+          end
+        elsif params["method"] == "file"
+          if params["filename"] == nil
+            @returnstatus = 1
+            @msg = "undefined filename"
+          else
+            full_path = File.join(Rails.root, "public","tmp", params["filename"])
+          end
+        else
+          @returnstatus = 1
+          @msg = "undefined method"
+        end
+      end
+
+      if @returnstatus == 0
+        m=Mugshot.new
+        m.caption = params["caption"] == nil ? nil : params["caption"].gsub(/[^A-Za-z0-9_\s\?\(\)\!\.\,]/,'').chomp!
+        m.xoffset = params["xoffset"].to_i
+        m.yoffset = params["yoffset"].to_i
+        m.image =  File.open(full_path)
+        `rm #{full_path}`
+        m.authuser_id = @authuser
+        #do _we_ really need all that complicated return status stuff?  Can i just give them an up or down?
+        #make sure save happened and give returnstatus accordingly
+        m.save
+        @msg = @returnstatus
+        #do social networking push
+      end
+    else
+        @returnstatus = 1
+        @msg = "already taken image today"
+    end
+    respond_to do |format|
+      format.xml { render :layout => false }
+    end
+  end
+
   def get_multi_box_update
     #this is my new ajax call for the front page..magz
     @mugshot = Mugshot.where("image_file_name != 'nil'").last
