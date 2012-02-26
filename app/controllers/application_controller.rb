@@ -4,12 +4,18 @@ class ApplicationController < ActionController::Base
   #before_filter :maintenance
   # Returns true or false if the user is logged in.
   # Preloads @current_authuser with the user model if they're logged in.
+  
   def logged_in?
     current_authuser
   end
   
   def current_authuser
     @current_authuser ||= Authuser.find_by_id(session[:authuser])
+  end
+  
+  def current_authuser=(new_authuser)
+    session[:authuser] = (new_authuser.nil? || new_authuser.is_a?(Symbol)) ? nil : new_authuser.id
+    @current_authuser = new_authuser
   end
   
   def login_from_cookie

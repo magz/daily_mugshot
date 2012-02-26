@@ -1,11 +1,13 @@
 class IphoneController < ApplicationController
+  skip_before_filter :require_login
+  skip_before_filter :login_from_cookie
   def loginxml
     #this should mostly all work except that image resize bit
     #o and set up the route (with this post restriction)
     #return unless request.post?
     
     #checking to make sure that such a user exists...not perfect.  Makes sure a response is provided though, rather than just erroring out
-    if Authuser.where(:login => params[:login]).first
+    if Authuser.find_by_login(params[:login])
       current_authuser = Authuser.authenticate(params[:login], params[:password])
     else
       current_authuser = false
@@ -32,7 +34,7 @@ class IphoneController < ApplicationController
     else
       @failure = 1
     end
-    
+    request.format = "xml"
     respond_to do |format|
       if @failure == 0 then
         format.xml { render :action => 'loginxml', :layout => false }

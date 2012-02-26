@@ -1,8 +1,9 @@
 class MainController < ApplicationController
   skip_before_filter :require_login, :only => [:welcome, :faq, :about]
   def welcome
-    @mugshots = Mugshot.where("image_file_name != 'nil'").last 6
-    
+    @mugshots = Mugshot.last 6
+    logger.info "welcome to main page"
+    logger.info session
   end
   
   def faq
@@ -29,4 +30,7 @@ class MainController < ApplicationController
     
   end
   
+  def secret
+    
+  end
 end

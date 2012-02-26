@@ -11,26 +11,28 @@ class Authuser < ActiveRecord::Base
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :authuser
   has_many :landmarks
+  has_many :ip_address_hacks
   
   validates :login, :email, :gender, :crypted_password, :presence => true
   validates :login, :email, :uniqueness => true
   
   self.per_page = 18
-  after_create :init
+  #after_create :init
   # before_save :encrypt_password
   #this is the same as authenticate_either in the old code
   #i don't see much reason to have them be separate functions
-  def init
-    self.time_zone ||= "US/Eastern"
-    self.active ||= true
-    self.gender ||= "m"
-    @email_reminder = EmailReminder.new
-    @email_reminder.hour = 12
-    @email_reminder.authuser_id = self.id
-    @email_reminder.active = true
-    @email_reminder.save
-    self.save
-  end
+  
+  # def init
+  #   self.time_zone ||= "US/Eastern"
+  #   self.active ||= true
+  #   self.gender ||= "m"
+  #   @email_reminder = EmailReminder.new
+  #   @email_reminder.hour = 12
+  #   @email_reminder.authuser_id = self.id
+  #   @email_reminder.active = true
+  #   @email_reminder.save
+  #   self.save
+  # end
   
   def gender_possessive
     if self.gender == "f"
@@ -127,5 +129,18 @@ class Authuser < ActiveRecord::Base
   def update_mugshot_count
     self.mugshot_count = self.mugshots.where(active: true).count
     self.save
+  end
+  
+  def try_image_all
+    logger.info "beginning try_image_all for user:  " + self.id.to_s
+    if !self.mugshots.first.present? && self.mugshots.first.image_file_name == nil
+      logger.info "first mugshot is nil, proceding to check/populate others"
+      self.mugshots.each do |m|
+        begin
+          m.try_image
+        rescue
+        end  
+      end
+    end
   end
 end

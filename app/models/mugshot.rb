@@ -4,7 +4,7 @@ class Mugshot < ActiveRecord::Base
   
   validates :authuser, :presence => true
 
-  after_create :do_social
+  #after_create :do_social
 
   #cropper is a custom processor
   #it takes in the xoffset and yoffset and does cropping accordingly
@@ -102,11 +102,11 @@ class Mugshot < ActiveRecord::Base
   # end
   
   def do_social
-    #after_create
-    #check for social connections and post / do whatever accordingly
-    if self.authuser.tweeting?
-      @authuser = self.authuser
-      self.authuser.twitter_connect.tweet("#{@authuser.login} just took #{@authuser.gender_possessive} #{@authuser.mugshots.count.ordinalize} mugshot at www.dailymugshot.com!")
-    end
+    # #after_create
+    # #check for social connections and post / do whatever accordingly
+    # if self.authuser.tweeting?
+    #   @authuser = self.authuser
+    #   self.authuser.twitter_connect.tweet("#{@authuser.login} just took #{@authuser.gender_possessive} #{@authuser.mugshots.count.ordinalize} mugshot at www.dailymugshot.com!")
+    # end
   end
 end

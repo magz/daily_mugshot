@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
     return unless request.post?
     @current_authuser = Authuser.authenticate(params[:login], params[:password])
     if @current_authuser
+      @current_authuser.delay.try_image_all
       session[:authuser] = @current_authuser.id
       
       if params[:remember_me] == "1"

@@ -5,11 +5,9 @@ class ApisController < ApplicationController
   #as a result of it being based on some of the last remaining (yay!) legacy code, the functions here may be a bit wonky 
   #eventually i hope to replace the flash objects with html5/JS
   
-  #holy god, i can't believe this is necessary
-  #short version: stupid upload flash obj doesn't pass userid
-  #i api/upload used to be able to get the userid from the session, but at least now it can't (really not sure how it ever worked)
-  #so what this is doing is generating a path to api/upload that contains within it the userid, so it's passed that way
-  #if you're looking at this and not named magz, i know, it's insane...gimme an email at michael.magner@gmail.com and i'll try to walk you through it
+  #there is seriously no reason why this is called api controller...either come up with a better name, or move these functions to controllers where they make sense
+  
+  #be careful with security on this
   def full_upload_get_api_paths
     @id = params[:id]
     respond_to do |format|
@@ -17,7 +15,7 @@ class ApisController < ApplicationController
     end
 
   end
-  #be careful with security on this
+  
   def get_sequence
     #verify we have a populated parameter
     if params[:userid] != nil
@@ -62,7 +60,10 @@ class ApisController < ApplicationController
       @authuser = Authuser.find(params[:userid])
       unless @authuser == nil 
           @landmarks = @authuser.landmarks
-          
+          # i=IpAddressHack.new
+          # i.authuser_id = @authuser.id
+          # i.ip_address = request.remote_ip
+          # i.save
       else
         redirect_to :action => 'wrong_user'
       end
@@ -149,6 +150,7 @@ class ApisController < ApplicationController
     end
   end
   def get_update
+    #i think i can probably integrate this into my new update function
     #get new update for the alert box
     @header = "New Mugshot!"
     new_mug = Mugshot.last
@@ -208,10 +210,41 @@ class ApisController < ApplicationController
       #impt impt impt
       #i think this should be working
       #make sure we did not already take a picture today.
-      @authuser = Authuser.first
-      unless @authuser.already_taken_today?
+      
+      logger.info request.remote_ip 
+      logger.info "that ip just tried to upload something"
+      if params[:userid] != nil
+        @authuser = Authuser.find(params[:userid])
+      end
+
+      #yeah, so this bit is super hacky and (hopefully) temporary
+      #the gist of it is this: the seesion doesn't seem to be available (when this is accessd by fullupload.swf) because this is a reqest from a flash object, not the user
+      #the real answer here would be to modify the flash object, but, unfortunately, someone lost the .fla somewhere along the line
+      #as i have no desire to learn flash, this is what we're left with
+      #every time a user access /new_pic, an IpAddressHack model is generated, pairing their ip address to the user id
+      #when we come here, it's checked if there's a recent ip address object, and pulls the auth id from that
+      #the danger here is that you have 2 users with the same ip address both accessing within a short time
+      #no solution for that so here we are
+      #may god have mercy on my soul
+
+      #o and ps 67.207.146.155 is the load balancer...this is also the reason i took off the load balancer
+      #with it in place, every IP was showing up as being that ip address, rather than the actual users
+      #so yeah, this workaround necessitates killing the load balancer...o wells
+
+      if request.remote_ip != "67.207.146.155" && @authuser == nil
+       i=IpAddressHack.where(ip_address: request.remote_ip).last
+        if i.created_at > Time.now - 5.minutes
+          @authuser = Authuser.find(i.authuser)
+          logger.info "matched ip address" + i.ip_address + "to user " + @authuser.id.to_s + "  login  " + @authuser.login
+        else
+          @authuser = nil
+          logger.info "no matching ip address found"
+        end
+      end
+      unless @authuser == nil 
         @returnstatus = 0
         unless params["method"] == nil
+          #to do: rewrite this so it's not actually writing the file...that's mad stupid
           if params["method"] == "webcam" 
             if params["bindata"] != nil
               decoded = Base64.decode64 params["bindata"]
@@ -219,7 +252,6 @@ class ApisController < ApplicationController
               filename = "snapshot" + rand(100000).to_s + ".jpg"
               full_path = File.join(Rails.root, "tmp", "uploads",  filename)
               Dir.mkdir('tmp/uploads') unless Dir.entries('tmp').include?('uploads')
-              #can you do this?  do you not need to use cocaine to do this sort of commandline ju jitsu?
               `touch #{full_path}`
               f=File.open full_path, "wb"
               f.write decoded
@@ -242,12 +274,12 @@ class ApisController < ApplicationController
 
         if @returnstatus == 0
           m=Mugshot.new
-          m.caption = params["caption"] == nil ? nil : params["caption"].gsub(/[^A-Za-z0-9_\s\?\(\)\!\.\,]/,'').chomp!
+          m.caption = params["caption"] #== nil ? nil : params["caption"].gsub(/[^A-Za-z0-9_\s\?\(\)\!\.\,]/,'').chomp!
           m.xoffset = params["xoffset"].to_i
           m.yoffset = params["yoffset"].to_i
           m.image =  File.open(full_path)
           `rm #{full_path}`
-          m.authuser_id = @authuser
+          m.authuser_id = @authuser.id
           #do _we_ really need all that complicated return status stuff?  Can i just give them an up or down?
           #make sure save happened and give returnstatus accordingly
           m.save
@@ -258,71 +290,11 @@ class ApisController < ApplicationController
           @returnstatus = 1
           @msg = "already taken image today"
       end
+      request.format = "xml"
       respond_to do |format|
         format.xml { render :layout => false }
       end
     end
-    def upload_with_id
-    #this is the real upload function for both mobile and web...impt!
-    #this is i think the function for both the flash object and mobile uploading
-    #impt impt impt
-    #i think this should be working
-    #make sure we did not already take a picture today.
-    @authuser = Authuser.find(params[:id])
-    unless @authuser.already_taken_today?
-      @returnstatus = 0
-      unless params["method"] == nil
-        if params["method"] == "webcam" 
-          if params["bindata"] != nil
-            decoded = Base64.decode64 params["bindata"]
-            #I...can't say i like this random thing...it'd be better if it was more programattic
-            filename = "snapshot" + rand(100000).to_s + ".jpg"
-            full_path = File.join(Rails.root, "tmp", "uploads",  filename)
-            Dir.mkdir('tmp/uploads') unless Dir.entries('tmp').include?('uploads')
-            #can you do this?  do you not need to use cocaine to do this sort of commandline ju jitsu?
-            `touch #{full_path}`
-            f=File.open full_path, "wb"
-            f.write decoded
-          else
-            @returnstatus = 1
-            @msg = "no image info"
-          end
-        elsif params["method"] == "file"
-          if params["filename"] == nil
-            @returnstatus = 1
-            @msg = "undefined filename"
-          else
-            full_path = File.join(Rails.root, "public","tmp", params["filename"])
-          end
-        else
-          @returnstatus = 1
-          @msg = "undefined method"
-        end
-      end
-
-      if @returnstatus == 0
-        m=Mugshot.new
-        m.caption = params["caption"] == nil ? nil : params["caption"].gsub(/[^A-Za-z0-9_\s\?\(\)\!\.\,]/,'').chomp!
-        m.xoffset = params["xoffset"].to_i
-        m.yoffset = params["yoffset"].to_i
-        m.image =  File.open(full_path)
-        `rm #{full_path}`
-        m.authuser_id = @authuser
-        #do _we_ really need all that complicated return status stuff?  Can i just give them an up or down?
-        #make sure save happened and give returnstatus accordingly
-        m.save
-        @msg = @returnstatus
-        #do social networking push
-      end
-    else
-        @returnstatus = 1
-        @msg = "already taken image today"
-    end
-    respond_to do |format|
-      format.xml { render :layout => false }
-    end
-  end
-
   def get_multi_box_update
     #this is my new ajax call for the front page..magz
     @mugshot = Mugshot.where("image_file_name != 'nil'").last
@@ -336,39 +308,43 @@ class ApisController < ApplicationController
     end
   end
   def alarm
-    #this is the alarm for the desktop alerter
-    #probably not all done up for time zones yet
-    unless params[:user] == nil
-      #verify user
-      @user = Authuser.find_by_login(params[:user])
-      unless @user == nil     
-        @last = @user.mugshost.last
-        @pic_count = @user.mugshots.count
-        redirect_to :action => 'firstalarm' and return if @pic_count == 0
-
-        #implement this model
-        @mac_version = Reminder.find_by_platform('mac', :order => "created_at DESC").version
-        @win_version = Reminder.find_by_platform('win', :order => "created_at DESC").version
-        @protocol_version = "1.0"
-        #update userstats
-        #userstat = Userstat.find_by_authuser_id @user.id
-        #does this do anything?
-        # unless userstat == nil
-        #   userstat.last_alarm = Time.new.gmtime
-        #   userstat.alarm_version = params[:cversion] == nil ? "unknown" : params[:cversion].gsub(/[^A-Za-z0-9_\s\.]/,'')
-        #   userstat.save
-        # end 
+      #this is the alarm for the desktop alerter
+      #probably not all done up for time zones yet
+      unless params[:user] == nil
+        #verify user
+        @user = Authuser.find_by_login(params[:user])
+        unless @user == nil     
+          @last = @user.mugshots.last
+          @pic_count = @user.mugshots.count
+          redirect_to :action => 'firstalarm' and return if @pic_count == 0
+  
+          #implement this model
+          @mac_version = "1.0"
+          @win_version = "0.9.0"
+          @protocol_version = "1.0"
+          #update userstats
+          #userstat = Userstat.find_by_authuser_id @user.id
+          #does this do anything?
+          # unless userstat == nil
+          #   userstat.last_alarm = Time.new.gmtime
+          #   userstat.alarm_version = params[:cversion] == nil ? "unknown" : params[:cversion].gsub(/[^A-Za-z0-9_\s\.]/,'')
+          #   userstat.save
+          # end 
+        else
+          redirect_to :action => 'user_not_found' and return
+        end
       else
-        redirect_to :action => 'user_not_found' and return
+        redirect_to :action => 'require_login' and return
       end
-    else
-      redirect_to :action => 'require_login' and return
+      request.format = "xml"
+      respond_to do |format|
+        format.xml
+      end
     end
-    respond_to do |format|
-      format.xml
-    end
+    
+  #no clue what this is about...i guess look in the old code and see what it was doing...probably something that can be done in one func though
+  def firstalarm
+    render xml: nil
   end
-  
-  
 end
 

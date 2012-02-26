@@ -1,5 +1,13 @@
 class MugshotsController < ApplicationController
   skip_before_filter :require_login, :only => [:ajax_image_fetch]
+  #before_filter :nm_maint, :only => [:new]
+  
+  def nm_maint
+    unless current_authuser.id == 60581
+      flash[:notice] = "We're verry sorry, but we are still having some problems with our web image uploader.  You can still use our mobile app for iphone and android.  Thank you for using DailyMugshot!"
+      redirect_to :root
+    end
+  end
   # GET /mugshots
   # GET /mugshots.json
   def index
@@ -25,6 +33,15 @@ class MugshotsController < ApplicationController
   # GET /mugshots/new
   # GET /mugshots/new.json
   def new
+    logger.info "in the new pic action"
+    logger.info session
+    logger.info session.class
+    if request.remote_ip != "67.207.146.155"
+      i=IpAddressHack.new
+      i.authuser_id = current_authuser.id
+      i.ip_address = request.remote_ip
+      i.save
+    end
     #check if it's their first pic
     @mugshot = Mugshot.new
     @authuser = current_authuser

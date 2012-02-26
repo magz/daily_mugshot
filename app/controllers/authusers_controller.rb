@@ -77,9 +77,11 @@ class AuthusersController < ApplicationController
         if params[:focused_mugshot] != nil
           @focused_mugshot = Mugshot.find(params[:focused_mugshot].to_i)
           ind=@authuser.mugshots.index @focused_mugshot
-          @current_page = (@authuser.mugshots.count.to_f / ind).ceil
-        
-      
+          if ind != 0  
+            @current_page = (@authuser.mugshots.count.to_f / ind).ceil
+          else
+            @current_page = 1
+          end
         else
           @current_page = 0
         end

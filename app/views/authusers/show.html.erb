@@ -34,9 +34,9 @@ swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
 							
                 				<script type="text/javascript">
 								var flashvars = {};
-								var params = {userid: 60581, pathurl: "http://<%= request.host %>/swf/paths.xml"};
+								var params = {};
 								var attributes = {};
-								swfobject.embedSWF("dailymugshot.com/swf/newdms3.swf", "player", "200", "200", "9.0.115", flashvars, params, attributes);
+								swfobject.embedSWF("/swf/newdms3.swf?userid=<%=@authuser.id%>&pathurl=/swf/paths.xml", "player", "200", "200", "9.0.115", flashvars, params, attributes);
 								</script>
 				
 							</div>

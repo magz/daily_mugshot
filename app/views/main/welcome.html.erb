@@ -26,10 +26,10 @@
 <% end %>
 
 <h2 align="center">Welcome to Daily Mugshot </h2> 
-<h4 align="left">Here are the most recent mugshots taken</h4><br>
+<br>
 <% @mugshots.each do |m|%>
-     <a class="alert_box_link" href= <%= "http://" + request.host + ":" + request.port.to_s + "/authusers/" + m.authuser.id.to_s %>>
-	<img class="alert_boxes" src="<%= m.try_image :inner %>" width="225" height="225">
+     <a class="alert_box_link" href= <%= "/authusers/" + m.authuser.id.to_s %>>
+	<img class="alert_boxes" src="<%= m.image :inner %>" width="225" height="225">
 	</a> 
 <% end %>
 

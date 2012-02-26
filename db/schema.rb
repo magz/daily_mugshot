@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120222040043) do
+ActiveRecord::Schema.define(:version => 20120226232832) do
 
   create_table "authusers", :force => true do |t|
     t.string   "login"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20120222040043) do
     t.datetime "remember_token_expires_at"
     t.datetime "deleted_at"
     t.integer  "mugshot_count"
+    t.integer  "last_mugshot"
   end
 
   create_table "comments", :force => true do |t|

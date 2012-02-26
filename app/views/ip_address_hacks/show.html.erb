@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Authuser:</b>
+  <%= @ip_address_hack.authuser_id %>
+</p>
+
+<p>
+  <b>Ip address:</b>
+  <%= @ip_address_hack.ip_address %>
+</p>
+
+
+<%= link_to 'Edit', edit_ip_address_hack_path(@ip_address_hack) %> |
+<%= link_to 'Back', ip_address_hacks_path %>

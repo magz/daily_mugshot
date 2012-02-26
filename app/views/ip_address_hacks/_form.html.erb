@@ -1,0 +1,25 @@
+<%= form_for(@ip_address_hack) do |f| %>
+  <% if @ip_address_hack.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ip_address_hack.errors.count, "error") %> prohibited this ip_address_hack from being saved:</h2>
+
+      <ul>
+      <% @ip_address_hack.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :authuser_id %><br />
+    <%= f.text_field :authuser_id %>
+  </div>
+  <div class="field">
+    <%= f.label :ip_address %><br />
+    <%= f.text_field :ip_address %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
