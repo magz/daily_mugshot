@@ -1,0 +1,36 @@
+<% content_for :head do %>
+<style type="text/css" media="screen">
+	.mugshow_actions .icon{
+		font-weight: bold;
+		font-size: 16px;
+		display: inline-block;
+		padding: 2px;
+		width: 12px;
+	}
+</style>
+<% end %>
+<div class="mugshow_actions">
+  <h4>Mugshow Actions</h4>
+  <script src="http://cdn.gigya.com/wildfire/JS/WFButton.js?module=post&cid=gigya_id&partner=94301&widgetTitle=Daily%20Mugshot" id="gigpost"></script>
+  <ul>
+		<% if logged_in? and current_user.id == @authuser.id -%>
+		<li>
+			<%= link_to "<span class='icon'>&dArr;</span> download mugshots", :mugshots %>
+		</li>
+		<%- end -%>
+    <% if logged_in? %>
+		<div id="friend_link_div">
+	    <%= render :partial => "friend_link" %>
+		</div>
+    <% end %>
+	  <li>
+	  <%= link_to_function "email this mugshow", :class => "share_mugshow"  do |page|
+	    page[:showFriend].set_style :display => "block"
+    end -%>
+	  </li>
+	  <li>
+	      <a href="javascript:WildfireBtn.onClick({module: 'post',partner: '94301',widgetTitle: 'Daily Mugshot'},'gigya_id',undefined,undefined)" class="post_mugshow">Post Mugshow</a>
+	  </li>
+	  <li><%= link_to "Main RSS", '/rss/main/' + @authuser.login, :class => 'rss' -%>, <%= link_to "Thumbnail RSS", '/rss/thumb/' + @authuser.login -%> </li>
+  </ul>
+</div>
