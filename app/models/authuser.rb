@@ -22,6 +22,43 @@ class Authuser < ActiveRecord::Base
   #this is the same as authenticate_either in the old code
   #i don't see much reason to have them be separate functions
   
+  before_save :full_update_stats
+  def full_update_stats
+    begin
+      if self.mugshots != []
+        self.last_mugshot = self.mugshots.last.id
+        self.mugshot_count = self.mugshots.count
+        self.consistency = ((self.mugshot_count * 1000) / (Date.today - self.mugshots.first.created_at.to_date).to_i)
+      else
+        self.last_mugshot = nil
+        self.mugshot_count = 0
+        self.consistency = 1
+      end
+    rescue
+      puts "error with authuser id: " + self.id.to_s + "   login:   " + self.login
+    end 
+  end
+  
+  def update_stats
+    begin
+      self.mugshot_count = self.mugshots.count
+      self.save
+    rescue
+    end
+    
+  end
+  #these get methods are temporary and intended to be deleted once the database caching population is settled
+  def get_mugshot_count
+    self.mugshot_count || self.mugshots.count 
+  end
+  def get_consistency
+    self.consistency || ((self.get_mugshot_count * 1000) / (Date.today - self.mugshots.first.created_at.to_date).to_i)
+  end
+  
+  def get_last_mugshot
+    self.last_mugshot || self.mugshots.last.id
+  end
+  
   # def init
   #   self.time_zone ||= "US/Eastern"
   #   self.active ||= true
@@ -33,27 +70,28 @@ class Authuser < ActiveRecord::Base
   #   @email_reminder.save
   #   self.save
   # end
-  
   def get_all_images
     to_get = []
-    self.mugshots.each do |m|
-      if m.image.to_s.match("missing").class != NilClass
-        to_get << m
+    
+      self.mugshots.each do |m|
+        if m.image.to_s.match("missing").class != NilClass
+          to_get << m
+        end
       end
-    end
 
-    unless to_get == []
-      f = AWS::S3.new.buckets[:dailymugshotprod]
-      to_get.each do |m|
-        m.image = f.objects[m.filename].url_for(:read).open 
-        m.save
+      unless to_get == []
+        f = AWS::S3.new.buckets[:dailymugshotprod]
+        to_get.each do |m|
+          i = f.objects[m.filename].url_for(:read).open 
+          m.image = i
+          m.save
+          i.close
+        end
       end
-      f.close
-    end
 
 
   end
-
+  
   def gender_possessive
     if self.gender == "f"
       "her"
@@ -75,14 +113,14 @@ class Authuser < ActiveRecord::Base
     end
   end 
   
-  def consistency
-    #maybe cut people some slack on this to account for downtime?  i dunno w/e
-    if self.has_mugshot?
-      (self.mugshots.count / ((Date.today - self.mugshots.first.created_at.to_datetime).to_f)) * 100 
-    else
-      100
-    end
-  end
+  # def consistency
+  #   #maybe cut people some slack on this to account for downtime?  i dunno w/e
+  #   if self.has_mugshot?
+  #     (self.mugshots.count / ((Date.today - self.mugshots.first.created_at.to_datetime).to_f)) * 100 
+  #   else
+  #     100
+  #   end
+  # end
   def last_mugshot_date
     self.mugshots.last.created_at
   end
@@ -151,4 +189,16 @@ class Authuser < ActiveRecord::Base
     self.save
   end
   
+  def try_image_all
+    logger.info "beginning try_image_all for user:  " + self.id.to_s
+    if !self.mugshots.first.present? && self.mugshots.first.image_file_name == nil
+      logger.info "first mugshot is nil, proceding to check/populate others"
+      self.mugshots.each do |m|
+        begin
+          m.try_image
+        rescue
+        end  
+      end
+    end
+  end
 end

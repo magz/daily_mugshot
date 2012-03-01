@@ -88,6 +88,22 @@ class ApisController < ApplicationController
   
   
   end
+  #this is based on the old method of keeping track of image files...we're not doing that anymore
+  # def get_full
+  #   if params[:filename] =~ /(open.+[\z^.*?])/ix 
+  #     s = $1
+  #     s = s.chop.chop
+  #   end
+  #   @authuser = Authuser.find params[:userid]
+  #   @full = @authuser.mugshots.find_by_image_file_name s
+  #   #sorry there are some finer points of respond_to i'm missing
+  #   #forgive me my ignorance if i don't make it back to fix this up
+  #   request.format = "xml"
+  #   
+  #   respond_to do |format|
+  #     format.xml  { render :layout => false, :status => (@full ? :ok : 404) }
+  #   end
+  # end
   
   def set_inner
     #this is called by the adjust object to update the offset of a mugshot
@@ -281,7 +297,7 @@ class ApisController < ApplicationController
     end
   def get_multi_box_update
     #this is my new ajax call for the front page..magz
-    @mugshot = Mugshot.last(50).shuffle.first
+    @mugshot = Mugshot.last(50).shuffle.last
     @authuser = @mugshot.authuser
     gender = @authuser.gender == "m" ? "his" : "her"
     @hash = {image: @mugshot.try_image("inner"), userid: @authuser.id, message: (@authuser.login + " just took " + gender + " " + @authuser.mugshots.count.ordinalize + " mugshot!")}
@@ -306,6 +322,14 @@ class ApisController < ApplicationController
           @mac_version = "1.0"
           @win_version = "0.9.0"
           @protocol_version = "1.0"
+          #update userstats
+          #userstat = Userstat.find_by_authuser_id @user.id
+          #does this do anything?
+          # unless userstat == nil
+          #   userstat.last_alarm = Time.new.gmtime
+          #   userstat.alarm_version = params[:cversion] == nil ? "unknown" : params[:cversion].gsub(/[^A-Za-z0-9_\s\.]/,'')
+          #   userstat.save
+          # end 
         else
           redirect_to :action => 'user_not_found' and return
         end
@@ -322,5 +346,9 @@ class ApisController < ApplicationController
   def firstalarm
     render xml: nil
   end
+  
+    
+  
+  
 end
 

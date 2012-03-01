@@ -6,19 +6,20 @@
               <% alternating = !alternating %>
               <div class="comment_content">
                   <h4 class="comment_title">
-                    <%#= comment.authuser_id == -1 ? 
+                    <%= comment.authuser_id == -1 ? 
                           "<span class='comment_auth'>anonymous</span>" : 
                           link_to( comment.authuser.login, 
                             {:action => "show", :id => comment.authuser_id }, :class => "comment_auth" ) %>
                     <span class="comment_date"><%= comment.created_at.strftime("%m/%d/%y") %></span>
-                    <%#= link_to_remote("Delete", {:url => {:action => "remove_comment", :id => comment.id }}, :class => "comment_delete img" ) if @deletable %>
+                    <%#= link_to("Delete", :controller => :comments, :action => :remove_comment, :id => comment.id, :remote => true )  %>
                   </h4>
-                  <%= comment.authuser_id == -1 ? 
+                <% if comment.authuser.present? || comment.authuser.id == -1 %>  
+				<%= (comment.authuser_id == -1 || !comment.authuser.mugshots.last.present?) ? 
                           image_tag("dmslogo_med.png", :class => "comment_pic") : 
-						  image_tag(comment.authuser.mugshots.last.try_image "thumb") 
-						  #need to incorporate the zoom thumb thing here
-											%>
-		                  
+						  image_tag((comment.authuser.mugshots.last.try_image "thumb"), size: "50x50") 
+						  #need to incorporate the zoom thumb thing here 
+						%>
+		         <% end %>
                   <div class="comment_body"><%= comment.body %></div>
               </div>
             </li>

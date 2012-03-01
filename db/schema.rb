@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120226232832) do
+ActiveRecord::Schema.define(:version => 20120301003046) do
 
   create_table "authusers", :force => true do |t|
     t.string   "login"
@@ -29,13 +29,14 @@ ActiveRecord::Schema.define(:version => 20120226232832) do
     t.datetime "remember_token_expires_at"
     t.datetime "deleted_at"
     t.integer  "mugshot_count"
+    t.integer  "consistency"
     t.integer  "last_mugshot"
   end
 
   create_table "comments", :force => true do |t|
     t.integer  "authuser_id"
-    t.integer  "mugshot_id"
-    t.string   "body"
+    t.integer  "owner_id"
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -75,7 +76,14 @@ ActiveRecord::Schema.define(:version => 20120226232832) do
 
   create_table "friendships", :force => true do |t|
     t.integer  "authuser_id"
-    t.integer  "friend_id"
+    t.integer  "followee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ip_address_hacks", :force => true do |t|
+    t.string   "authuser_id"
+    t.string   "ip_address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -126,36 +134,6 @@ ActiveRecord::Schema.define(:version => 20120226232832) do
     t.string   "release_notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "transition_authusers", :id => false, :force => true do |t|
-    t.integer  "id",                                      :default => 0, :null => false
-    t.string   "login",                     :limit => 16
-    t.string   "email"
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "remember_token"
-    t.datetime "remember_token_expires_at"
-    t.integer  "active",                                  :default => 1
-    t.string   "time_zone"
-    t.string   "gender"
-    t.date     "birthday"
-    t.integer  "invites"
-    t.integer  "prvt",                                    :default => 0
-    t.datetime "deleted_at"
-    t.string   "type"
-  end
-
-  create_table "transition_pics_table", :id => false, :force => true do |t|
-    t.integer  "id",          :default => 0, :null => false
-    t.integer  "authuser_id"
-    t.datetime "created"
-    t.integer  "xoffset"
-    t.integer  "yoffset"
-    t.string   "filename"
-    t.datetime "deleted_at"
   end
 
   create_table "twitter_connects", :force => true do |t|

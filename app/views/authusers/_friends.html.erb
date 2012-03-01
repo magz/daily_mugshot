@@ -1,0 +1,25 @@
+<% if @followed_friends != [] %>
+    <div id="favorites">
+	  <h3 class="title">Favorites</h3>
+	  <% @followed_friends.each do |fav| %>
+	      <% if true %>
+	      <%# if fav.get_mugshot_count > 0 && fav.prvt == 0 %>
+	      		<%= link_to(image_tag(Mugshot.find(fav.get_last_mugshot).try_image, size: "50x50"), :action => :show, :id => fav.id)  %>
+	      <% end %>	
+		<% end %>
+		
+    </div>
+	<% end %>
+
+	<% if @following_friends != [] %>
+	    <div id="favorites">
+		  <h3 class="title">Followers</h3>
+		  <% @followed_friends.each do |fav| %>
+		      <% if true %>
+		      <%# if fav.get_mugshot_count > 0 && fav.prvt == 0 %>
+		      		<%= link_to(image_tag(Mugshot.find(fav.get_last_mugshot).try_image, size: "50x50"), :action => :show, :id => fav.id)  %>
+		      <% end %>	
+			<% end %>
+
+	    </div>
+		<% end %>

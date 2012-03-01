@@ -1,22 +1,18 @@
 <div class="mugshow_stats">
         <h4>Mugshow Stats</h4>
         <dl>
-                <span OnMouseOver="renderTooltip(118,'Date of Most Recent Mugshot');" OnMouseOut="hideTooltip();">
+                <span>
                     <dt>Last Mugshot</dt>
                     <dd><strong><%= @authuser.mugshots.last.created_at.strftime "%Y-%m-%d"%></strong></dd>
                 </span>
 
-                <span OnMouseOver="renderTooltip(140,'Total Mugshots Taken');" OnMouseOut="hideTooltip();">
+                <span>
                     <dt>Mugshot Count</dt>
-                    <dd><strong><%= @authuser.mugshots.count %></strong></dd>
+                    <dd><strong><%= @authuser.get_mugshot_count %></strong></dd>
                 </span>
-                <span OnMouseOver="renderTooltip(162,'Number of Mugshots Divided by Days Since First Mugshot');" OnMouseOut="hideTooltip();">
+                <span>
                     <dt>Consistency</dt>
-                    <dd><strong><%= @authuser.consistency %>%</strong></dd>
-                </span>
-                <span OnMouseOver="renderTooltip(184,'Average Time of Day');" OnMouseOut="hideTooltip();">
-                    <dt>Avg Shot Time</dt>
-                    <dd><strong><%#= @authuser.userstat.average_time.strftime("%I:%M %p") %></strong></dd>
+                    <dd><strong><%= @authuser.get_consistency/10 %>%</strong></dd>
                 </span>
         </dl>
 </div>

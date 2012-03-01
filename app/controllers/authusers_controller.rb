@@ -1,13 +1,23 @@
 class AuthusersController < ApplicationController
   skip_before_filter :require_login, :only => [:new, :create, :index, :search, :show, :signup, :forgot_password, :submit_forgot_password, :submit_forgot_password]
+  before_filter :privacy_filter, :only => [:show]
   
+  def privacy_filter
+    if params[:id].to_i.to_s == params[:id]
+      @authuser = Authuser.find(params[:id]) 
+    else
+      @authuser = Authuser.find_by_login(params[:id]) 
+    end 
+    if @authuser != nil && @authuser.prvt == true && @authuser.id != current_authuser.id
+      flash[:notice] = "We're sorry, but that account is private"
+      redirect_to :root
+    end
+  end
   # GET /authusers
   # GET /authusers.json
   def index
     #this could maybe be slightly more efficient
-    #@authusers = Authuser.where(mugshot_count: !order("RAND()").paginate(:page => params[:page])
-
-    @authusers = Authuser.order("RAND()").paginate(:page => params[:page])
+    @authusers = Authuser.where("mugshot_count > 10").order("RAND()").paginate(:page => params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @authusers }
@@ -42,17 +52,17 @@ class AuthusersController < ApplicationController
       @authuser = Authuser.find(params[:id]) 
     else
       @authuser = Authuser.find_by_login(params[:id]) 
-    end   
+    end 
     #is this necessary?  for the mobile app maybe?
     raise(ActiveRecord::RecordNotFound,"Couldn't find Authuser with ID=#{params[:id]}") if @authuser.nil?
     #original has it include userstats with this..i'm guessing so it can do that thumbnail trick
     #leaving it off for the moment
-    @comments = []
-    Comment.where(:authuser_id => @authuser).order("created_at DESC").each do |c|
-      if c.deleted_at == nil
-        @comments << c
-      end
-    end
+    @comments = Comment.where(owner_id: @authuser.id).order("created_at DESC")
+    @followed_friends = []
+    @following_friends = []
+    Friendship.where(:followee_id => @authuser.id).each {|f| @followed_friends << f.authuser}
+    Friendship.where(:authuser_id => @authuser.id).each {|f| @following_friends << f.followee}
+    
     if params[:current_tab] == "mosaic"
       @current_tab = "mosaic"
       #add a thing to only get active ones
@@ -213,16 +223,17 @@ class AuthusersController < ApplicationController
     end
 
     @authuser.email = params[:authuser][:email]
-    @authuser.email = params[:authuser][:time_zone]
+    @authuser.time_zone = params[:authuser][:time_zone]
     @authuser.login = params[:authuser][:login]
     @authuser.gender = params[:authuser][:gender]
     @authuser.prvt = false
-
-
+    
+    logger.info "here are the errors"
+    logger.info @errors
     respond_to do |format|
       if @errors == [] && @authuser.save
         session[:authuser] = @authuser.id
-        format.html { redirect_to :first_pic, notice: 'Authuser was successfully created.' }
+        format.html { redirect_to :root, notice: 'Authuser was successfully created.' }
         format.json { render json: @authuser, status: :created, location: @authuser }
       else
         format.html { render action: "signup" }

@@ -29,19 +29,19 @@ swfobject.registerObject("adjust", "9.0.115", "expressInstall.swf");
 				<% if @authuser.mugshots.count > @page_size -%>
 				<ul id="sequence_date_ranges">
 				  <li>
-				    <%= link_to "&lt; First", 
+				    <%= link_to "First", 
 				          {:page => @page_count}, :class => "css3button" %>
 				  </li>
 				  <li>
-				    <%= link_to "&lt; Prev", 
+				    <%= link_to "Prev", 
 				          {:page => @current_page  + 1 }, :class => "css3button" %>
 				  </li>
 				  <li>
-				    <%= link_to "Next &gt;", 
+				    <%= link_to "Next", 
 				      {:page => @current_page - 1}, :class => "css3button" %>
 				  </li>
 				  <li>
-				    <%= link_to "Last &gt;", 
+				    <%= link_to "Last", 
 		          		{:page => 0}, :class => "css3button" %>
 				  </li>
 				</ul>
@@ -56,13 +56,15 @@ swfobject.registerObject("adjust", "9.0.115", "expressInstall.swf");
 </div>
 <div id="adjust" class="flash_container">
 <script type=text/javascript>
+	$(document).ready(function() {
+	
 	var flashvars = {};
 	var params = {pathurl: "http://<%= request.host %>/swf/paths.xml", userid: <%= current_authuser.id.to_s %>, filename: "<%= @focused_mugshot.try_image %>", firstfile: "<%= current_authuser.mugshots.first.try_image %>", xcoord: <%= @focused_mugshot.xoffset %>, ycoord: <%= @focused_mugshot.yoffset %>};
 	var attributes = {};
 	swfobject.embedSWF("http://<%= request.host %>/swf/adjust.swf", "adjust", "480", "530", "9.0.115", flashvars, params, attributes);
-
+	});
 </script>
 <p>
-	<%#= link_to 'Download', download_mugshot_path(@pic.mugshot), :popup => true, :class => 'css3button' %>
+	<%#= link_to 'Download', @focused_mugshot.try_image, :popup => true, :class => 'css3button' %>
 </p>
 </div>

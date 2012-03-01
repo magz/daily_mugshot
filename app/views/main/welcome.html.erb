@@ -29,7 +29,7 @@
 <br>
 <% @mugshots.each do |m|%>
      <a class="alert_box_link" href= <%= "/authusers/" + m.authuser.id.to_s %>>
-	<img class="alert_boxes" src="<%= m.image :inner %>" width="225" height="225">
+	<img class="alert_boxes" src="<%= m.try_image :inner %>" width="225" height="225">
 	</a> 
 <% end %>
 
@@ -99,7 +99,7 @@ var start_update = function() {
 //to do: fade in / fade out via .fadeout .fadein
 //put in space for text
 //setup periodic execution
-$.periodic.defaults.period = 2000;
+$.periodic.defaults.period = 1000;
 $.periodic(function() {
 	start_update();
 });

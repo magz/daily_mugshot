@@ -14,9 +14,9 @@ ssh_options[:forward_agent] = true
 set :deploy_to, "/var/www/apps/#{application}"
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-role :web, "stage.dailymugshot.com"                          # Your HTTP server, Apache/etc
-role :app, "stage.dailymugshot.com"                          # This may be the same as your `Web` server
-role :db,  "stage.dailymugshot.com", :primary => true # This is where Rails migrations will run
+role :web, "67.207.146.146"                          # Your HTTP server, Apache/etc
+role :app, "67.207.146.146"                          # This may be the same as your `Web` server
+role :db,  "67.207.146.146", :primary => true # This is where Rails migrations will run
 
 default_run_options[:pty] = true  
 

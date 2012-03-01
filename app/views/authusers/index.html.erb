@@ -2,14 +2,11 @@
 
 <% @authusers.each do |user| %>
 	
-	<% unless user.has_mugshot? %>
-	<% user = Authuser.find(60581) %>
-	<% end %>
 	
 	<div class="user">
 	<a href=<%= authuser_path(user.id) %>><div class="username"><%= user.login %></div></a>
 	<a href=<%= authuser_path(user.id) %>><div class="userpic"><%= image_tag asset_path("loading_gif.gif"), class: "user_image", data: user.id.to_s, size: "141x141"%></div></a>
-	<a href=<%= authuser_path(user.id) %>><div class="usershots"><%= user.mugshots.count %></div></a>
+	<a href=<%= authuser_path(user.id) %>><div class="usershots"><%= user.get_mugshot_count %></div></a>
 	</div>
 
 
@@ -22,7 +19,6 @@ $('.user_image').each(function(index) {
 		$(".user_image")[data["id"]].src = data["image"];	
 	});
 });	
-
 </script>
 <div class="clearboth"></div>
 

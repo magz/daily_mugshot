@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  skip_before_filter :require_login, :only => [:new, :create]
+  skip_before_filter :require_login, :only => [:new, :create, :ajax_remove_comment]
   # GET /comments
   # GET /comments.json
   def index
@@ -81,4 +81,25 @@ class CommentsController < ApplicationController
       format.json { head :ok }
     end
   end
+  def ajax_remove_comment
+    unless params[:id] == nil
+        @comment = Comment.find_by_id(params[:id])
+        #make sure we can find the comment
+        unless @comment == nil
+          owner_id = @comment.owner_id
+          #make sure a user is logged in
+          if logged_in?
+            #make sure the logged in user is the owner of the mugshow
+            if current_authuser.id == owner_id
+              @comment.destroy
+            end
+          end
+        end
+    end
+    respond_to do |format|
+      format.html { redirect_to :action => "show", :id => authuser_id}
+      format.js
+    end
+  end
+  
 end

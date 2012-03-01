@@ -12,7 +12,13 @@ class SessionsController < ApplicationController
         cookies[:_daily_mugshot_auth_token] = { :value => @current_authuser.remember_token , :expires => 1.year.from_now } 
       end
       # redirect_to my_mugshow_url
-      
+      if @current_authuser.consistency == nil
+        #temporary to ensure user_stats get populated
+        begin
+          @current_authuser.save
+        rescue
+        end
+      end
       flash[:notice] = "Logged in successfully" 
     else
       flash[:notice] = "Incorrect Login" 
