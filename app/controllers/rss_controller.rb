@@ -1,5 +1,5 @@
 class RssController < ApplicationController
-
+  skip_before_filter [:require_login]
   caches_page :feed
   def feed
     if params[:login] == nil || params[:size] == nil

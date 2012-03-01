@@ -34,6 +34,26 @@ class Authuser < ActiveRecord::Base
   #   self.save
   # end
   
+  def get_all_images
+    to_get = []
+    self.mugshots.each do |m|
+      if m.image.to_s.match("missing").class != NilClass
+        to_get << m
+      end
+    end
+
+    unless to_get == []
+      f = AWS::S3.new.buckets[:dailymugshotprod]
+      to_get.each do |m|
+        m.image = f.objects[m.filename].url_for(:read).open 
+        m.save
+      end
+      f.close
+    end
+
+
+  end
+
   def gender_possessive
     if self.gender == "f"
       "her"
@@ -131,16 +151,4 @@ class Authuser < ActiveRecord::Base
     self.save
   end
   
-  def try_image_all
-    logger.info "beginning try_image_all for user:  " + self.id.to_s
-    if !self.mugshots.first.present? && self.mugshots.first.image_file_name == nil
-      logger.info "first mugshot is nil, proceding to check/populate others"
-      self.mugshots.each do |m|
-        begin
-          m.try_image
-        rescue
-        end  
-      end
-    end
-  end
 end

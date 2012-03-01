@@ -34,6 +34,7 @@ DailyMugshot::Application.routes.draw do
   match "browse" => "authusers#index", :as => :browse
   match "account/loginxml" => "iphone#loginxml"
   match "authusers/forgot_password" => "authusers#forgot_password", :as => :forgot_password
+  
   match "authusers/submit_forgot_password" => "authusers#submit_forgot_password", :as => :password_submit_reset
   match "/toggle_privacy" => "authusers#update_privacy", :as => :toggle_privacy
   match "/mugshots/ajax_image_fetch" => "mugshots#ajax_image_fetch", :as => :ajax_image_fetch
@@ -119,7 +120,14 @@ DailyMugshot::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
+  match "rss/:size/:login" => "rss#feed"
+  match "secret" => "main#secret"
+  match "martin_delete" => "main#martin_delete"
+  match "iphone/forgot" => "authusers#forgot_password"
+  match "iphone/signup" => "authusers#signup"
+  match "main/show/:id" => "authusers#show"
+  match "/:id" => "authusers#show"
+  match "authuser/new_pic" => "mugshots#new"
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'main#welcome'

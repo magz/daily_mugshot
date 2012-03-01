@@ -28,10 +28,10 @@ class Mugshot < ActiveRecord::Base
   #:storage => :s3, :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "rails3_development" 
 
   def update_mugshot_count
-    
-    self.authuser.mugshot_count = self.authuser.mugshots.count
-    self.authuser.last_mugshot = self.id
-    self.authuser.save
+    a = self.authuser
+    a.mugshot_count = self.authuser.mugshots.count
+    a.last_mugshot = self.id
+    a.save
   end
   def try_image(size="full")
     #this is a placeholder method while the migration of the Mugshots db is moving over...delete when done

@@ -281,7 +281,7 @@ class ApisController < ApplicationController
     end
   def get_multi_box_update
     #this is my new ajax call for the front page..magz
-    @mugshot = Mugshot.last
+    @mugshot = Mugshot.last(50).shuffle.first
     @authuser = @mugshot.authuser
     gender = @authuser.gender == "m" ? "his" : "her"
     @hash = {image: @mugshot.try_image("inner"), userid: @authuser.id, message: (@authuser.login + " just took " + gender + " " + @authuser.mugshots.count.ordinalize + " mugshot!")}

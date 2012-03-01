@@ -5,6 +5,8 @@ class AuthusersController < ApplicationController
   # GET /authusers.json
   def index
     #this could maybe be slightly more efficient
+    #@authusers = Authuser.where(mugshot_count: !order("RAND()").paginate(:page => params[:page])
+
     @authusers = Authuser.order("RAND()").paginate(:page => params[:page])
     respond_to do |format|
       format.html # index.html.erb
@@ -36,12 +38,21 @@ class AuthusersController < ApplicationController
   # GET /authusers/1
   # GET /authusers/1.json
   def show
-    @authuser = Authuser.find(params[:id]) || Authuser.find_by_login(params[:id])    
+    if params[:id].to_i.to_s == params[:id]
+      @authuser = Authuser.find(params[:id]) 
+    else
+      @authuser = Authuser.find_by_login(params[:id]) 
+    end   
     #is this necessary?  for the mobile app maybe?
     raise(ActiveRecord::RecordNotFound,"Couldn't find Authuser with ID=#{params[:id]}") if @authuser.nil?
     #original has it include userstats with this..i'm guessing so it can do that thumbnail trick
     #leaving it off for the moment
-    @comments = Comment.where(:authuser_id => @authuser).order("created_at DESC")
+    @comments = []
+    Comment.where(:authuser_id => @authuser).order("created_at DESC").each do |c|
+      if c.deleted_at == nil
+        @comments << c
+      end
+    end
     if params[:current_tab] == "mosaic"
       @current_tab = "mosaic"
       #add a thing to only get active ones
