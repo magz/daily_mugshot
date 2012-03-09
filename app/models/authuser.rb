@@ -7,7 +7,7 @@ class Authuser < ActiveRecord::Base
   has_one :twitter_connect
   has_one :email_reminder
   has_many :friendships
-  has_many :friends, :through => :friendships
+  has_many :friends, :through => :friendships, :source => :followee
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :authuser
   has_many :landmarks
@@ -27,7 +27,12 @@ class Authuser < ActiveRecord::Base
     begin
       if self.mugshots != []
         self.last_mugshot = self.mugshots.last.id
-        self.mugshot_count = self.mugshots.count
+        self.last_mugshot_url = Mugshot.find(self.last_mugshot).try_image(:inner)
+        if self.mugshot_count == nil
+          self.mugshot_count = self.mugshots.count
+        else
+          self.mugshot_count = self.mugshot_count + 1
+        end
         self.consistency = ((self.mugshot_count * 1000) / (Date.today - self.mugshots.first.created_at.to_date).to_i)
       else
         self.last_mugshot = nil
@@ -56,7 +61,16 @@ class Authuser < ActiveRecord::Base
   end
   
   def get_last_mugshot
-    self.last_mugshot || self.mugshots.last.id
+     if self.last_mugshot != nil
+       self.last_mugshot
+      else  
+        if self.mugshots.last.present?
+          self.mugshots.last
+        else
+          nil
+        end
+      end
+  
   end
   
   # def init
@@ -82,10 +96,13 @@ class Authuser < ActiveRecord::Base
       unless to_get == []
         f = AWS::S3.new.buckets[:dailymugshotprod]
         to_get.each do |m|
-          i = f.objects[m.filename].url_for(:read).open 
-          m.image = i
-          m.save
-          i.close
+          begin
+            i = f.objects[m.filename].url_for(:read).open 
+            m.image = i
+            m.save
+            i.close
+          rescue
+          end
         end
       end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120301003046) do
+ActiveRecord::Schema.define(:version => 20120306045105) do
 
   create_table "authusers", :force => true do |t|
     t.string   "login"
@@ -31,7 +31,10 @@ ActiveRecord::Schema.define(:version => 20120301003046) do
     t.integer  "mugshot_count"
     t.integer  "consistency"
     t.integer  "last_mugshot"
+    t.string   "last_mugshot_url"
   end
+
+  add_index "authusers", ["time_zone"], :name => "index_authusers_on_time_zone"
 
   create_table "comments", :force => true do |t|
     t.integer  "authuser_id"
@@ -40,6 +43,8 @@ ActiveRecord::Schema.define(:version => 20120301003046) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "comments", ["authuser_id"], :name => "index_comments_on_authuser_id"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -66,6 +71,8 @@ ActiveRecord::Schema.define(:version => 20120301003046) do
     t.datetime "updated_at"
   end
 
+  add_index "email_reminders", ["hour"], :name => "index_email_reminders_on_hour"
+
   create_table "feedbacks", :force => true do |t|
     t.integer  "authuser_id"
     t.string   "email"
@@ -81,6 +88,9 @@ ActiveRecord::Schema.define(:version => 20120301003046) do
     t.datetime "updated_at"
   end
 
+  add_index "friendships", ["authuser_id"], :name => "index_friendships_on_authuser_id"
+  add_index "friendships", ["followee_id"], :name => "index_friendships_on_followee_id"
+
   create_table "ip_address_hacks", :force => true do |t|
     t.string   "authuser_id"
     t.string   "ip_address"
@@ -95,6 +105,8 @@ ActiveRecord::Schema.define(:version => 20120301003046) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "landmarks", ["authuser_id"], :name => "index_landmarks_on_authuser_id"
 
   create_table "mugshots", :force => true do |t|
     t.integer  "authuser_id"
@@ -113,19 +125,7 @@ ActiveRecord::Schema.define(:version => 20120301003046) do
     t.datetime "created_at"
   end
 
-  create_table "old_mugshots", :force => true do |t|
-    t.integer  "authuser_id"
-    t.string   "caption"
-    t.integer  "xoffset"
-    t.integer  "yoffset"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "image_file_name"
-    t.integer  "image_file_size"
-    t.string   "image_content_type"
-    t.datetime "image_updated_at"
-    t.datetime "deleted_at"
-  end
+  add_index "mugshots", ["authuser_id"], :name => "index_mugshots_on_authuser_id"
 
   create_table "reminders", :force => true do |t|
     t.integer  "authuser_id"

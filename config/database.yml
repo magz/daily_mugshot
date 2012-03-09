@@ -25,3 +25,5 @@ production:
     username: magzmugshot
     password: roebling909
     host: 108.166.113.13
+    pool: 20
+    timeout: 10000

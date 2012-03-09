@@ -1,25 +1,23 @@
 <%= stylesheet_link_tag 'new_browse' %>
 
-<% @authusers.each do |user| %>
+<% @authusers.zip(@mugshots).each do |user, image| %>
 	
 	
 	<div class="user">
 	<a href=<%= authuser_path(user.id) %>><div class="username"><%= user.login %></div></a>
-	<a href=<%= authuser_path(user.id) %>><div class="userpic"><%= image_tag asset_path("loading_gif.gif"), class: "user_image", data: user.id.to_s, size: "141x141"%></div></a>
+	<a href=<%= authuser_path(user.id) %>><div class="userpic">
+	<%# if user.last_mugshot_url == nil %> <%= image_tag image.try_image(:inner), class: "user_image", data: user.id.to_s, size: "141x141"%>
+	<%# else %>
+	<%#= image_tag user.last_mugshot_url, class: "user_image", data: user.id.to_s, size: "141x141"%>
+	<%# end %>
+	
+	</div></a>
 	<a href=<%= authuser_path(user.id) %>><div class="usershots"><%= user.get_mugshot_count %></div></a>
 	</div>
 
 
 <% end %>
 
-<script>
-$('.user_image').each(function(index) {
-	var target_url = "/mugshots/ajax_image_fetch.json?id=" + $(this).attr('data') + "&index=" + index;
-	$.get(target_url, function(data) {
-		$(".user_image")[data["id"]].src = data["image"];	
-	});
-});	
-</script>
 <div class="clearboth"></div>
 
 <%= will_paginate @authusers %>

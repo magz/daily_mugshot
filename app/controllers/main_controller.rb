@@ -1,9 +1,9 @@
 class MainController < ApplicationController
   skip_before_filter :require_login, :only => [:welcome, :faq, :about, :secret]
+  caches_page :main
+  
   def welcome
-    @mugshots = Mugshot.where("authuser_id != 65417").last 6
-    logger.info "welcome to main page"
-    logger.info session
+    @mugshots = Mugshot.last(6)
   end
   
   def faq

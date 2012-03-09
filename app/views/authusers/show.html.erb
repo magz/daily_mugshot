@@ -1,8 +1,5 @@
 <%= stylesheet_link_tag "comments" %>
 <%# is this necessary? %>
-<%= stylesheet_link_tag "show" %>
-<%= javascript_include_tag 'lowpro' %>
-<%= javascript_include_tag 'show' %>
 
 <script type="text/javascript">
 swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
@@ -26,11 +23,12 @@ swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
 	<span id="tabs"><%= render :partial => "show_tabs" %></span>
 <%= render :partial => "mosaic_view" if @current_tab == "mosaic" %>
 </div>
+<% if @current_tab == "mugshow" %>
+
 <div id="mugshow_view">
 					<div class="mugshow_box">
 						<div class="mugshow_box_content">
 							<div id="player">
-								<% if @current_tab == "mugshow" %>
 							
                 				<script type="text/javascript">
 								$(document).ready(function() {
@@ -45,7 +43,7 @@ swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
 							
 							<div class="mugshow_meta">
 								<%= render :partial => "show_stats" if @authuser.mugshots != [] %>
-								<%#= render :partial => "show_actions" %>
+								<%= render :partial => "show_actions" if (current_authuser != nil && current_authuser.id == 60581) %>
 							</div>	
 							<div class="clearboth"><!--EMPTY--></div>
 						</div>
@@ -59,12 +57,14 @@ swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
 				    <div id="favorites">
 					  <h3 class="title">Favorites</h3>
 					  <% @followed_friends.each do |fav| %>
-					      <% if true %>
-					      <%# if fav.get_mugshot_count > 0 && fav.prvt == 0 %>
+						<% if fav.get_mugshot_count > 0  %>
 					      		<%= link_to(image_tag(Mugshot.find(fav.get_last_mugshot).try_image, size: "50x50"), :action => :show, :id => fav.id)  %>
-					      <% end %>	
+					          <% else %>
+									<%= link_to((image_tag "dmslogo_med.png", size: "50x50"), :action => :show, :id => fav.id)%>
+						  
+								<% end %>	
+								
 						<% end %>
-
 				    </div>
 					<% end %>
 
@@ -72,18 +72,17 @@ swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
 					    <div id="favorites">
 						  <h3 class="title">Followers</h3>
 						  <% @following_friends.each do |fav| %>
-						      <% if true %>
-						      <%# if fav.get_mugshot_count > 0 && fav.prvt == 0 %>
+							<% if fav.get_mugshot_count > 0 %>
 						      		<%= link_to(image_tag(Mugshot.find(fav.get_last_mugshot).try_image, size: "50x50"), :action => :show, :id => fav.id)  %>
-						      <% end %>	
+						      <% else %>
+									<%= link_to((image_tag "dmslogo_med.png", size: "50x50"), :action => :show, :id => fav.id)%>
+							  <% end %>	
 							<% end %>
-
+								
 					    </div>
 						<% end %>
-
-				
+						<div id="testdiv"></div>
 				  <h3 class="title">Comments</h3>
-				  <% if @comments %>
+					<%#= render :partial => 'comment_form' if logged_in? %>
+				
 					<%= render :partial => 'comments'  %>
-					<% end %>
-

@@ -1,6 +1,32 @@
 class AuthusersController < ApplicationController
-  skip_before_filter :require_login, :only => [:new, :create, :index, :search, :show, :signup, :forgot_password, :submit_forgot_password, :submit_forgot_password]
+  skip_before_filter :require_login, :only => [:new, :create, :index, :search, :show, :signup, :forgot_password, :submit_forgot_password, :submit_forgot_password, :create_comment]
   before_filter :privacy_filter, :only => [:show]
+  
+  def create_comment
+    if params[:owner_id].to_i == current_authuser.id
+      @comment = Comment.new
+      @comment.body = params[:comment][:body]
+      @comment.authuser_id = params[:authuser_id]
+      @comment.owner_id = params[:owner_id]
+    end
+    
+    respond_to do |format|
+      if @comment.save
+        @comments = Comment.where(authuser_id: params[:authuser_id]).order("created_at DESC")
+        #format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        #format.json { render json: @comment, status: :created, location: @comment }
+        format.js { render_to_string(:partial=>'comments', :locals => {:comments => @comments}).html_safe}
+      else
+        #format.html { render action: "new" }
+        #format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.js
+        
+      end
+    end
+  end
+  
+  
+  
   
   def privacy_filter
     if params[:id].to_i.to_s == params[:id]
@@ -17,7 +43,12 @@ class AuthusersController < ApplicationController
   # GET /authusers.json
   def index
     #this could maybe be slightly more efficient
-    @authusers = Authuser.where("mugshot_count > 10").order("RAND()").paginate(:page => params[:page])
+    @authusers = Authuser.where("mugshot_count > 10 AND last_mugshot is not null").order("RAND()").paginate(:page => params[:page])
+    @mugshots = []
+    @authusers.each do |a|
+      @mugshots << Mugshot.find(a.get_last_mugshot)
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @authusers }
@@ -53,16 +84,32 @@ class AuthusersController < ApplicationController
     else
       @authuser = Authuser.find_by_login(params[:id]) 
     end 
-    #is this necessary?  for the mobile app maybe?
-    raise(ActiveRecord::RecordNotFound,"Couldn't find Authuser with ID=#{params[:id]}") if @authuser.nil?
-    #original has it include userstats with this..i'm guessing so it can do that thumbnail trick
-    #leaving it off for the moment
+    if @authuser == nil
+      flash[:notice] = "Sorry that user wasn't found!"
+      redirect_to :root
+      return
+    end
+    
     @comments = Comment.where(owner_id: @authuser.id).order("created_at DESC")
+    @new_comment = Comment.new
     @followed_friends = []
     @following_friends = []
-    Friendship.where(:followee_id => @authuser.id).each {|f| @followed_friends << f.authuser}
-    Friendship.where(:authuser_id => @authuser.id).each {|f| @following_friends << f.followee}
-    
+    Friendship.where(:followee_id => @authuser.id).each do |f|
+      begin
+        if Authuser.find(f.authuser_id) != nil
+          @following_friends << f.authuser
+        end
+      rescue
+      end
+    end
+    Friendship.where(:authuser_id => @authuser.id).each do |f|
+      begin
+        if Authuser.find(f.authuser_id) != nil
+          @followed_friends << f.followee
+        end
+      rescue
+      end
+    end
     if params[:current_tab] == "mosaic"
       @current_tab = "mosaic"
       #add a thing to only get active ones

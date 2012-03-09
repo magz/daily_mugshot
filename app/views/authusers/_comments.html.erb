@@ -11,19 +11,23 @@
                           link_to( comment.authuser.login, 
                             {:action => "show", :id => comment.authuser_id }, :class => "comment_auth" ) %>
                     <span class="comment_date"><%= comment.created_at.strftime("%m/%d/%y") %></span>
-                    <%#= link_to("Delete", :controller => :comments, :action => :remove_comment, :id => comment.id, :remote => true )  %>
+                    <% if (logged_in? != nil && (comment.authuser_id == current_authuser.id || comment.owner_id == current_authuser.id)) %>
+					<%= link_to 'Delete', 
+					      { :controller => 'comments', :action => 'destroy', :id => comment.id }, 
+					      { :confirm => 'Are you sure?', :method => :delete}   %>
+					<% end %>
                   </h4>
-                <% if comment.authuser.present? || comment.authuser.id == -1 %>  
-				<%= (comment.authuser_id == -1 || !comment.authuser.mugshots.last.present?) ? 
-                          image_tag("dmslogo_med.png", :class => "comment_pic") : 
-						  image_tag((comment.authuser.mugshots.last.try_image "thumb"), size: "50x50") 
-						  #need to incorporate the zoom thumb thing here 
-						%>
-		         <% end %>
+				<% if (comment.authuser_id == -1 || !comment.authuser.get_last_mugshot) %> 
+                          <%= image_tag("dmslogo_med.png", :class => "comment_pic") %>
+						<% else %>
+						  <%= image_tag((Mugshot.find(comment.authuser.get_last_mugshot).try_image(:thumb)), size: "50x50") %>
+						<% end %>
+						
                   <div class="comment_body"><%= comment.body %></div>
               </div>
             </li>
-      <% end -%>
+      <% end %>
   </div>
 </ul>
 <div class="clearboth"><!-- CLEAR --></div>    
+

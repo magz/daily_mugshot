@@ -22,7 +22,7 @@ class ApisController < ApplicationController
       #verify user
       user = Authuser.find(params[:userid])
       if user != nil     
-        @pics = Mugshot.where(:authuser_id => params[:userid])
+        @pics = user.mugshots
       else
         @pics = nil
       end

@@ -54,7 +54,7 @@ DailyMugshot::Application.routes.draw do
   
   match "feedback/new" => "feedbacks#new", :as => :new_feedback
   
-  
+  match "main/browse" => "authusers#index"
   #sessions routes
   match "sessions/login" => "sessions#login", :as => :login
   match "sessions/logout" => "sessions#logout", :as => :logout
@@ -128,6 +128,9 @@ DailyMugshot::Application.routes.draw do
   match "main/show/:id" => "authusers#show"
   match "/:id" => "authusers#show"
   match "authuser/new_pic" => "mugshots#new"
+  match "frienships/add_follow" => "friendships#add_follow"
+  match "frienships/remove_follow" => "friendships#remove_follow"
+  match "authusers/create_comment" => "authusers#create_comment"
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'main#welcome'

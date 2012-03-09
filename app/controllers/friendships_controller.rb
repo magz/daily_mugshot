@@ -2,7 +2,29 @@ class FriendshipsController < ApplicationController
   # GET /friendships
   # GET /friendships.json
   
-  before_filter :require_admin
+  before_filter :require_admin, :except => [:add_follow, :remove_follow]
+  
+  def add_follow
+    @friendship = Friendship.new
+    @friendship.authuser = current_authuser
+    @friendship.followee = Authuser.find(params[:followee_id])
+    @friendship.save
+    respond_to do |format|
+      format.js
+    end
+    
+  end
+  
+  def remove_follow
+    @friendship = Friendship.find_by_authuser_id_and_followee_id(current_authuser, params[:followee_id])
+    logger.info @frienship == nil
+    @friendship.delete if @friendship
+    respond_to do |format|
+      format.js
+    end
+    
+  end
+  
   
   def index
     @friendships = Friendship.all
