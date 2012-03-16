@@ -131,6 +131,12 @@ DailyMugshot::Application.routes.draw do
   match "frienships/add_follow" => "friendships#add_follow"
   match "frienships/remove_follow" => "friendships#remove_follow"
   match "authusers/create_comment" => "authusers#create_comment"
+
+  match '/auth/twitter/callback', to: 'twitter_connects#create'
+  match '/auth/failure', to: 'twitter_connects#fail'
+  match "/auth/signup_for_twittter" => "twitter_connects#signup_for_twittter", :as => "twitter_signup"
+  match "/auth/deactivate_twitter" => "twitter_connects#deactivate_twitter", :as => "deactivate_twitter"
+
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'main#welcome'

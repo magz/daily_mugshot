@@ -1,0 +1,30 @@
+
+<% if logged_in? %>
+	<div class="add_comment_form">
+	<%= form_for @new_comment, :html => {:id => "new_comment_form"}, :remote=> true, :url => { :controller => "authusers", :action => "create_comment", :authuser_id => @authuser.id, :owner_id => current_authuser.id} do |c| %>
+			<span class="title">Comment: </span>
+			<%= c.text_area(:body, :size => "20x4") %>
+				<button type="submit" class="button" id="add_comment_button"><span>Post Comment</span></button>
+				<%= image_tag 'loading.gif', :id => "comment_loading", :class => 'block automargin top10', :style => "display:none"%>
+			<% end %>
+			</div>
+		<% end %>
+	
+<script>
+$(document).ready(function(){
+	//alert("yoyoyoyo");
+	$('.add_comment_form')
+		.bind("ajax:complete", function(evt, data, status, xhr){
+			console.log(data);
+			var parsed_data = jQuery.parseJSON(data["responseText"]);
+			//check this
+			if(parsed_data["success" == true]) {
+				$("#comments").html(parsed_data["user_html"]);
+			}
+			//this fires twice in development, but not in production...has to do with an extra rendering of jquery or something
+			//asset pipeline is weird/a pain sometimes 
+	    })
+
+});
+
+</script>

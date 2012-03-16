@@ -1,0 +1,35 @@
+<li>
+	<% if current_authuser.friends.include? @authuser %>    
+		<%= link_to "remove from favorites",
+    {:controller => 'friendships',
+              :action => 'remove_follow',
+              :followee_id => @authuser.id}, :remote => true,
+              :class => "remove_friend", :id => "friend_link" %>
+			<% else %>
+			<%= link_to "add to favorites",
+		    {:controller => 'friendships',
+		              :action => 'add_follow',
+		              :followee_id => @authuser.id}, :remote => true,
+		              :class => "add_friend", :id => "friend_link" %>
+			<% end %>
+    <span id="friendStatus"></span>
+</li>
+<script>
+$(document).ready(function(){
+	//alert("yoyoyoyo");
+	$('#friend_link')
+		.bind("ajax:complete", function(evt, data, status, xhr){
+			var parsed_data = jQuery.parseJSON(data["responseText"]);
+			$("#friend_link").html(parsed_data["user_html"]);
+			if(parsed_data["new_class"]) {
+				$("#friend_link").removeClass();
+				$("#friend_link").addClass(parsed_data["new_class"]);
+			}
+
+			//this fires twice in development, but not in production...has to do with an extra rendering of jquery or something
+			//asset pipeline is weird/a pain sometimes 
+	    })
+
+});
+
+</script>

@@ -10,7 +10,12 @@ class FriendshipsController < ApplicationController
     @friendship.followee = Authuser.find(params[:followee_id])
     @friendship.save
     respond_to do |format|
-      format.js
+        format.js do 
+          template_format = :html
+          @new_link_html = "<a href='/frienships/remove_follow?followee_id=" + params[:followee_id] + " class='remove_friend' data-remote='true' id='friend_link'>Remove from favorites </a> <span id='friendStatus'></span>"
+          render :json => { :success => true, :user_html => @new_link_html, :new_class => "remove_friend" }
+
+        end
     end
     
   end
@@ -20,7 +25,12 @@ class FriendshipsController < ApplicationController
     logger.info @frienship == nil
     @friendship.delete if @friendship
     respond_to do |format|
-      format.js
+        format.js do 
+          template_format = :html
+          @new_link_html = "<a href='/frienships/add_follow?followee_id=" + params[:followee_id] + " class='add_friend' data-remote='true' id='friend_link'>Add to favorites </a> <span id='friendStatus'></span>"
+          render :json => { :success => true, :user_html => @new_link_html, :new_class => "add_friend" }
+
+        end
     end
     
   end

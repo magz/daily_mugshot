@@ -15,7 +15,7 @@ class Mugshot < ActiveRecord::Base
   #this was the source of a tremendous amounts of its messiness
   #if you want to obscure the urls of the mugshots, use the :hash option i think
   
-  after_create :update_users_mugshot_stats
+  after_create :update_users_mugshot_stats, :do_social
   
   
   #doulbe check the seecurity of using the s3 urls rather than cloudfront...what's the difference there?

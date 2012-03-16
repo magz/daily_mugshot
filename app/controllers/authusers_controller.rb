@@ -15,7 +15,12 @@ class AuthusersController < ApplicationController
         @comments = Comment.where(authuser_id: params[:authuser_id]).order("created_at DESC")
         #format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
         #format.json { render json: @comment, status: :created, location: @comment }
-        format.js { render_to_string(:partial=>'comments', :locals => {:comments => @comments}).html_safe}
+        format.js do 
+          template_format = :html
+          @comment_html = render_to_string(:partial=>'comments.html.erb', :layout => false, :locals => {:comments => @comments}).html_safe
+          render :json => { :success => true, :user_html => @comment_html  }
+
+        end
       else
         #format.html { render action: "new" }
         #format.json { render json: @comment.errors, status: :unprocessable_entity }
@@ -323,17 +328,6 @@ class AuthusersController < ApplicationController
         @errors << "Problem updating your account.  Please try again"
       end
     end
-    #checks if present because it wont' be if active is set to false
-    # if @errors ==[] 
-    #   @email_reminder = @authuser.email_reminder
-    #   if params[:email_reminder].present?
-    #     @email_reminder.active = true
-    #   else
-    #     @email_reminder.active = false
-    #   end
-    #   @email_reminder.hour = params[:date][:hour]
-    #   @email_reminder.save
-    # end
       
         
     if @errors == []

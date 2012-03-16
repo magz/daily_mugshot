@@ -12,6 +12,7 @@ class Authuser < ActiveRecord::Base
   has_many :inverse_friends, :through => :inverse_friendships, :source => :authuser
   has_many :landmarks
   has_many :ip_address_hacks
+  has_many :videos
   
   validates :login, :email, :gender, :crypted_password, :presence => true
   validates :login, :email, :uniqueness => true
