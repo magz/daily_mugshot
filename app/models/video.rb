@@ -4,20 +4,27 @@ require 'net/http'
 
 	def generate_self
 		@errors = []
-		begin
-			Dir::mkdir(File.join(Rails.root, "tmp", "video", self.authuser_id.to_s))
+		tempfolder = File.join(Rails.root, "tmp", "video", self.authuser_id.to_s)
+    begin
+			FileUtils.rm_rf(tempfolder)
+      Dir::mkdir(tempfolder)
 		rescue
 			@errors << "Directory already exists"
 		end
 
-		fetch_photos(File.join(Rails.root, "tmp", "video", self.authuser_id.to_s) + "/")
+		fetch_photos(tempfolder + "/")
 		
-		command = "cd " + File.join(Rails.root, "tmp", "video", self.authuser_id.to_s) + " && ffmpeg -minrate 5000k -maxrate 5000k -bufsize 1835k -b 5000k -s 480x480 -f image2 -r 8 -i 'dms-%05d.jpeg' -qscale 1 output.flv"
+		command = "cd " + tempfolder + " && ffmpeg -minrate 5000k -maxrate 5000k -bufsize 1835k -b 5000k -s 480x480 -f image2 -r 8 -i 'dms-%05d.jpeg' -qscale 1 output.flv"
 		io = IO.popen(command)
       	io.each{|line| puts "ffmpeg says: " + line }
     
-
-	end
+    description = "This video was created by " +self.authuser.login + " at dailymugshot.com using images from " + self.authuser.created_at.strftime("%m/%d/%Y") + " to " + Time.now.strftime("%m/%d/%Y")
+    uploader = YouTubeIt::Client.new(username: 'dailymugshot', password: 'roebling909', dev_key: 'AI39si5FzQ55UvBK2Fb0c9uLJ-UHJco30YuEmhCc3HZwjIk668H3xmV5ZqWR1UcAgA0iK7YmwJ9y8A548DKft4_pmKDTh8_vSw') 
+    result = uploader.video_upload File.open(tempfolder + "/output.flv"), :title => self.authuser.login, :description => description, :category => 'People',:keywords => %w[dailymugshot]
+    
+    FileUtils.rm_rf(File.join(Rails.root, "tmp", "video", self.authuser_id.to_s))
+    return result.player_url
+  end
 
 
 
@@ -26,7 +33,7 @@ require 'net/http'
     #slightly sloppy, but it ensures a smooth transition
     (0..25).each do |increment|
       filename = "%05d" % increment.to_s
-      io = IO.popen("cp " + File.join(Rails.root, "app", "assets", "images", "videoPromo.gif ") + destination + "dms-"+filename+".jpeg")
+      io = IO.popen("cp " + File.join(Rails.root, "app", "assets", "images", "videoPromo.jpg ") + destination + "dms-"+filename+".jpeg")
       io.each{|line| puts "result: " + line }
       
     end

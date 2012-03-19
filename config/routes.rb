@@ -5,7 +5,6 @@ DailyMugshot::Application.routes.draw do
 
   resources :add_some_fieldsto_authusers
 
-  resources :videos
 
   resources :feedbacks
 
@@ -75,6 +74,7 @@ DailyMugshot::Application.routes.draw do
   match "main/camera_hope" => "mugshots#first_pic"
 
   match "mugshots/ajax_active_update/" => "mugshots#ajax_active_update"
+  match "/video" => "video#new"
   #resources routes
   #be careful with these
   resources :authusers

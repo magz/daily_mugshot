@@ -8,10 +8,11 @@
 		<li id="takePic"><%= link_to "Take a Pic", new_pic_path %></li>
 	<% else%>
 		<li id="takePic"><%= link_to "Take a Pic", controller: "mugshots", action: "first_pic" %></li>
+	<li id="invites" class = "new"><%= link_to "Youtube It -- NEW!", {:controller => "video", :action => "new" } if current_authuser.id == 60581 %></li>
+
 	<% end %>
 	</br>
 	<li id="invites"><%#= link_to "Find Your Friends", {:controller => "authuser", :action => "find_friends" } %></li>
-	<li id="invites" class = "new"><%#= link_to "Youtube It -- NEW!", {:controller => "video", :action => "new" } %></li>
 	<li id="flipbook"><%#= link_to "Make A Flipbook", :flipbook_intro %></li>
 	<li id="getReminders"><%= link_to "Get Reminders", :get_reminder %></li>
 	<% end %>

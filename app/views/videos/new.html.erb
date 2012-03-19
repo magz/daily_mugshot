@@ -1,5 +1,10 @@
-<h1>New video</h1>
+<h1>Video</h1>
+<p>You can now upload your mugshots to Youtube!  Just click the button below and your mugshow will be uploaded.  Note: this may take a minute, particularly if you have a large number of photos.  This feature is still being tested, so if you have any problems with this, please let us know.  Enjoy! 
+	
+You can also view videos that other users have submitted <a href=http://www.youtube.com/user/dailymugshot>HERE</a>
+</p>
+<%= link_to "Create Your Video!", :controller => :video, :action  =>  :create, :onclick => "this.disabled = true"%>
 
-<%= render 'form' %>
+<h1>Example Video</h1>
 
-<%= link_to 'Back', videos_path %>
+<iframe width="420" height="315" src="http://www.youtube.com/embed/vnaghn0SaNk" frameborder="0" allowfullscreen></iframe>

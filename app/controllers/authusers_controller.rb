@@ -217,14 +217,6 @@ class AuthusersController < ApplicationController
   # GET /authusers/1/edit
   def edit
     @authuser = current_authuser
-    # if @authuser.email_reminder.present?
-    #   @email_reminder = @authuser.email_reminder
-    # else
-    #   @email_reminder = EmailReminder.new
-    #   @email_reminder.active = true
-    #   @email_reminder.authuser_id = @authuser.id
-    #   
-    # end  
     @errors = []
   end
   
