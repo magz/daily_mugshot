@@ -6,12 +6,10 @@
 	<li id="myAcounnt"><%= link_to "My Account", my_account_path %></li>
 	<% if current_authuser.has_mugshot? %>
 		<li id="takePic"><%= link_to "Take a Pic", new_pic_path %></li>
-	<% else%>
+	<% else %>
 		<li id="takePic"><%= link_to "Take a Pic", controller: "mugshots", action: "first_pic" %></li>
-	<li id="invites" class = "new"><%= link_to "Youtube It -- NEW!", {:controller => "video", :action => "new" } if current_authuser.id == 60581 %></li>
-
 	<% end %>
-	</br>
+	<li id="invites" class = "new"><%= link_to "Youtube It", {:controller => "videos", :action => "new" } if current_authuser.id == 60581 %></li>
 	<li id="invites"><%#= link_to "Find Your Friends", {:controller => "authuser", :action => "find_friends" } %></li>
 	<li id="flipbook"><%#= link_to "Make A Flipbook", :flipbook_intro %></li>
 	<li id="getReminders"><%= link_to "Get Reminders", :get_reminder %></li>

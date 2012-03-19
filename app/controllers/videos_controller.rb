@@ -1,9 +1,8 @@
 require "uri"
 require 'net/http'
 
-class VideoController < ApplicationController
+class VideosController < ApplicationController
 
-  before_filter :login_required
   
   def create
     

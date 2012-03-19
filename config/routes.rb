@@ -74,7 +74,7 @@ DailyMugshot::Application.routes.draw do
   match "main/camera_hope" => "mugshots#first_pic"
 
   match "mugshots/ajax_active_update/" => "mugshots#ajax_active_update"
-  match "/video" => "video#new"
+  match "/video" => "videos#new"
   #resources routes
   #be careful with these
   resources :authusers
