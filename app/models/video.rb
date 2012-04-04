@@ -26,7 +26,26 @@ require 'net/http'
     return result.player_url
   end
 
+  def generate
+    unless FileTest.exists?("/var/www/apps/shared/videos/" + self.authuser_id.to_s + ".flv")
+      @errors = []
+      tempfolder = File.join(Rails.root, "tmp", "video", self.authuser_id.to_s)
+      begin
+        FileUtils.rm_rf(tempfolder)
+        Dir::mkdir(tempfolder)
+      rescue
+        @errors << "Directory already exists"
+      end
+      fetch_photos(tempfolder + "/")
+      
+      command = "cd " + tempfolder + " && ffmpeg -minrate 5000k -maxrate 5000k -bufsize 1835k -b 5000k -s 480x480 -f image2 -r 8 -i 'dms-%05d.jpeg' -qscale 1 /var/www/apps/shared/videos/" + self.authuser_id.to_s + ".flv"
+      io = IO.popen(command)
+      io.each{|line| puts "ffmpeg says: " + line }
+    end
 
+
+
+  end
 
   def fetch_photos(destination)
     #this is to create the pre roll...it simply copies the splash image 30 times (/10 frames per second = 3 secs.).  You can modify the length of the preroll by adjusting the "30" in the iterator below
