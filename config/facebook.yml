@@ -3,5 +3,3 @@ development:
   app_id: 342223555797578
   secret_key: 457d1d5bfabe351b72e08c773959cf8a
   api_key: ea22540703e80b87e46f5def91047927
-  redirect_uri: http://www.dailymugshot.com/facebook_connects/create
-

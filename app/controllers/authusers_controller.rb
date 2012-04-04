@@ -1,9 +1,9 @@
 class AuthusersController < ApplicationController
-  skip_before_filter :require_login, :only => [:new, :create, :index, :search, :show, :signup, :forgot_password, :submit_forgot_password, :submit_forgot_password, :create_comment]
+  skip_before_filter :require_login, :only => [:new, :create, :index, :search, :show, :signup, :forgot_password, :submit_forgot_password, :submit_forgot_password, :create_comment, :ajax_get_friends, :ajax_get_comments, :ajax_switch_to_mosaic]
   before_filter :privacy_filter, :only => [:show]
   
   def create_comment
-    if params[:owner_id].to_i == current_authuser.id
+    if params[:authuser_id].to_i == current_authuser.id
       @comment = Comment.new
       @comment.body = params[:comment][:body]
       @comment.authuser_id = params[:authuser_id]
@@ -12,8 +12,7 @@ class AuthusersController < ApplicationController
     
     respond_to do |format|
       if @comment.save
-        @comments = Comment.where(authuser_id: params[:authuser_id]).order("created_at DESC")
-        #format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        @comments = Comment.where(owner_id: params[:owner_id]).order("created_at DESC")        #format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
         #format.json { render json: @comment, status: :created, location: @comment }
         format.js do 
           template_format = :html
@@ -30,6 +29,71 @@ class AuthusersController < ApplicationController
     end
   end
   
+  def ajax_switch_to_mosaic
+    @authuser  = Authuser.find_by_id(params[:id])
+    if @authuser
+      @mugshots = @authuser.mugshots
+      
+      
+      
+      
+      template_format = :html
+      @mosaic_html = render_to_string(:partial=>'mosaic_view.html.erb', :layout => false, :locals => {:mugshot => @mugshots}).html_safe
+      render :json => { :success => true, :mosaic_view_html => @mosaic_html  }
+      
+    end
+  
+  
+  end
+  
+  def ajax_get_friends
+    @authuser  = Authuser.find_by_id(params[:id])
+    if @authuser
+      @followed_friends = []
+      @following_friends = []
+      Friendship.where(:followee_id => @authuser.id).each do |f|
+        begin
+          if Authuser.find(f.authuser_id) != nil
+            @following_friends << f.authuser
+          end
+        rescue
+        end
+      end
+      Friendship.where(:authuser_id => @authuser.id).each do |f|
+        begin
+          if Authuser.find(f.authuser_id) != nil
+            @followed_friends << f.followee
+          end
+        rescue
+        end
+      end
+      # format.js do 
+        template_format = :html
+        @friends_html = render_to_string(:partial=>'friends.html.erb', :layout => false, :locals => {:comments => @comments}).html_safe
+        render :json => { :success => true, :friends_html => @friends_html  }
+
+      # end
+      
+  
+    end
+  end
+  def ajax_get_comments
+    logger.info "ok we're in ajax get comments now..."
+    
+    @authuser  = Authuser.find_by_id(params[:id])
+    if @authuser
+      @comments = Comment.where(owner_id: @authuser.id).order("created_at DESC")
+        
+    end
+      # format.js do 
+        template_format = :html
+        @comments_html = render_to_string(:partial=>'comments.html.erb', :layout => false, :locals => {:comments => @comments}).html_safe
+        render :json => { :success => true, :comments_html => @comments_html  }
+  
+      # end
+  #     
+  # 
+  end
   
   
   
@@ -39,9 +103,11 @@ class AuthusersController < ApplicationController
     else
       @authuser = Authuser.find_by_login(params[:id]) 
     end 
-    if @authuser != nil && @authuser.prvt == true && @authuser.id != current_authuser.id
-      flash[:notice] = "We're sorry, but that account is private"
-      redirect_to :root
+    if @authuser != nil && @authuser.prvt == true 
+      unless logged_in? && @authuser.id == current_authuser.id
+        flash[:notice] = "We're sorry, but that account is private"
+        redirect_to :root
+      end
     end
   end
   # GET /authusers
@@ -73,17 +139,25 @@ class AuthusersController < ApplicationController
         @authusers.delete user 
       end
     end
-    
-    @authusers.sort!{|a,b| a.last_mugshot_date <=> b.last_mugshot_date}
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @authusers }
+    if @authusers != []
+      if @authusers.size > 1
+        @authusers.sort!{|a,b| a.last_mugshot_date <=> b.last_mugshot_date}
+        respond_to do |format|
+          format.html # index.html.erb
+          format.json { render json: @authusers }
+        end
+      else
+        redirect_to "/authusers/" + @authusers[0].id.to_s
+      end
+    else
+      flash[:notice] = "Sorry, no results were found for your search"
+      redirect_to :root
     end
-    
   end
   # GET /authusers/1
   # GET /authusers/1.json
   def show
+    logger.info params[:id] + "this is the user currently being looked up....."
     if params[:id].to_i.to_s == params[:id]
       @authuser = Authuser.find(params[:id]) 
     else
@@ -97,24 +171,24 @@ class AuthusersController < ApplicationController
     
     @comments = Comment.where(owner_id: @authuser.id).order("created_at DESC")
     @new_comment = Comment.new
-    @followed_friends = []
-    @following_friends = []
-    Friendship.where(:followee_id => @authuser.id).each do |f|
-      begin
-        if Authuser.find(f.authuser_id) != nil
-          @following_friends << f.authuser
-        end
-      rescue
-      end
-    end
-    Friendship.where(:authuser_id => @authuser.id).each do |f|
-      begin
-        if Authuser.find(f.authuser_id) != nil
-          @followed_friends << f.followee
-        end
-      rescue
-      end
-    end
+    # @followed_friends = []
+    # @following_friends = []
+    # Friendship.where(:followee_id => @authuser.id).each do |f|
+    #   begin
+    #     if Authuser.find(f.authuser_id) != nil
+    #       @following_friends << f.authuser
+    #     end
+    #   rescue
+    #   end
+    # end
+    # Friendship.where(:authuser_id => @authuser.id).each do |f|
+    #   begin
+    #     if Authuser.find(f.authuser_id) != nil
+    #       @followed_friends << f.followee
+    #     end
+    #   rescue
+    #   end
+    # end
     if params[:current_tab] == "mosaic"
       @current_tab = "mosaic"
       #add a thing to only get active ones
@@ -229,7 +303,7 @@ class AuthusersController < ApplicationController
     
     if params[:authuser][:password] == params[:authuser][:password_confirmation] && params[:authuser][:password] != ""
       @authuser.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{@authuser.login}--")
-      @authuser.crypted_password =  Authuser.encrypt(params[:password], @authuser.salt)
+      @authuser.crypted_password =  Authuser.encrypt(params[:authuser][:password].strip, @authuser.salt)
     else
       if params[:authuser][:password] == "" 
         @errors << "You cannot leave your password blank"

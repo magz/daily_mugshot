@@ -1,5 +1,6 @@
 class ApisController < ApplicationController
   skip_before_filter :require_login
+  
   #this is almost exclusively code for the flash objects
   #it integrates code from both the api and openapis controllers
   #as a result of it being based on some of the last remaining (yay!) legacy code, the functions here may be a bit wonky 
@@ -17,41 +18,83 @@ class ApisController < ApplicationController
   end
   
   def get_sequence
-    #verify we have a populated parameter
-    if params[:userid] != nil
-      #verify user
-      user = Authuser.find(params[:userid])
-      if user != nil     
-        @pics = user.mugshots
+      #verify we have a populated parameter
+      unless FileTest.exists?("tmp/get_sequence_cache/" + params[:userid] + ".xml")
+      
+        if params[:userid] != nil
+          #verify user
+          user = Authuser.find(params[:userid])
+          if user != nil     
+            # if logged_in? && current_authuser.id == 60581 && FileTest.exists?("tmp/get_sequence_cache/" + user.id.to_s + ".xml")
+            #   request.format = "xml"
+            #   respond_with File.read(File.open("tmp/get_sequence_cache/" + user.id.to_s + ".xml"))
+            #   return
+            # else  
+              @pics = user.mugshots
+            # end
+          else
+            @pics = nil
+          end
+        else
+          @pics = nil
+        end
+      #sorry there are some finer points of respond_to i'm missing
+      #forgive me my ignorance if i don't make it back to fix this up
+          request.format = "xml"
+          respond_to do |format|
+            format.xml
+          end
       else
-        @pics = nil
+        logger.info "rendering user " + params[:userid] + " sequence from cache...."
+        render :layout => false, :file => "tmp/get_sequence_cache/" + params[:userid] + ".xml"
+        
       end
-    else
-      @pics = nil
-    end
-    #sorry there are some finer points of respond_to i'm missing
-    #forgive me my ignorance if i don't make it back to fix this up
-    request.format = "xml"
-    respond_to do |format|
-      format.xml
-    end
-  end
-  
-  def upload_file
-  
-    #i am neither sure if this is going to work or if it's actually used
-    #i am, for example, not clear how this funciton relates to the primary upload funciton
-    #or how it sets up which user is the uploader
-    path = File.join(Rails.root, "public", "tmp")
-    Dir.mkdir(path) unless Dir.entries(File.join(Rails.root, "public")).include? "tmp"
-    fullpath = path + "/#{params['filename']}.jpg"
-    `touch #{fullpath}`
     
-    File.open(fullpath, "wb") do |f|
-          f.write(params['Filedata'].read)
-    end
       
   end
+  
+  # def upload_file
+  #   logger.info "ok this is the endpoint we're hitting"
+  #   logger.info "---------------"
+  #   if params['Filedata']
+  #     if params[:userid] != nil
+  #       @authuser = Authuser.find(params[:userid])
+  #     end
+  #     if request.remote_ip != "67.207.146.155" && @authuser == nil
+  #      i=IpAddressHack.where(ip_address: request.remote_ip).last
+  #       if i.created_at > Time.now - 5.minutes
+  #         @authuser = Authuser.find(i.authuser)
+  #         logger.info "matched ip address" + i.ip_address + "to user " + @authuser.id.to_s + "  login  " + @authuser.login
+  #       else
+  #         @authuser = nil
+  #         logger.info "no matching ip address found"
+  #       end
+  #     end
+  #     logger.info "ok"
+  #     if @authuser
+  #       logger.info @authuser.login + "is the authuser we're trying to upload an image for"
+  #       m=Mugshot.new
+  #       m.authuser_id = @authuser.id
+  #       m.image = params["Filedata"].read
+  #       #m.save
+  #       
+  #       logger.info params["Filedata"].class
+  #     end
+  #     
+  #   end
+  #   #i am neither sure if this is going to work or if it's actually used
+  #   #i am, for example, not clear how this funciton relates to the primary upload funciton
+  #   #or how it sets up which user is the uploader
+  #   path = File.join(Rails.root, "public", "tmp")
+  #   Dir.mkdir(path) unless Dir.entries(File.join(Rails.root, "public")).include? "tmp"
+  #   fullpath = path + "/#{params['filename']}.jpg"
+  #   `touch #{fullpath}`
+  #   
+  #   File.open(fullpath, "wb") do |f|
+  #         f.write(params['Filedata'].read)
+  #   end
+  #     
+  # end
   
   def get_landmarks
     #this is called by the fullupload object
@@ -283,6 +326,12 @@ class ApisController < ApplicationController
           #do _we_ really need all that complicated return status stuff?  Can i just give them an up or down?
           #make sure save happened and give returnstatus accordingly
           m.save
+          if FileTest.exists?("tmp/get_sequence_cache/" + @authuser.id.to_s + ".xml")
+            `rm "tmp/get_sequence_cache/" + @authuser.id.to_s + ".xml"`
+          
+          end
+          do_social(@authuser)
+          
           @msg = @returnstatus
           #do social networking push
         end
@@ -347,7 +396,21 @@ class ApisController < ApplicationController
     render xml: nil
   end
   
+  def do_social(authuser)
+    logger.info "begging social for " + authuser.login
+    if authuser.tweeting?
+      pic_num = authuser.mugshots.count.ordinalize
+  
+      gender = authuser.gender == "m" ? "his" : "her"
+      
+      description = authuser.login + " just took "+ gender + " " + pic_num + " mugshot!  www.dailymugshot.com/" + authuser.id.to_s
+      logger.info "tweeting for " + authuser.login
+      authuser.twitter_connect.tweet description
+          
+    end
     
+    
+  end  
   
   
 end

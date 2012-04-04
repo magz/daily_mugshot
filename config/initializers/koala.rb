@@ -2,10 +2,8 @@
 #   CONFIG = YAML.load_file(Rails.root.join("config/facebook.yml"))[Rails.env]
 #   APP_ID = CONFIG['app_id']
 #   SECRET = CONFIG['secret_key']
-#   CALLBACK_URL = CONFIG['callback_url']
-
 # end
-
+# 
 # Koala::Facebook::OAuth.class_eval do
 #   def initialize_with_default_settings(*args)
 #     case args.size
@@ -16,6 +14,6 @@
 #         initialize_without_default_settings(*args) 
 #     end
 #   end 
-
+# 
 #   alias_method_chain :initialize, :default_settings 
 # end

@@ -1,13 +1,19 @@
-<%= @twitter_hash %>
+<%= @access_token %>
+<%= @access_token.token %>
+<%= @access_token.secret %>
+
+<br><br><br><br>
+
+<%= @twitter_hash %><br><br>
 <%#= @twitter_connect %>
 <%= session %>
-<%= "some stuffffff" %>
+<%= "some stuffffff" %><br><br>
 
-<%= @twitter_hash["credentials"]["token"] %>
-<%= @twitter_hash["credentials"]["secret"] %>
+<%= @twitter_hash["credentials"]["token"] %><br><br>
+<%= @twitter_hash["credentials"]["secret"] %><br><br><br>
 
-<%= "some stuffffff" %>
-<%= @params["oauth_verifier"] %>
+<%= "some stuffffff" %><br><br><br>
+<%= @params %><br><br><br>
 
 
 
@@ -16,7 +22,11 @@
 jfjfjfjfjfjfjfjf
 
 
-<%= @client %>
+<%#= @t %> <br>
+<%#= @t.token %><br>
+<%#= @t.secret %><br>
+<%#= @t.authuser_id %><br>
+<%#= @t %><br>
 
 fdasfdsf
 

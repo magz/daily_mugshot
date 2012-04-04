@@ -9,8 +9,8 @@ class IphoneController < ApplicationController
     #checking to make sure that such a user exists...not perfect.  Makes sure a response is provided though, rather than just erroring out
     if Authuser.find_by_login(params[:login])
       current_authuser = Authuser.authenticate(params[:login], params[:password])
-    else
-      current_authuser = false
+    else Authuser.find_by_email(params[:login])
+      current_authuser = Authuser.authenticate(Authuser.find_by_email(params[:login]).login, params[:password])
     end
     if current_authuser
       session[:authuser_id] = current_authuser.id

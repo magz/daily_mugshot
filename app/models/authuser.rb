@@ -12,7 +12,6 @@ class Authuser < ActiveRecord::Base
   has_many :inverse_friends, :through => :inverse_friendships, :source => :authuser
   has_many :landmarks
   has_many :ip_address_hacks
-  has_many :videos
   
   validates :login, :email, :gender, :crypted_password, :presence => true
   validates :login, :email, :uniqueness => true
@@ -206,6 +205,11 @@ class Authuser < ActiveRecord::Base
     self.mugshot_count = self.mugshots.where(active: true).count
     self.save
   end
+  
+  # def cache_get_sequence
+  #   File.open("tmp/get_sequence_cache/" + self.id.to_s + ".xml", 'w') {|f| f.write(Rails.app.get("/openapis/get_sequence?userid=" + self.id.to_s).response.body) }
+  #   
+  # end
   
   def try_image_all
     logger.info "beginning try_image_all for user:  " + self.id.to_s

@@ -1,9 +1,10 @@
 class MainController < ApplicationController
   skip_before_filter :require_login, :only => [:welcome, :faq, :about, :secret]
-  caches_page :main
+  #respond_to :js, :html, :xml, :json
+  
   
   def welcome
-    @mugshots = Mugshot.last(6)
+    @mugshots = Mugshot.last(50).shuffle[1..6]
   end
   
   def faq
@@ -31,30 +32,33 @@ class MainController < ApplicationController
   end
   
   def secret
-    if params[:userid]
-      @mugshots = Mugshot.where(authuser_id: params[:userid])
-    else
-      @mugshots = []
-    end
-    f= AWS::S3.new.buckets[:dailymugshotprod]
-    @result_urls = []
-    @mugshots.each do |m|
-      if m.image.to_s.match("missing").class != NilClass
-        if f.objects[m.filename].acl.grants.last.permission.to_s == "<Permission>READ</Permission>"
-          @result_urls << "http://dqnxa4ugjb67h.cloudfront.net/" + m.filename
-        else
-          m.try_image
-          @result_urls << m.image
-        end
-      else
-        @result_urls << m.image
-      end
-    end
+   	@dino_comix=(Hash.from_xml open("http://www.rsspect.com/rss/qwantz.xml").read)["rss"]["channel"]["item"][0]["description"].html_safe
+	
   end
   
   def martin_delete
     Authuser.find_by_login("trivialelement").mugshots.last.delete
     flash[:notice] = "successfully deleted chris martin"
+    redirect_to :root
+  end
+  def pablo_delete
+    Authuser.find_by_login("pabs616").mugshots.last.delete
+    flash[:notice] = "successfully deleted pabloooooo"
+    redirect_to :root
+  end
+  
+  def create_video
+    #for some reason putting this in the video controller makes flash[:notice] not work, so i'm putting it here until i figure out why
+    video = Video.new()
+    video.authuser_id = current_authuser.id
+    video.save!
+    begin
+      address = video.generate_self
+      flash[:notice] = "Your video has been successfully created! Check it out on our youtube channel soon (it may take a few minutes to be processed by Google) #{address}"
+    rescue
+      flash[:notice] = "Something went wrong with the creation of your video.  We're working to improve this new feature, so please send us feedback letting us know"
+    end
+    
     redirect_to :root
   end
 end

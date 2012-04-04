@@ -17,10 +17,15 @@
 					      { :confirm => 'Are you sure?', :method => :delete}   %>
 					<% end %>
                   </h4>
-				<% if (comment.authuser_id == -1 || !comment.authuser.get_last_mugshot) %> 
+				<% if (comment.authuser_id == -1 || !comment.authuser.has_mugshot?) %> 
                           <%= image_tag("dmslogo_med.png", :class => "comment_pic") %>
 						<% else %>
-						  <%= image_tag((Mugshot.find(comment.authuser.get_last_mugshot).try_image(:thumb)), size: "50x50") %>
+						<% begin %>  
+						<%= image_tag((Mugshot.find(comment.authuser.get_last_mugshot).try_image(:thumb)), size: "50x50") %>
+						<% rescue %>
+						<%= image_tag("dmslogo_med.png", :class => "comment_pic") %>
+                        
+						<% end %>
 						<% end %>
 						
                   <div class="comment_body"><%= comment.body %></div>

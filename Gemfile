@@ -41,6 +41,8 @@ gem "koala", "~> 1.4.0"
 gem "youtube-g", "~> 0.5.0"
 gem "youtube_it", "~> 2.1.4"
 
+# gem "bleak_house"
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

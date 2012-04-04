@@ -5,13 +5,13 @@ class TwitterConnectsController < ApplicationController
     if t && t.active
         flash[:notice] = "You're already signed up for twitter!"
         redirect_to :root
-    else if t.active == false
+    else if t && t.active == false
       t.active = true
       t.save
       flash[:notice] = "Your mugshtos will now be automatically tweeted!"
       redirect_to :root
       else
-        redirect_to "auth/twitter"
+        redirect_to "/auth/twitter"
       end
     end
 
@@ -23,6 +23,7 @@ class TwitterConnectsController < ApplicationController
     if t
       t.active = false
       flash[:notice] = "Your mugshots will no longer be authomatically tweeted"
+      t.save
     else
       flash[:notice] = "You are not curerntly signed up to have your mugshots automatically tweeted"
     end
@@ -54,7 +55,7 @@ class TwitterConnectsController < ApplicationController
   #OAuth is required by twitter auth anyway, so nbd
   def prepare_access_token(oauth_token, oauth_token_secret)
     #generate consumer token
-    consumer = OAuth::Consumer.new("eUwxnXFyOEuo4pWx9WCw", "BuXKrX2vlkKaFZLU5k1XibuIxM85cahid6oFPNco",
+    consumer = OAuth::Consumer.new("2Tp53hDcEtkxel1DYxOQsQ", "i6Qqt1iBbV6tbv3TsaCzM3JmKJppnKDviNoHP6W0",
     {
         :site => "http://api.twitter.com"
     })

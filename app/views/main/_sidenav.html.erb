@@ -9,9 +9,10 @@
 	<% else %>
 		<li id="takePic"><%= link_to "Take a Pic", controller: "mugshots", action: "first_pic" %></li>
 	<% end %>
-	<li id="invites" class = "new"><%= link_to "Youtube It", {:controller => "videos", :action => "new" } if current_authuser.id == 60581 %></li>
-	<li id="invites"><%#= link_to "Find Your Friends", {:controller => "authuser", :action => "find_friends" } %></li>
-	<li id="flipbook"><%#= link_to "Make A Flipbook", :flipbook_intro %></li>
+	<% if current_authuser.id == 60581 %>
+	<li id="invites" class = "new"><%= link_to "Youtube It", :new_video %></li>
+	<% else %>
+	<% end %>
 	<li id="getReminders"><%= link_to "Get Reminders", :get_reminder %></li>
 	<% end %>
 	<li id="browseGal"><%= link_to "Browse Gallery", :browse %></li>

@@ -1,36 +1,96 @@
-require "uri"
-require 'net/http'
-
 class VideosController < ApplicationController
-
+  before_filter :check_for_mugshot, :only => [:new]
   
-  def create
-    
-    
-    
-    video = Video.new()
-    video.authuser_id = current_authuser.id
-    video.save!
-    begin
-      address = video.generate_self
-      flash[:notice] = "Your video has been successfully created!  Check it out on our youtube channel soon (it may take a few minutes to be processed by Google) <a href=#{address}>HERE</a>"
-    rescue
-      flash[:notice] = "Something went wrong with the creation of your video.  We're working to improve this new feature, so please send us feedback letting us know"
+  
+  def check_for_mugshot
+    unless current_authuser.has_mugshot?
+      flash[:notice] = "You must have at least one mugshot before you can create a video!"
+      redirect_to :first_pic
     end
     
-    redirect_to :root
-     
+  end
+  # GET /videos
+  # GET /videos.json
+  def index
+    @videos = Video.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @videos }
+    end
   end
 
-  def new
-    @authuser = current_authuser
-   
+  # GET /videos/1
+  # GET /videos/1.json
+  def show
+    @video = Video.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @video }
+    end
   end
-  
-  
+
+  # GET /videos/new
+  # GET /videos/new.json
+  def new
+    @video = Video.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @video }
+    end
+  end
+
+  # GET /videos/1/edit
+  def edit
+    @video = Video.find(params[:id])
+  end
+
+  # POST /videos
+  # POST /videos.json
+  def create
+    @video = Video.new(params[:video])
+
+    respond_to do |format|
+      if @video.save
+        format.html { redirect_to @video, notice: 'Video was successfully created.' }
+        format.json { render json: @video, status: :created, location: @video }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @video.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /videos/1
+  # PUT /videos/1.json
+  def update
+    @video = Video.find(params[:id])
+
+    respond_to do |format|
+      if @video.update_attributes(params[:video])
+        format.html { redirect_to @video, notice: 'Video was successfully updated.' }
+        format.json { head :ok }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @video.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /videos/1
+  # DELETE /videos/1.json
+  def destroy
+    @video = Video.find(params[:id])
+    @video.destroy
+
+    respond_to do |format|
+      format.html { redirect_to videos_url }
+      format.json { head :ok }
+    end
+  end
   def test
     
   end
-
-
 end

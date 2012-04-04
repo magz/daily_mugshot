@@ -2,7 +2,13 @@ class SessionsController < ApplicationController
   skip_before_filter :require_login, :only => [:login, :logout]
   def login
     return unless request.post?
-    @current_authuser = Authuser.authenticate(params[:login], params[:password])
+    if Authuser.find_by_login(params[:login])
+      @current_authuser = Authuser.authenticate(params[:login], params[:password])
+    else 
+      if Authuser.find_by_email(params[:login])
+        @current_authuser = Authuser.authenticate(Authuser.find_by_email(params[:login]).login, params[:password])
+      end
+    end
     if @current_authuser
       @current_authuser.delay.try_image_all
       session[:authuser] = @current_authuser.id
@@ -19,11 +25,18 @@ class SessionsController < ApplicationController
         rescue
         end
       end
-      flash[:notice] = "Logged in successfully" 
+      flash[:notice] = "Logged in successfully"
+      if current_authuser.already_taken_today?
+        redirect_to "/authusers/" + current_authuser.id.to_s
+      else
+        redirect_to :new_pic
+      end
+       
     else
       flash[:notice] = "Incorrect Login" 
+      redirect_to :root
+      
     end
-    redirect_to root_path
   end
   
   def logout

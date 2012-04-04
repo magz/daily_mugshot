@@ -1,6 +1,6 @@
 class TwitterConnect < ActiveRecord::Base
-  TWITTER_CONSUMER_KEY = "eUwxnXFyOEuo4pWx9WCw"
-  TWITTER_CONSUMER_SECRET = "BuXKrX2vlkKaFZLU5k1XibuIxM85cahid6oFPNco"
+  TWITTER_CONSUMER_KEY = "2Tp53hDcEtkxel1DYxOQsQ"
+  TWITTER_CONSUMER_SECRET = "i6Qqt1iBbV6tbv3TsaCzM3JmKJppnKDviNoHP6W0"
 
 
   belongs_to :authuser
@@ -15,7 +15,7 @@ class TwitterConnect < ActiveRecord::Base
   #validates :check_key_works
   
   def tweet(message)
-    if active
+    if self.active
       twitter_client = TwitterOAuth::Client.new(
           :consumer_key => TWITTER_CONSUMER_KEY,
           :consumer_secret => TWITTER_CONSUMER_SECRET,
@@ -28,7 +28,7 @@ class TwitterConnect < ActiveRecord::Base
       else
         self.active = false
         self.save
-        flash[:notice] = "If you would like to automatically tweet your mugshots, please go to you account options to reauthorize Daily Mugshot's twitter access"
+        #flash[:notice] = "If you would like to automatically tweet your mugshots, please go to you account options to reauthorize Daily Mugshot's twitter access"
       end
     end
   end

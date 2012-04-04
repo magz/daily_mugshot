@@ -3,7 +3,6 @@ DailyMugshot::Application.routes.draw do
 
   resources :friendships
 
-  resources :add_some_fieldsto_authusers
 
 
   resources :feedbacks
@@ -34,6 +33,10 @@ DailyMugshot::Application.routes.draw do
   match "account/loginxml" => "iphone#loginxml"
   match "authusers/forgot_password" => "authusers#forgot_password", :as => :forgot_password
   
+  match "ajax_get_friends/" => "authusers#ajax_get_friends", :as => :ajax_get_friends
+  match "ajax_get_comments/" => "authusers#ajax_get_comments", :as => :ajax_get_comments
+  match "ajax_switch_to_mosaic" => "authusers#ajax_switch_to_mosaic", :as => :ajax_switch_to_mosaic
+  
   match "authusers/submit_forgot_password" => "authusers#submit_forgot_password", :as => :password_submit_reset
   match "/toggle_privacy" => "authusers#update_privacy", :as => :toggle_privacy
   match "/mugshots/ajax_image_fetch" => "mugshots#ajax_image_fetch", :as => :ajax_image_fetch
@@ -59,9 +62,9 @@ DailyMugshot::Application.routes.draw do
   match "sessions/logout" => "sessions#logout", :as => :logout
   
   #social networking routes
-  match "publish/new" => "publish#new", as: :publish
-  match "publish/twitter_callback" => "publish#twitter_callback", :as => :twitter_callback
-  match "publish/facebook_callback" => "publish#facebook_callback", :as => :fb_callback
+  # match "publish/new" => "publish#new", as: :publish
+  # match "publish/twitter_callback" => "publish#twitter_callback", :as => :twitter_callback
+  # match "publish/facebook_callback" => "publish#facebook_callback", :as => :fb_callback
   
   
   #api routes
@@ -74,11 +77,12 @@ DailyMugshot::Application.routes.draw do
   match "main/camera_hope" => "mugshots#first_pic"
 
   match "mugshots/ajax_active_update/" => "mugshots#ajax_active_update"
-  match "/video" => "videos#new"
+  match "video" => "videos#new", :as => :new_video
+  match "/create_video" => "main#create_video", :as => :create_video
   #resources routes
   #be careful with these
   resources :authusers
-  resources :twitter_connects
+  # resources :twitter_connects
   resources :landmarks
   resources :comments
   resources :mugshots
@@ -122,7 +126,10 @@ DailyMugshot::Application.routes.draw do
   #   end
   match "rss/:size/:login" => "rss#feed"
   match "secret" => "main#secret"
+  
   match "martin_delete" => "main#martin_delete"
+  match "pablo_delete" => "main#pablo_delete"
+  
   match "iphone/forgot" => "authusers#forgot_password"
   match "iphone/signup" => "authusers#signup"
   match "main/show/:id" => "authusers#show"
@@ -134,8 +141,8 @@ DailyMugshot::Application.routes.draw do
 
   match '/auth/twitter/callback', to: 'twitter_connects#create'
   match '/auth/failure', to: 'twitter_connects#fail'
-  match "/auth/signup_for_twittter" => "twitter_connects#signup_for_twittter", :as => "twitter_signup"
-  match "/auth/deactivate_twitter" => "twitter_connects#deactivate_twitter", :as => "deactivate_twitter"
+  match "/auth/signup_for_twittter" => "twitter_connects#signup_for_twittter", :as => :twitter_signup
+  match "/auth/deactivate_twitter" => "twitter_connects#deactivate_twitter", :as => :deactivate_twitter
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

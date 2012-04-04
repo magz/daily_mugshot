@@ -1,4 +1,5 @@
 <%= stylesheet_link_tag "comments" %>
+<%# is this necessary? %>
 
 <script type="text/javascript">
 swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
@@ -20,6 +21,7 @@ swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
 
 <h1><%= @authuser.login %>'s Mugshow</h1>
 	<span id="tabs"><%= render :partial => "show_tabs" %></span>
+<div id="mosaic">
 <%= render :partial => "mosaic_view" if @current_tab == "mosaic" %>
 </div>
 <% if @current_tab == "mugshow" %>
@@ -51,37 +53,62 @@ swfobject.registerObject("player", "9.0.115", "expressInstall.swf");
 					<div class="clearboth"><!--EMPTY--></div>
 					<div id="showFriend">
 				    </div>
-				
-				<% if @followed_friends != [] %>
-				    <div id="favorites">
-					  <h3 class="title">Favorites</h3>
-					  <% @followed_friends.each do |fav| %>
-						<% if fav.get_mugshot_count > 0  %>
-					      		<%= link_to(image_tag(Mugshot.find(fav.get_last_mugshot).try_image, size: "50x50"), :action => :show, :id => fav.id)  %>
-					          <% else %>
-									<%= link_to((image_tag "dmslogo_med.png", size: "50x50"), :action => :show, :id => fav.id)%>
-						  
-								<% end %>	
-								
-						<% end %>
-				    </div>
+				<div id="friends_partial">
+					<% if @followed_friends != [] %>
+					    <div id="favorites">
+						  <h3 class="title">Favorites</h3>
+							<div align=center><%= image_tag("large_loading_spinner.gif", :size => "75x75") %></div>
+						</div>
 					<% end %>
-
-					<% if @following_friends != [] %>
+				    <% if @following_friends != [] %>
 					    <div id="favorites">
 						  <h3 class="title">Followers</h3>
-						  <% @following_friends.each do |fav| %>
-							<% if fav.get_mugshot_count > 0 %>
-						      		<%= link_to(image_tag(Mugshot.find(fav.get_last_mugshot).try_image, size: "50x50"), :action => :show, :id => fav.id)  %>
-						      <% else %>
-									<%= link_to((image_tag "dmslogo_med.png", size: "50x50"), :action => :show, :id => fav.id)%>
-							  <% end %>	
-							<% end %>
-								
-					    </div>
+							<div align=center><%= image_tag("large_loading_spinner.gif", :size => "75x75") %></div>
+						
 						<% end %>
+
+					    </div>
+					
+					</div>
 						<div id="testdiv"></div>
 				  <h3 class="title">Comments</h3>
-					<%= render :partial => 'comment_form' if (logged_in? && current_authuser.has_mugshot?) %>
-				
-					<div id="comments"> <%= render :partial => 'comments'  %> </div>
+					<% if logged_in? && current_authuser.has_mugshot? %>
+					<%= render :partial => 'comment_form' if logged_in? %>
+					<% end %>
+					<div id="comments"> 
+						<div align=center><%= image_tag("large_loading_spinner.gif", :size => "75x75") %></div>
+					</div>
+<script>
+$(document).ready(function(){
+	$.get('/ajax_get_friends.json?id=<%=@authuser.id.to_s%>', function(data) {
+	  console.log(data);
+	  //alert('Load was performed.');
+
+
+
+	if(data["success"] == true) {
+	  //alert(data["friends_html"]);
+	  $("#friends_partial").html(data["friends_html"]);
+	}
+
+
+	});
+	$.get('/ajax_get_comments.json?id=<%=@authuser.id.to_s%>', function(data) {
+	  console.log(data);
+	  if(data["success"] == true) {
+
+		  $("#comments").html(data["comments_html"]);
+		}
+
+
+
+
+	});
+
+
+
+
+});
+
+
+</script

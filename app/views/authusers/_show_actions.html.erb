@@ -1,4 +1,4 @@
-<%- content_for :head do -%>
+<% content_for :head do -%>
 <style type="text/css" media="screen">
 	.mugshow_actions .icon{
 		font-weight: bold;
@@ -18,7 +18,7 @@
 			<%#= link_to "<span class='icon'>&dArr;</span> download mugshots", :mugshots %>
 		</li>
 		<% end %>
-    <% if logged_in? != nil %>
+    <% if logged_in? && current_authuser.id == 60581%>
 		<div id="friend_link_div">
 	    <%= render :partial => "friend_link" %>
 		</div>
@@ -28,8 +28,6 @@
 	    page[:showFriend].set_style :display => "block"
     end %>
 	  </li>
-	  <li>
-	      <!-- <a href="javascript:WildfireBtn.onClick({module: 'post',partner: '94301',widgetTitle: 'Daily Mugshot'},'gigya_id',undefined,undefined)" class="post_mugshow">Post Mugshow</a> -->
-	  </li>
+	  
   </ul>
 </div>

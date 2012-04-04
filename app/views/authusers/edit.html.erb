@@ -79,7 +79,23 @@
                         </div>
                     </div>
                 </div>
-
+				<% if (current_authuser.id == 60581 || current_authuser.login == "Trivialelement"|| current_authuser.login == "pabs616") %>
+				<div class=" ">
+                    <div class="highlight_box_wrapper">
+                        <div class="highlight_box_content">
+                         <h3>Post to Twitter?</h3>
+                         <label for="time_zone">
+                           <% if current_authuser.twitter_connect && current_authuser.twitter_connect.active %>
+						You are currently posting to Twitter.  If you would like to stop posting your updates to Twitter, please click <%= link_to "HERE", :deactivate_twitter %>.
+							<% else %>
+							If you would like to authorize Daily Mugshot to post updates to your Twitter feed, please click <%= link_to "HERE", :twitter_signup %>.  You can disable this feature at any time.
+							<% end %>
+                         </label>	
+                         <br>
+                        </div>
+                    </div>
+                </div>
+				<% end %>
                 <div class="highlight_box">
                     <div class="highlight_box_wrapper">
                         <div class="highlight_box_content">

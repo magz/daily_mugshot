@@ -3,8 +3,9 @@
 	
 You can also view videos that other users have submitted <a href=http://www.youtube.com/user/dailymugshot>HERE</a>
 </p>
-<%= link_to "Create Your Video!", :controller => :video, :action  =>  :create, :onclick => "this.disabled = true"%>
+<%= link_to "Create Your Video!", :create_video, :id => "video_link", :disable_with => "Please wait..."%>
 
 <h1>Example Video</h1>
 
 <iframe width="420" height="315" src="http://www.youtube.com/embed/vnaghn0SaNk" frameborder="0" allowfullscreen></iframe>
+

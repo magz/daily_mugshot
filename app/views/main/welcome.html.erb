@@ -54,7 +54,9 @@
 <ul>
 	<li>Use Daily Mugshot to chronicle images of yourself and share them as an animated sequence
 	<li>Place widgets in your blog or website and to display your mugshots with automatic updates (you can always make your mugshots private)
+	<% unless logged_in? %>
 	<li><%= link_to "Getting started", :signup %> is a snap, all you need is a webcam, digital camera, or camera-phone! 
+	<% end %>
 	<li>Update anywhere using the Daily Mugshot apps for <a href="http://itunes.apple.com/us/app/dailymugshot/id393861180?mt=8"> iPhone </a> and <a href="https://market.android.com/details?id=com.fuzz.dms&feature=search_result"> Android </a>
 </ul>
 <script>

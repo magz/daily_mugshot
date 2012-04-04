@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%= current_authuser.id == 60581 if logged_in? %>
   <title>DailyMugshot</title>
+  <%#= stylesheet_link_tag "application"%>
   <%= stylesheet_link_tag "quickstyles"%>
   <%= stylesheet_link_tag "base"%>
   <%= stylesheet_link_tag "public"%>
   <%= javascript_include_tag "application", "swfobject" %>
+  <%#= javascript_include_tag "zoomThumb" %>
   <%= javascript_include_tag "navigation" %>
 
 	<%= favicon_link_tag asset_path "favicon.ico" %>
