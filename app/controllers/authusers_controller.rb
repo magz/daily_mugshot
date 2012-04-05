@@ -325,7 +325,7 @@ class AuthusersController < ApplicationController
     end
     
     unless params[:authuser][:gender]
-      @errors << "You left your login blank!"
+      @errors << "You left your gender blank!"
     end
 
     unless Authuser.find_by_email(params[:authuser][:email]) == nil
