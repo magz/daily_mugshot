@@ -1,22 +1,17 @@
-<ul id="sequence_images_list">
-  <% if mugshots %>
-  <% for m in mugshots %>
-   <li>
-	   <label>
-        <%=(m.created_at).strftime("%m/%d/%y")%>
-        <%= link_to (image_tag(m.try_image ("thumb"))), 
+ <% if @mugshots%>
+ <div align="center">
+ 	<ul style="display: inline; list-style: none; ">
+ <% @mugshots.each_index do |i| %>
+   <li style="width: 75px; float: left; list-style-type: none; margin-bottom: 5px">
+        <%=(@mugshots[i].created_at).strftime("%m/%d/%y")%><br>
+        <%= link_to (image_tag(@mugshots[i].try_image ("thumb"))), 
 		            :controller => "authusers", 
 		            :action => "show_mine", 
-		            :focused_mugshot => m.id %>
-        <% x=m.id.to_s %>
-		<%= check_box("m", "active", checked: m.active, onchange: "$.post('mugshots/ajax_active_update.json', {id:"+ m.id.to_s + "})")  %>
+		            :focused_mugshot => @mugshots[i].id %><br>
+		<div align="center"><%= check_box("", "active", checked: @mugshots[i].active, onchange: "$.post('mugshots/ajax_active_update.json', {id:"+ @mugshots[i].id.to_s + "})")  %></div>
 
-				<script type="text/javascript">
-				</script>
-
-	   </label>
    </li>
 	<% end %>
-	<% end %>
-
+<% end %>
 </ul>
+ </div>

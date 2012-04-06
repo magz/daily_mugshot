@@ -9,17 +9,23 @@ class FriendshipsController < ApplicationController
     @friendship.authuser = current_authuser
     @friendship.followee = Authuser.find(params[:followee_id])
     @friendship.save
-    template_format = :html
-    render :json => { :success => true, :state => "remove"}
+    # @friend_link_html = render_to_string(:partial=>'authusers/friend_link.html.erb', :layout => false, :locals => {:authuser => Authuser.find(params[:followee_id])}).html_safe
+
+    # template_format = :html
+    # render :json => { :success => true, :friend_link_html => @friend_link_html  }
+    redirect_to "/authusers/" + params[:followee_id]
+
   end
   
   def remove_follow
     @friendship = Friendship.find_by_authuser_id_and_followee_id(current_authuser, params[:followee_id])
     logger.info @frienship == nil
     @friendship.delete if @friendship
-    template_format = :html
-    render :json => { :success => true, :state => "add"}
-    
+    # @friend_link_html = render_to_string(:partial=>'authusers/friend_link.html.erb', :layout => false, :locals => {:authuser => Authuser.find(params[:followee_id])}).html_safe
+
+    # template_format = :html
+    # render :json => { :success => true, :friend_link_html => @friend_link_html  }
+    redirect_to "/authusers/" + params[:followee_id]
   end
   
   
