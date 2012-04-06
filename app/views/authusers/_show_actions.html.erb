@@ -18,7 +18,7 @@
 			<%#= link_to "<span class='icon'>&dArr;</span> download mugshots", :mugshots %>
 		</li>
 		<% end %>
-    <% if logged_in? && current_authuser.id == 60581%>
+    <% if logged_in? %>
 		<div id="friend_link_div">
 	    <%= render :partial => "friend_link" %>
 		</div>
