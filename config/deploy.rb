@@ -54,3 +54,7 @@ namespace :deploy do
   # end
 
 end  
+precompile"
+  # end
+
+end  

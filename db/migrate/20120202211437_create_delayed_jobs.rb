@@ -20,3 +20,6 @@ class CreateDelayedJobs < ActiveRecord::Migration
     drop_table :delayed_jobs
   end
 end
+le :delayed_jobs
+  end
+end

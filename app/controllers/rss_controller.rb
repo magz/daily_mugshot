@@ -47,3 +47,7 @@ class RssController < ApplicationController
 
   
 end #end of class
+ end
+
+  
+end #end of class

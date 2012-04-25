@@ -3,3 +3,6 @@ class Friendship < ActiveRecord::Base
   belongs_to :followee, :class_name => "Authuser"
   
 end
+_name => "Authuser"
+  
+end

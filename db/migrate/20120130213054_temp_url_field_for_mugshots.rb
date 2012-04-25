@@ -13,3 +13,7 @@ class TempUrlFieldForMugshots < ActiveRecord::Migration
   #   
   end
 end
+ :deleted
+  #   
+  end
+end

@@ -19,3 +19,7 @@ class MakeIndicesandCleanupTables < ActiveRecord::Migration
     
   end
 end
+authuser_id
+    
+  end
+end

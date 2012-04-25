@@ -1,2 +1,4 @@
 module TwitterConnectsHelper
 end
+ TwitterConnectsHelper
+end

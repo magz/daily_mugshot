@@ -11,3 +11,7 @@ class AddFileNameandActivetoMugshots < ActiveRecord::Migration
     
   end
 end
+, :filename
+    
+  end
+end

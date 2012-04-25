@@ -236,3 +236,7 @@ DEPENDENCIES
   will_paginate
   youtube-g (~> 0.5.0)
   youtube_it (~> 2.1.4)
+er
+  will_paginate
+  youtube-g (~> 0.5.0)
+  youtube_it (~> 2.1.4)

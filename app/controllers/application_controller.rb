@@ -43,3 +43,15 @@ class ApplicationController < ActionController::Base
     end
   end
 end
+tion"
+      redirect_to :root
+    end
+  end
+
+  def require_admin
+    unless current_authuser && (current_authuser.id == 1 || current_authuser.id == 60581)
+      flash[:notice] = "Admin area only"
+      redirect_to :root 
+    end
+  end
+end

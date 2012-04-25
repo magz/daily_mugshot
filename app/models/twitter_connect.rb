@@ -34,3 +34,8 @@ class TwitterConnect < ActiveRecord::Base
   end
   
 end
+  end
+    end
+  end
+  
+end

@@ -14,3 +14,6 @@ class DropComments < ActiveRecord::Migration
     drop_table :comments
   end
 end
+_table :comments
+  end
+end

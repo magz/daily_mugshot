@@ -7,3 +7,8 @@ class FlipbookController < ApplicationController
     
   end
 end
+d
+  def new
+    
+  end
+end

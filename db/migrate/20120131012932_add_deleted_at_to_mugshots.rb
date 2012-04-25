@@ -11,3 +11,7 @@ class AddDeletedAtToMugshots < ActiveRecord::Migration
     
   end
 end
+:deleted_at
+    
+  end
+end

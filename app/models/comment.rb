@@ -8,3 +8,6 @@ class Comment < ActiveRecord::Base
       self.body ||= ""
   end
 end
+self.body ||= ""
+  end
+end

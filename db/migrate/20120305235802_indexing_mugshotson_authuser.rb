@@ -7,3 +7,6 @@ class IndexingMugshotsonAuthuser < ActiveRecord::Migration
       remove_index :mugshots, :column => :authuser_id
     end
   end 
+authuser_id
+    end
+  end 

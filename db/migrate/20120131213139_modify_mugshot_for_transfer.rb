@@ -14,3 +14,8 @@ class ModifyMugshotForTransfer < ActiveRecord::Migration
     end
   end
 end
+ted
+    
+    end
+  end
+end

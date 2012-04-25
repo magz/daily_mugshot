@@ -18,3 +18,34 @@
      </li>
 
 </ul>
+go_to_mosaic()
+{
+	$("#mosaic").css("display", "");
+	$("#mugshow_view").css("display", "none");
+	$("#mosaic_tab").addClass("current");
+	$("#mugshow_tab").removeClass("current");
+	
+}
+
+function go_to_mugshow()
+{
+	$("#mosaic").css("display", "none");
+	$("#mugshow_view").css("display", "");
+	$("#mugshow_tab").addClass("current");
+	$("#mosaic_tab").removeClass("current");
+			
+}
+$('#mugshow_tab_link').click(function(event){
+  go_to_mugshow();
+  event.preventDefault(); // Prevent link from following its href
+});
+$('#mosaic_tab_link').click(function(event){
+  go_to_mosaic();
+  event.preventDefault(); // Prevent link from following its href
+});
+
+
+
+
+
+</script>

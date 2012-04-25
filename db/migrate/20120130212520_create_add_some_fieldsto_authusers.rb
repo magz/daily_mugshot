@@ -13,3 +13,7 @@ class CreateAddSomeFieldstoAuthusers < ActiveRecord::Migration
     
   end
 end
+_expires_at
+    
+  end
+end

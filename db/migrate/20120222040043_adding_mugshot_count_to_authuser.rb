@@ -11,3 +11,7 @@ class AddingMugshotCountToAuthuser < ActiveRecord::Migration
     
   end
 end
+gshot_count
+    
+  end
+end

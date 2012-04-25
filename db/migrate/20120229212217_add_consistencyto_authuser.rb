@@ -9,3 +9,6 @@ class AddConsistencytoAuthuser < ActiveRecord::Migration
     remove_column :authusers, :consistency
   end
 end
+rs, :consistency
+  end
+end

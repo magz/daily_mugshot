@@ -9,3 +9,7 @@ class RenameFriendIdtoFollowee < ActiveRecord::Migration
     
   end
 end
+ :friend_id
+    
+  end
+end

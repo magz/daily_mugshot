@@ -23,3 +23,6 @@ class UserMailer < ActionMailer::Base
     #iterate over that group and send a mail to each of them
   end
 end
+ to each of them
+  end
+end

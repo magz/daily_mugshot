@@ -8,3 +8,7 @@ class ChangingEmailReminderHourstoDateTime < ActiveRecord::Migration
     
   end
 end
+r, :integer
+    
+  end
+end

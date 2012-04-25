@@ -7,3 +7,11 @@
 	<%= image_tag(@mugshots[index].try_image("thumb"), size: "53x53") %>
 <% end %>
 </table>
+gshots[index].try_image("thumb"), :size => "53x53", :class => "thumb_image") %>
+	</div>
+<% end %>
+<script>
+$(document).ready(function() {
+	$('.thumb_image').hoverpulse({speed: 100});
+});
+</script>

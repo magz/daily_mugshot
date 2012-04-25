@@ -66,3 +66,7 @@ class Mugshot < ActiveRecord::Base
     end
   end
 end
+        
+    end
+  end
+end

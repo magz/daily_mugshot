@@ -9,3 +9,7 @@ class CreateVideos < ActiveRecord::Migration
     end
   end
 end
+mestamps
+    end
+  end
+end

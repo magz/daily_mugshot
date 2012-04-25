@@ -10,3 +10,7 @@ class AddSalttoAuthuser < ActiveRecord::Migration
     
   end
 end
+sers, :salt
+    
+  end
+end

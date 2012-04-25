@@ -224,3 +224,10 @@ class Authuser < ActiveRecord::Base
     end
   end
 end
+     end
+    end
+  end
+  def fb_registered?
+    self.fb_id != nil
+  end
+end

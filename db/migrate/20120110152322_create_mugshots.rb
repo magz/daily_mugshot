@@ -11,3 +11,7 @@ class CreateMugshots < ActiveRecord::Migration
     end
   end
 end
+mestamps
+    end
+  end
+end

@@ -16,3 +16,7 @@ class AddImageDataToMugshot < ActiveRecord::Migration
     
   end
 end
+_updated_at
+    
+  end
+end

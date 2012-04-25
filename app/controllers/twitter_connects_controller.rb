@@ -81,3 +81,8 @@ class TwitterConnectsController < ApplicationController
 
 
 end
+irect_to :root
+  end
+
+
+end

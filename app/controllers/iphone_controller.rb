@@ -84,4 +84,9 @@ class IphoneController < ApplicationController
   
 
 
+endout => false
+  end
+  
+
+
 end

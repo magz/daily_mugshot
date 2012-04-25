@@ -8,3 +8,7 @@ class RenameMugshotIdtoOwnerIdComments < ActiveRecord::Migration
     
   end
 end
+:mugshot_id
+    
+  end
+end

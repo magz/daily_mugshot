@@ -48,3 +48,6 @@ module DailyMugshot
     config.colorize_logging
   end
 end
+colorize_logging
+  end
+end

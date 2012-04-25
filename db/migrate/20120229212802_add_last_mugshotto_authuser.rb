@@ -9,3 +9,6 @@ class AddLastMugshottoAuthuser < ActiveRecord::Migration
       remove_column :authusers, :last_mugshot
     end
   end
+last_mugshot
+    end
+  end

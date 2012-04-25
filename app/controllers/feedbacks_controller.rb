@@ -68,3 +68,7 @@ class FeedbacksController < ApplicationController
     end
   end
 end
+ad :ok }
+    end
+  end
+end

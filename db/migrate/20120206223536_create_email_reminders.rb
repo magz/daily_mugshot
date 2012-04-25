@@ -10,3 +10,7 @@ class CreateEmailReminders < ActiveRecord::Migration
     end
   end
 end
+mestamps
+    end
+  end
+end

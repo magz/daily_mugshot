@@ -11,3 +11,7 @@ class AddDeletedAttoAuthuser < ActiveRecord::Migration
     
   end
 end
+:deleted_at
+    
+  end
+end

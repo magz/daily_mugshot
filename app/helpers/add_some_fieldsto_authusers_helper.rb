@@ -1,2 +1,4 @@
 module AddSomeFieldstoAuthusersHelper
 end
+ieldstoAuthusersHelper
+end

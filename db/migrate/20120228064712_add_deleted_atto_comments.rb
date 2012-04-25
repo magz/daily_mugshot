@@ -10,3 +10,6 @@ class AddDeletedAttoComments < ActiveRecord::Migration
       remove_column :comments, :deleted_at
     end
   end
+ :deleted_at
+    end
+  end

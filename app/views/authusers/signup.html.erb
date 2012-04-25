@@ -1,11 +1,22 @@
 <%= stylesheet_link_tag "signup" %>
 
 <h1>Account Setup</h1>
+	<div id="signup_left" style="float:left; width:280px; height:404px; text-align:center;">
+	<h1 style="background-image: none;">Sign in with</h1>
+	<%= link_to "auth/facebook" do %>
+	<%= image_tag "facebook_signin.png" %>
+	<% end %>
+	
+</div>
+<div id="signup_right" style="float:right; width:376px; margin-bottom: 20px; border-left:2px solid #b2b2b2; padding-left: 10px;">
+	<h1 style="background-image: none;">Create an Account</h1>
+
 	<fieldset>
+    
     <%= form_for @authuser do |f| -%>
   <% if @errors != [] %>
     <div id="error_explanation">
-      <h2><%= pluralize(@errors.count, "error") %> prevented your account from being created:</h2>
+      <h2 style="background-image: none;"><%= pluralize(@errors.count, "error") %> prevented your account from being created:</h2>
 
       <ul>
       <% @errors.each do |msg| %>
@@ -14,9 +25,9 @@
       </ul>
     </div>
   <% end %>
-		<div class="highlight_box" id="current_password">
-		<div class="highlight_box_wrapper">
-		<div class="highlight_box_content">
+		<div  id="current_password">
+		<div>
+		<div>
      <br>      
                   
 			<label for="authuser_login">
@@ -31,7 +42,6 @@
 				Email:
                                 <%= f.text_field :email %>
 			</label>
-			<a href="/main/faq#g3"> Why do we need email? </a>
 
             <br>      
       <br>      
@@ -76,8 +86,10 @@
 		</div>
 		</div> 
                 		
-                <button class="button signup_button" name="commit" type="submit" value="Sign up">Update</button>
+                <button type="submit" name="commit" value="Submit" class="signup_button">Submit</button>
                 <% end %> 
 
 		
 	</fieldset>
+</div>
+>

@@ -8,3 +8,12 @@
 # end
 # 
 # 
+lay => 'popup'
+# end
+# 
+# 
+ENV["FACEBOOK_KEY"] = "190735387714811"
+ENV['FACEBOOK_SECRET'] = "5923dfc003108c41dc80341be626155f"
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET'], {:scope => 'publish_stream,offline_access,email'}
+end

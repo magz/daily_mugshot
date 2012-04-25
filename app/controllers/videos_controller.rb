@@ -94,3 +94,8 @@ class VideosController < ApplicationController
     
   end
 end
+
+  def test
+    
+  end
+end

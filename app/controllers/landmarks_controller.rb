@@ -83,3 +83,7 @@ class LandmarksController < ApplicationController
     end
   end
 end
+ad :ok }
+    end
+  end
+end

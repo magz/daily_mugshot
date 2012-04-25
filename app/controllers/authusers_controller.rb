@@ -412,3 +412,55 @@ class AuthusersController < ApplicationController
 end
 
 
+authuser = Authuser.find(params[:id])
+    @authuser.destroy
+
+    respond_to do |format|
+      format.html { redirect_to authusers_url }
+      format.json { head :ok }
+    end
+  end
+  
+  def submit_forgot_password
+    #i think this is all pretty good...just gotta get that emailer up and running
+    @authuser = Authuser.find_by_email(params[:email])
+    if @authuser
+      #generates a random alphanumeric sequence of 8 characters...old way was unnecessarily elaborate
+      new_password = (0..8).map{ rand(36).to_s(36) }.join
+      UserMailer.forgot_password(@authuser, new_password).deliver
+      @authuser.crypted_password = Authuser.encrypt(new_password, @authuser.salt)
+      @authuser.save
+          respond_to do |format|
+            format.html do
+              flash[:notice] = "Success! Your password was reset and emailed to #{@authuser.email}"
+              redirect_to :root
+            end
+            format.xml { head :ok }
+          end
+        else
+          @error_messages = "Sorry, we could not find your email. Please try again."
+          respond_to do |format|
+            format.html { render :action => :forgot_password }
+            format.xml  { render :xml => {:message => @error_messages}, :status => :unprocessable_entity }
+          end
+        end
+    end
+
+    def forgot_password
+      
+    end
+    def update_privacy
+      @user = Authuser.find params[:user]
+      @user.prvt = params[:state]
+      @user.save
+        #flash[:notice] = 'Sequence was successfully updated.'
+        respond_to do |format|
+          #format.html { redirect_to :action => 'show', :id => @user.id }
+          format.js
+          format.xml { head :ok }
+        end
+    end
+    
+end
+
+

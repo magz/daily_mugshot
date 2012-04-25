@@ -45,3 +45,7 @@ class PublishController < ApplicationController
     
   end
 end
+ok_callback
+    
+  end
+end

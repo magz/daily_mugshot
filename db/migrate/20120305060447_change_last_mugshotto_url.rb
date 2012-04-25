@@ -9,3 +9,6 @@ class ChangeLastMugshottoUrl < ActiveRecord::Migration
       remove_column :authusers, :last_mugshot_url
     end
   end
+_mugshot_url
+    end
+  end

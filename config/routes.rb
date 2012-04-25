@@ -154,3 +154,18 @@ DailyMugshot::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 end
+tter/callback', to: 'twitter_connects#create'
+  match '/auth/failure', to: 'twitter_connects#fail'
+  match "/auth/signup_for_twittter" => "twitter_connects#signup_for_twittter", :as => :twitter_signup
+  match "/auth/deactivate_twitter" => "twitter_connects#deactivate_twitter", :as => :deactivate_twitter
+
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  root :to => 'main#welcome'
+
+  # See how all your routes lay out with "rake routes"
+
+  # This is a legacy wild controller route that's not recommended for RESTful applications.
+  # Note: This route will make all actions in every controller accessible via GET requests.
+  # match ':controller(/:action(/:id(.:format)))'
+end

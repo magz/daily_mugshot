@@ -5,4 +5,5 @@ ActionMailer::Base.smtp_settings = {
   :authentication => :plain,
   :user_name => "support@dailymugshot.com",
   :password => "3018fuzz"
+}  :password => "3018fuzz"
 }
